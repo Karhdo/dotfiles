@@ -1,0 +1,6 @@
+.config/flutter
+.config/karabiner
+.config/configstore
+.config/simple-update-notifier
+
+.DS_Store

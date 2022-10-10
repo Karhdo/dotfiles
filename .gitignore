@@ -1,0 +1,10 @@
+.DS_Store
+simple-update-notifier
+iterm2
+flutter
+configstore
+karabiner
+
+#Zsh local config
+.config/zsh/.zsh_history
+.config/zsh/.zcompdump-MacBook-5.7.1
