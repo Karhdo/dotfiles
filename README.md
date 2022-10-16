@@ -46,8 +46,8 @@ Requires [Neovim](https://neovim.io/) (>= 0.8)
 - [Nerd fonts](https://github.com/ryanoasis/nerd-fonts) - Powerline-patched fonts. I use Hack.
 - [Exa](https://the.exa.website/) - `ls` replacement
 
-## About me
+## Reference
 
-- [Twitter @inkdrop_app](https://twitter.com/inkdrop_app)
-- [Blog](https://blog.inkdrop.app/)
-- [My product: Inkdrop - Markdown note-taking app](https://www.inkdrop.app/)
+- [captainko cko.nvim](https://github.com/captainko/cko.nvim)
+- [craftzdog dotfiles-public](https://github.com/craftzdog/dotfiles-public)
+
