@@ -35,8 +35,10 @@ alias zqk="cd ~/Workplace/QK-IT\ Company"
 alias ls="exa -l --icons"
 alias la="exa -la --icons"
 
+# Tool manager npm versions
+eval "$(fnm env --use-on-cd)"
+
 export PATH="$PATH:/usr/local/mongodb/bin"
-export PATH="$HOME/Development/flutter/bin:$PATH"
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 
-eval "$(fnm env --use-on-cd)"
+
