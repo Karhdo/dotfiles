@@ -1,5 +1,6 @@
 return function()
-	require('lualine').setup {
-        options = {theme = 'tokyonight'}
-    }
+	require("tokyonight").setup({
+		style = "moon",
+		transparent = true,
+	})
 end

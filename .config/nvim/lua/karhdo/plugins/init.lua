@@ -17,9 +17,11 @@ return require("packer").startup(function(use)
 	use({ "kyazdani42/nvim-tree.lua", tag = "nightly", config = config("nvim-tree") }) -- Folder explorer
 	use({ "akinsho/bufferline.nvim", tag = "v2.*", config = config("bufferline") }) -- Buffer explorer
 	use({ "xiyaowong/nvim-transparent", config = config("nvim-transparent") }) -- Remove all background colors
-	use({ "folke/tokyonight.nvim", config = config("tokyonight") }) -- Colorschemes tokyonight
-	use({ "folke/lua-dev.nvim", config = config("lua-dev") }) -- Setup for init.lua and plugin development
+	use({ "folke/neodev.nvim", config = config("neodev") }) -- Setup for init.lua and plugin development
 	use({ "norcalli/nvim-colorizer.lua", config = config("colorizer") }) -- Setup for init.lua and plugin development
+
+	-- Colorschemes
+	use({ "folke/tokyonight.nvim", config = config("tokyonight") }) -- Tokyonight theme
 
 	-- cmp plugins
 	use({
@@ -60,7 +62,6 @@ return require("packer").startup(function(use)
 	-- Treesitter
 	use({
 		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate",
 		requires = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 			"p00f/nvim-ts-rainbow",
