@@ -49,8 +49,8 @@ local function lsp_highlight_document(client)
 	if not status_ok then
 		return
 	end
+
 	illuminate.on_attach(client)
-	-- end
 end
 
 local function lsp_keymaps(bufnr)

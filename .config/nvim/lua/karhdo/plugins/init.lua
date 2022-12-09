@@ -19,6 +19,7 @@ return require("packer").startup(function(use)
 	use({ "xiyaowong/nvim-transparent", config = config("nvim-transparent") }) -- Remove all background colors
 	use({ "folke/neodev.nvim", config = config("neodev") }) -- Setup for init.lua and plugin development
 	use({ "norcalli/nvim-colorizer.lua", config = config("colorizer") }) -- Setup for init.lua and plugin development
+	use({ "RRethy/vim-illuminate", config = config("illuminate") }) -- Automatically highlighting
 
 	-- Colorschemes
 	use({ "folke/tokyonight.nvim", config = config("tokyonight") }) -- Tokyonight theme
