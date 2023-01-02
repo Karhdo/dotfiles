@@ -14,4 +14,5 @@ return function()
 	map("n", "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>")
 	map("n", "<Leader>bcr", "<Cmd>BufferLineCloseRight<CR>")
 	map("n", "<Leader>bcl", "<Cmd>BufferLineCloseLeft<CR>")
+	map("n", "<Leader>bco", "<Cmd>BufferLineCloseLeft<CR><Cmd>BufferLineCloseRight<CR>")
 end
