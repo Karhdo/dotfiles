@@ -1,8 +1,9 @@
 # Karhdo's dotfiles
 
+![nvim screenshot](./images/screenshot-neovim.png)
+
 ![iterm2 screenshot](./images/screenshot-iTerm2.png)
 
-![nvim screenshot](./images/screenshot-neovim.png)
 
 ## Contents
 
