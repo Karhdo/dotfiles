@@ -9,6 +9,7 @@ function M.disable_formatting(client)
 end
 
 local float_opt = { scope = "cursor", focusable = false }
+
 function M.diag_go_next()
 	vim.diagnostic.goto_next({ float = float_opt })
 end
@@ -60,6 +61,7 @@ end
 ---@param bufnr integer
 function M.setup_common_mappings(client, bufnr)
 	local server_capabilities = client.server_capabilities
+
 	local nnoremap = mapper.nnoremap
 
 	nnoremap({ "]g", M.diag_go_next, buffer = bufnr, nowait = true })
@@ -78,7 +80,7 @@ function M.setup_common_mappings(client, bufnr)
 	end
 
 	if server_capabilities.hoverProvider then
-		nnoremap({ "K", vim.lsp.buf.hover, buffer = bufnr, nowait = true })
+    nnoremap({ "K", vim.lsp.buf.hover, buffer = bufnr, nowait = true })
 	end
 
 	if server_capabilities.referencesProvider then
@@ -91,8 +93,10 @@ end
 ---@param bufnr  integer
 function M.setup_mappings(client, bufnr)
 	M.setup_common_mappings(client, bufnr)
+
 	local nnoremap = mapper.nnoremap
 	local vnoremap = mapper.vnoremap
+
 	local server_capabilities = client.server_capabilities
 
 	if server_capabilities.codeActionProvider then
@@ -155,25 +159,15 @@ function M.setup_servers()
 
 			opt.on_attach = opt.on_attach or M.on_attach
 			opt.capabilities = opt.capabilities or vim.lsp.protocol.make_client_capabilities()
+
 			if has_cmp_lsp then
 				opt.capabilities = cmp_lsp.default_capabilities(opt.capabilities)
 			end
 
-			if server_name == "tsserver" then
-				require("typescript").setup({
-					disable_commands = false, -- prevent the plugin from creating Vim commands
-					debug = false, -- enable debug logging for commands
-					go_to_source_definition = {
-						fallback = true, -- fall back to standard LSP definition on failure
-					},
-					server = get_server_option(server_name),
-				})
-			else
-				require("lspconfig")[server_name].setup(opt)
-			end
+			require("lspconfig")[server_name].setup(opt)
 		end,
 
-		--[[ ["tsserver"] = function(server_name)
+		["tsserver"] = function(server_name)
 			require("typescript").setup({
 				disable_commands = false, -- prevent the plugin from creating Vim commands
 				debug = false, -- enable debug logging for commands
@@ -182,7 +176,7 @@ function M.setup_servers()
 				},
 				server = get_server_option(server_name),
 			})
-		end, ]]
+		end,
 	})
 end
 
