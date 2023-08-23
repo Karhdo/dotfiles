@@ -1,4 +1,4 @@
----@diagnostic disable: missing-parameter
+---@diagnostic disable: missing-fields
 local commander = require("core.utils.commander")
 
 commander.augroup("TextYankHighlight", {

@@ -29,3 +29,5 @@ end
 
 map_tele(";f", "search_current_folders")
 map_tele(";r", "live_grep")
+
+return map_tele

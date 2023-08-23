@@ -6,7 +6,7 @@ _M.search_current_folders = function()
 		cwd = "./",
 		hidden = true,
 		path_display = { shorten = 8 },
-		file_ignore_patterns = { ".git/objects", ".git/logs", ".git/refs", ".git/info" },
+		file_ignore_patterns = { ".git/" },
 	})
 end
 

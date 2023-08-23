@@ -1,6 +1,8 @@
 ---@diagnostic disable: need-check-nil
 
 local mapper = require("core.utils.mapper")
+local map_tele = require("core.telescope.mappings")
+local commander = require("core.utils.commander")
 local M = {}
 
 function M.disable_formatting(client)
@@ -8,6 +10,54 @@ function M.disable_formatting(client)
 	client.server_capabilities.documentRangeFormattingProvider = false
 end
 
+function M.do_cursor_hold()
+	vim.lsp.buf.document_highlight()
+	vim.diagnostic.open_float({
+		scope = "line",
+		focusable = false,
+		severity_sort = true,
+		close_events = {
+			"BufLeave",
+			"CursorMoved",
+			"CursorMovedI",
+			"InsertCharPre", --[[default]]
+		},
+	})
+end
+
+function M.setup_autocommands(client, bufnr)
+	local server_capabilities = client.server_capabilities
+
+	if server_capabilities.codeLensProvider then
+		commander.augroup("LspCodeLens", {
+			{
+				event = { "BufEnter", "CursorHold", "InsertLeave" },
+				buffer = bufnr,
+				command = vim.lsp.codelens.refresh,
+			},
+		})
+		mapper.nnoremap({ "<Leader>cl", vim.lsp.codelens.run, buffer = bufnr })
+	end
+
+	if server_capabilities.documentHighlightProvider then
+		commander.augroup("LspCursorCommands", {
+			{
+				event = "CursorHold",
+				buffer = bufnr,
+				command = M.do_cursor_hold,
+			},
+			{
+				event = { "CursorMoved", "CursorMovedI" },
+				buffer = bufnr,
+				command = vim.lsp.buf.clear_references,
+			},
+		})
+	end
+end
+
+-- =============================================================================
+-- Setup Mappings
+-- =============================================================================
 local float_opt = { scope = "cursor", focusable = false }
 
 function M.diag_go_next()
@@ -61,7 +111,6 @@ end
 ---@param bufnr integer
 function M.setup_common_mappings(client, bufnr)
 	local server_capabilities = client.server_capabilities
-
 	local nnoremap = mapper.nnoremap
 
 	nnoremap({ "]g", M.diag_go_next, buffer = bufnr, nowait = true })
@@ -79,12 +128,24 @@ function M.setup_common_mappings(client, bufnr)
 		nnoremap({ "gd", vim.lsp.buf.definition, buffer = bufnr, nowait = true })
 	end
 
+	if server_capabilities.typeDefinitionProvider then
+		map_tele("<Leader>gt", "lsp_type_definitions", nil, bufnr)
+	end
+
 	if server_capabilities.hoverProvider then
-    nnoremap({ "K", vim.lsp.buf.hover, buffer = bufnr, nowait = true })
+		nnoremap({ "K", vim.lsp.buf.hover, buffer = bufnr, nowait = true })
 	end
 
 	if server_capabilities.referencesProvider then
 		nnoremap({ "gr", vim.lsp.buf.references, buffer = bufnr, nowait = true })
+	end
+
+	if server_capabilities.documentSymbolProvider then
+		map_tele("go", "lsp_document_symbols", nil, bufnr)
+	end
+
+	if server_capabilities.workspaceSymbolProvider then
+		map_tele("gO", "lsp_dynamic_workspace_symbols", nil, bufnr)
 	end
 end
 
@@ -97,15 +158,31 @@ function M.setup_mappings(client, bufnr)
 	local nnoremap = mapper.nnoremap
 	local vnoremap = mapper.vnoremap
 
+	local extras = client.config and client.config.extras or {}
 	local server_capabilities = client.server_capabilities
+
+	if extras.hover then
+		nnoremap({ "<Leader>K", extras.hover, buffer = bufnr, nowait = true })
+	end
 
 	if server_capabilities.codeActionProvider then
 		nnoremap({ "<Leader>ca", vim.lsp.buf.code_action, buffer = bufnr, nowait = true })
 		vnoremap({ "<Leader>ca", vim.lsp.buf.code_action, buffer = bufnr, nowait = true })
 	end
 
-	if server_capabilities.implementationProvider then
-		nnoremap({ "gi", vim.lsp.buf.implementation, buffer = bufnr, nowait = true })
+	if server_capabilities.documentFormattingProvider then
+		nnoremap({
+			"<Leader><Leader>f",
+			function()
+				(extras.format or vim.lsp.buf.format)({ async = false })
+			end,
+			buffer = bufnr,
+			nowait = true,
+		})
+	end
+
+	if server_capabilities.documentRangeFormattingProvider then
+		vnoremap({ "<Leader><Leader>f", extras.range_format or vim.lsp.buf.format, buffer = bufnr, nowait = true })
 	end
 
 	if server_capabilities.typeDefinitionProvider then
@@ -113,21 +190,25 @@ function M.setup_mappings(client, bufnr)
 	end
 end
 
+---comment
 ---@param client any
 ---@param bufnr  number
 function M.on_attach(client, bufnr)
+	M.setup_autocommands(client, bufnr)
 	M.setup_mappings(client, bufnr)
 
 	local ok_status, status = PR("lsp-status")
 	if ok_status then
 		status.on_attach(client)
 	end
-
-	local has_navic, navic = PR("nvim-navic")
-	if has_navic and client.server_capabilities.documentSymbolProvider then
-		navic.attach(client, bufnr)
-	end
 end
+
+-- =============================================================================
+-- Commands
+-- =============================================================================
+commander.command("LspLog", function()
+	vim.api.nvim_command("edit " .. vim.lsp.get_log_path())
+end, {})
 
 local function get_server_option(server_name)
 	local has_opt, result = PR("core.lsp." .. server_name) -- load config if it exists
@@ -146,12 +227,14 @@ local function get_server_option(server_name)
 end
 
 -- =============================================================================
--- Setup servers{{{
+-- Setup servers
 -- =============================================================================
 ---Logic to (re)start installed language servers for use initializing lsp
 ---and restart them on installing new ones
 function M.setup_servers()
 	local has_cmp_lsp, cmp_lsp = PR("cmp_nvim_lsp")
+
+	local function empty_config() end
 
 	require("mason-lspconfig").setup_handlers({
 		function(server_name)
@@ -166,7 +249,6 @@ function M.setup_servers()
 
 			require("lspconfig")[server_name].setup(opt)
 		end,
-
 		["tsserver"] = function(server_name)
 			require("typescript").setup({
 				disable_commands = false, -- prevent the plugin from creating Vim commands
