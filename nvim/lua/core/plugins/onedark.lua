@@ -40,7 +40,8 @@ function M.config()
 		},
 	})
 
-	require("onedark").load()
+  -- Remove comment to set onedark theme.
+	-- require("onedark").load()
 end
 
 return M
