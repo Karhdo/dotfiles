@@ -3,6 +3,8 @@ iterm2
 configstore
 karabiner
 tmux/plugins
+yarn
+neofetch
 
 #Zsh local config
 .config/zsh/.zsh_history
