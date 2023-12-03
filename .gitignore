@@ -5,6 +5,7 @@ karabiner
 tmux/plugins
 yarn
 neofetch
+spicetify
 
 #Zsh local config
 .config/zsh/.zsh_history
