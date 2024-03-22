@@ -1,4 +1,5 @@
----@type LazyPlugin
+---@type LazyPluginSpec
+--
 local M = {
 	"nvim-tree/nvim-web-devicons",
 }

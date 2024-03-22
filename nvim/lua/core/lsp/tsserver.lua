@@ -33,6 +33,7 @@ local M = {
 	},
 	init_options = {
 		preferences = {
+      		allowJs = true,
 			quotePreference = "auto", -- "auto" | "double" | "single";
 			importModuleSpecifierPreference = "non-relative",
 			includeCompletionsForImportStatements = true,

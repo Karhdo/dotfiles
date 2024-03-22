@@ -1,10 +1,8 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"tzachar/cmp-tabnine",
-  -- For MacOS
-  -- build = "./install.sh", 
-  -- For Windows
-  build = "powershell ./install.ps1", 
+  -- build = "./install.sh", -- For MacOS
+  build = "powershell ./install.ps1", -- For Windows
   dependencies = 'hrsh7th/nvim-cmp'
 }
 

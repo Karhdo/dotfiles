@@ -1,11 +1,13 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"L3MON4D3/LuaSnip",
+	event = { "InsertEnter" },
 	dependencies = { "rafamadriz/friendly-snippets" },
+	run = "make install_jsregexp",
 }
 
 function M.config()
-	require("luasnip").config.set_config({
+  require("luasnip").config.set_config({
 		history = true,
 		enable_autosnippets = true,
 		store_selection_keys = "<Tab>",

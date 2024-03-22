@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"nvim-lualine/lualine.nvim",
 	enabled = true,

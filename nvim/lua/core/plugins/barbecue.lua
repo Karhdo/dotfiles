@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"utilyre/barbecue.nvim",
 	enabled = not vim.g.started_by_firenvim,
