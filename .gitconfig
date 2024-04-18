@@ -1,3 +1,9 @@
+[push]
+  autoSetupRemote = true
+
 [user]
 	name = Karhdo
 	email = dotrongkhanh.dev@gmail.com
+
+[includeIf "gitdir:~/Workplace/YouNet-Media/"]
+  path = ~/.config/git/ynm.config
