@@ -5,8 +5,8 @@ _M.search_current_folders = function()
 		prompt_title = "Current Folder",
 		cwd = "./",
 		hidden = true,
-		path_display = { shorten = 8 },
-		file_ignore_patterns = { ".git/" },
+		-- path_display = { shorten = 8 },
+		file_ignore_patterns = { ".git" },
 	})
 end
 

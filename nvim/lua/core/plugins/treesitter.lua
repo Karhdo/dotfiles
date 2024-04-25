@@ -19,16 +19,11 @@ function M.config()
     auto_install = false,
 		ensure_installed = langs,
 		highlight = {
-			enable = not vim.g.vscode, -- false will disable the whole extension
+			enable = not vim.g.vscode,
 			additional_vim_regex_highlighting = { "org" },
 		},
 		indent = { enable = true },
 		autotag = { enable = true },
-		rainbow = {
-			enable = not vim.g.vscode, -- false will disable the whole extension
-			disable = { "html" },
-			extended = true,
-		},
 	})
 end
 

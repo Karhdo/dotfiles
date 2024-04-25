@@ -8,6 +8,11 @@ local M = {
 function M.config()
 	require("tokyonight").setup({
 		style = "night",
+    on_highlights = function(hl)
+      hl.DiagnosticUnnecessary = {
+        fg = '#7882AD',
+      }
+    end,
 	})
 
 	require("tokyonight").load()
