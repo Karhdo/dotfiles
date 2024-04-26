@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 ---@type LazyPluginSpec
 local M = {
   "akinsho/toggleterm.nvim",
@@ -50,6 +51,41 @@ function M.config()
 		pattern = "term://*",
 		callback = set_terminal_keymaps,
 	})
+
+  local Terminal = require('toggleterm.terminal').Terminal;
+
+  local lazygit = Terminal:new({
+		count = 8,
+		-- id = 101,
+		cmd = "lazygit",
+		shade_terminals = false,
+		-- dir = "git_dir",
+		direction = "float",
+		hidden = true,
+		float_opts = { border = "single" },
+		start_in_insert = true,
+		-- function to run on opening the terminal
+		---@param term Terminal
+		on_open = function(term)
+			tnoremap({
+				"<c-q>",
+				function()
+					term:close()
+				end,
+				buffer = term.bufnr,
+			})
+			tnoremap({ "<C-h>", "<C-h>", silent = true, buffer = term.bufnr })
+			tnoremap({ "<C-j>", "<C-j>", silent = true, buffer = term.bufnr })
+			tnoremap({ "<C-k>", "<C-k>", silent = true, buffer = term.bufnr })
+			tnoremap({ "<C-l>", "<C-l>", silent = true, buffer = term.bufnr })
+		end,
+	})
+
+  local function lazygit_toggle()
+		lazygit:toggle()
+	end
+
+  mapper.nnoremap({ "<LocalLeader>gg", lazygit_toggle })
 end
 
 return M
