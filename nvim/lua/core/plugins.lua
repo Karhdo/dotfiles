@@ -24,13 +24,7 @@ local M = {
 		config = function()
 			require("mason-lspconfig").setup()
 		end,
-	},
-	{
-		"numToStr/Comment.nvim",
-		config = function()
-			require("Comment").setup()
-		end,
-	},
+	}
 }
 
 return M
