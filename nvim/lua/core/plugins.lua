@@ -4,6 +4,7 @@ local not_has_vscode = not vim.g.vscode
 --@type LazyPlugin[]
 local M = {
 	{ "nvim-lua/plenary.nvim" },
+	{ "github/copilot.vim" },
 	{
 		"windwp/nvim-autopairs",
 		event = { "InsertEnter" },

@@ -6,12 +6,17 @@ local M = {
 }
 
 function M.config()
+  local transparent = false -- set to true if you would like to enable transparency
+
 	require("tokyonight").setup({
 		style = "night",
-    on_highlights = function(hl)
-      hl.DiagnosticUnnecessary = {
-        fg = '#7882AD',
-      }
+    styles = {
+      sidebars = transparent and "transparent" or "dark",
+      floats = transparent and "transparent" or "dark"
+    },
+    transparent = transparent,
+    on_highlights = function(highlights)
+      highlights.DiagnosticUnnecessary = { fg = '#7882AD' }
     end,
 	})
 

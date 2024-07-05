@@ -9,6 +9,11 @@ local M = {
 
 function M.config()
 	local icons = require("core.global.style").icons
+  local nvimtree = require("nvim-tree")
+
+  -- Recommended settings from nvim-tree documentation
+  vim.g.loaded_netrw = 1
+  vim.g.loaded_netrwPlugin = 1
 
 	icons = {
 		error = icons.error,
@@ -17,7 +22,7 @@ function M.config()
 		hint = icons.hint,
 	}
 
-	require("nvim-tree").setup({
+	nvimtree.setup({
 		auto_reload_on_write = false,
 		git = { enable = true, ignore = false, timeout = 500 },
 		diagnostics = { enable = true, icons = icons },
@@ -32,7 +37,8 @@ function M.config()
 			add_trailing = false,
 			group_empty = true,
 			highlight_opened_files = "name",
-			icons = {
+      indent_markers = { enable = true },
+      icons = {
 				glyphs = {
 					default = "",
 					symlink = "",

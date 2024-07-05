@@ -4,11 +4,11 @@
 ---@field remap  boolean
 ---@field silent boolean
 
----@class core.MappingOption
+---@class core.MappingOption?
 ---@field [1]              string - lhs
 ---@field [2]              string|function - rhs
----@field lhs              string - lhs
----@field rhs              string|function - rhs
+---@field lhs              string? - lhs
+---@field rhs              string|function? - rhs
 ---@field buffer           number?
 ---@field desc             string?
 ---@field nowait           boolean?

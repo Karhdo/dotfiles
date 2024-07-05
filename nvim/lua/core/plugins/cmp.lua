@@ -13,7 +13,7 @@ local M = {
 		"hrsh7th/cmp-nvim-lsp-document-symbol",
 		"f3fora/cmp-spell",
 		"onsails/lspkind-nvim",
-		"tzachar/cmp-tabnine",
+		-- "tzachar/cmp-tabnine",
 	},
 }
 
@@ -31,7 +31,7 @@ function M.config()
 		buffer = "[Buffer]",
 		fuzzy_buffer = "[Fuzzy]",
 		luasnip = "[LuaSnip]",
-		cmp_tabnine = "[Tab9]",
+		-- cmp_tabnine = "[Tab9]",
 		npm = "[NPM]",
 		crates = "[Crates]",
 	}
@@ -53,7 +53,7 @@ function M.config()
 		},
 		sources = {
 			{ name = "luasnip", max_item_count = 4, priority = 8 },
-			{ name = "cmp_tabnine", max_item_count = 3, priority = 7 },
+			-- { name = "cmp_tabnine", max_item_count = 3, priority = 7 },
 			{ name = "nvim_lsp", priority = 8 },
 			{ name = "nvim_lsp_signature_help", priority = 8 },
 			{ name = "spell", keywork_length = 3, priority = 5 },

@@ -27,7 +27,8 @@ local function map_tele(lhs, rhs, options, buffer, mode)
 	vim.keymap.set(mode, lhs, rhs, map_opts)
 end
 
-map_tele(";f", "search_current_folders")
+map_tele(";b", "buffers")
 map_tele(";r", "live_grep")
+map_tele(";f", "search_current_folders")
 
 return map_tele
