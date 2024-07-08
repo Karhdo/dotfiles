@@ -1,15 +1,15 @@
 -- Indent blankline
 local M = {
 	"lukas-reineke/indent-blankline.nvim",
-	event = "BufEnter",
+  event = { "BufReadPre", "BufNewFile" },
 	main = "ibl",
 }
 
 function M.config()
 	require("ibl").setup({
 		indent = {
-			char = "│",
-			tab_char = "│",
+			char = "┊",
+			tab_char = "┊",
 		},
 		scope = { enabled = false },
 		exclude = {

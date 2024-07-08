@@ -25,9 +25,12 @@ vnoremap({ "<A-k>", [[:m '<-2<CR>gv=gv]], silent = true })
 nnoremap({ "<C-,>", "<C-W><" })
 nnoremap({ "<C-.>", "<C-W>>" })
 -- Sizing window vertically
-nnoremap({ "<A-,>", "<C-W>5<" })
-nnoremap({ "<A-.>", "<C-W>5>" })
+nnoremap({ "<A-,>", "<C-W>5>" })
+nnoremap({ "<A-.>", "<C-W>5<" })
 
 ------ Insert new lines ------
 nnoremap({ "<C-CR>", [[mzo<Esc>`z]], silent = true })
 nnoremap({ "<S-CR>", [[mzO<Esc>`z]], silent = true })
+
+------ Clear search highlishts ------
+nnoremap({ "<leader>nh", "<Cmd>nohlsearch<CR>", desc = 'Clear highlishts' })
