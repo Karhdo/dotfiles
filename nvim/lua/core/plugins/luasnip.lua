@@ -1,6 +1,7 @@
 ---@type LazyPluginSpec
 local M = {
 	"L3MON4D3/LuaSnip",
+  version = "v2.*",
 	event = { "InsertEnter" },
 	dependencies = { "rafamadriz/friendly-snippets" },
 	run = "make install_jsregexp",

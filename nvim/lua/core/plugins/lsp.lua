@@ -202,6 +202,7 @@ local M = {
 							"svelte",
 							"vue",
 							"yaml",
+              "javascript",
 						},
 						condition = function(utils)
 							return not has_prettier(utils)

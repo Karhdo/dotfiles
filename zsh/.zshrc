@@ -1,24 +1,14 @@
-# -------------------- Oh-My-Zsh --------------------
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# -------------------- ZSH --------------------
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Set theme oh-my-zsh
-ZSH_THEME="robbyrussell"
-
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
-
-# Source file .zshrc
-source $ZSH/oh-my-zsh.sh
-
-# Customize the zsh Prompt
-PS1="%{$fg[red]%}[%{$fg[yellow]%}%n%{$reset_color%}@%{$fg[blue]%}%m%{$fg[red]%}]%{$fg[blue]%} ➜ %{$fg[cyan]%}%c%{$fg[red]%} "
-RPROMPT='$(git_prompt_info)'
+# -------------------- Startship --------------------
+eval "$(starship init zsh)"
 
 # -------------------- Karhdo's Aliases  -------------------
 # Aliases of terminal
 alias c="clear"
-alias v="nvim"
+alias v="~/Downloads/nvim-macos-x86_64/bin/nvim"
 
 # Aliases of config
 alias cz="cd ~/.config/zsh; v .zshrc" #Config zsh
@@ -33,8 +23,8 @@ alias zw="cd ~/Workplace"
 alias zy="cd ~/Workplace/YouNet-Media"
 
 # Aliases of exa
-alias ls="exa -l --icons"
-alias la="exa -la --icons"
+# alias ls="exa -l --icons"
+# alias la="exa -la --icons"
 
 # Aliases open and split tmux
 function ide () {
@@ -54,3 +44,19 @@ function ide () {
 # Tool manager npm versions
 eval "$(fnm env --use-on-cd)"
 
+# -------------------- Oh-My-Zsh --------------------
+# Path to your oh-my-zsh installation.
+# export ZSH="$HOME/.oh-my-zsh"
+
+# Set theme oh-my-zsh
+# ZSH_THEME="robbyrussell"
+
+# Add wisely, as too many plugins slow down shell startup.
+# plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
+
+# Source file .zshrc
+# source $ZSH/oh-my-zsh.sh
+
+# Customize the zsh Prompt
+# PS1="%{$fg[red]%}[%{$fg[yellow]%}%n%{$reset_color%}@%{$fg[blue]%}%m%{$fg[red]%}]%{$fg[blue]%} ➜ %{$fg[cyan]%}%c%{$fg[red]%} "
+# RPROMPT='$(git_prompt_info)'

@@ -4,8 +4,3 @@
 [user]
 	name = Karhdo
 	email = dotrongkhanh.dev@gmail.com
-
-[includeIf "gitdir:~/Workplace/YouNet-Media/"]
-  [user]
-	  name = khanhdt1109
-	  email = khanhdt@younetgroup.com
