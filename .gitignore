@@ -6,6 +6,8 @@ tmux/plugins
 yarn
 neofetch
 spicetify
+apps.json
+versions.json
 
 #Zsh local config
 .config/zsh/.zsh_history
