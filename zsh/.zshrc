@@ -20,11 +20,11 @@ alias z="cd ~"
 alias zv="cd ~/.config/nvim"
 alias zz="cd ~/.config/zsh"
 alias zw="cd ~/Workplace"
-alias zy="cd ~/Workplace/YouNet-Media"
+alias zy="cd ~/Workplace/YouNet_Media"
 
 # Aliases of exa
-# alias ls="exa -l --icons"
-# alias la="exa -la --icons"
+alias ls="exa -l --icons"
+alias la="exa -la --icons"
 
 # Aliases open and split tmux
 function ide () {
@@ -43,6 +43,12 @@ function ide () {
 
 # Tool manager npm versions
 eval "$(fnm env --use-on-cd)"
+
+# Add Cargo binaries to PATH
+export PATH="$HOME/.cargo/bin:$PATH"
+
+bindkey '^[[A' history-search-backward
+bindkey '^[[B' history-search-forward
 
 # -------------------- Oh-My-Zsh --------------------
 # Path to your oh-my-zsh installation.
