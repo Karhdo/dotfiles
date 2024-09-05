@@ -1,35 +1,34 @@
-# -------------------- ZSH --------------------
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# -------------------- ZSH Plugins --------------------
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh  # Command suggestions
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh  # Command syntax highlighting
 
-# -------------------- Startship --------------------
-eval "$(starship init zsh)"
+# -------------------- Starship Prompt --------------------
+eval "$(starship init zsh)"  # Initializes Starship prompt
 
-# -------------------- Karhdo's Aliases  -------------------
-# Aliases of terminal
+# -------------------- Aliases --------------------
+# Terminal Aliases
 alias c="clear"
 alias v="~/Downloads/nvim-macos-x86_64/bin/nvim"
 
-# Aliases of config
-alias cz="cd ~/.config/zsh; v .zshrc" #Config zsh
-alias cv="cd ~/.config/nvim; v init.lua" #Config nvim
+# Configuration Aliases
+alias cz="cd ~/.config/zsh && v .zshrc"  # Edit Zsh config
+alias cv="cd ~/.config/nvim && v init.lua"  # Edit Neovim config
 
+# Directory Navigation Aliases
+alias z="cd ~"  # Home directory
+alias zv="cd ~/.config/nvim"  # Neovim config folder
+alias zz="cd ~/.config/zsh"  # Zsh config folder
+alias zw="cd ~/Workplace"  # Workplace folder
+alias zy="cd ~/Workplace/YouNet_Media"  # YouNet Media folder
 
-# Aliases of change directory
-alias z="cd ~"
-alias zv="cd ~/.config/nvim"
-alias zz="cd ~/.config/zsh"
-alias zw="cd ~/Workplace"
-alias zy="cd ~/Workplace/YouNet_Media"
+# Exa (ls alternative) Aliases
+alias ls="exa -l --icons"  # List with icons
+alias la="exa -la --icons"  # List all with icons
 
-# Aliases of exa
-alias ls="exa -l --icons"
-alias la="exa -la --icons"
-
-# Aliases open and split tmux
-function ide () {
+# -------------------- Functions --------------------
+# Open Tmux IDE layout
+function ide() {
   if [ -z "$TMUX" ]; then
-    # tmux inline speed things up
     tmux new-session \; \
       split-window -v -l 22%\; \
       split-window -h -l 50%\; \
@@ -41,14 +40,26 @@ function ide () {
   fi
 }
 
-# Tool manager npm versions
-eval "$(fnm env --use-on-cd)"
+# -------------------- Key Bindings --------------------
+bindkey '^[[A' history-search-backward  # Search history backward
+bindkey '^[[B' history-search-forward  # Search history forward
 
+# -------------------- Environment Variables --------------------
 # Add Cargo binaries to PATH
 export PATH="$HOME/.cargo/bin:$PATH"
 
-bindkey '^[[A' history-search-backward
-bindkey '^[[B' history-search-forward
+# Add local binaries to PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# Node.js version manager (fnm) setup
+FNM_PATH="$HOME/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env --use-on-cd --shell zsh)"
+fi
+
+# Zoxide (cd alternative) setup
+eval "$(zoxide init zsh)"
 
 # -------------------- Oh-My-Zsh --------------------
 # Path to your oh-my-zsh installation.

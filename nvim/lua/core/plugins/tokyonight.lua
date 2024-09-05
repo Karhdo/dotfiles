@@ -6,12 +6,12 @@ local M = {
 }
 
 function M.config()
-  local transparent = false -- set to true if you would like to enable transparency
+  local transparent = true -- set to true if you would like to enable transparency
 
 	require("tokyonight").setup({
 		style = "night",
     styles = {
-      sidebars = transparent and "transparent" or "dark",
+      -- sidebars = transparent and "transparent" or "dark",
       floats = transparent and "transparent" or "dark"
     },
     transparent = transparent,

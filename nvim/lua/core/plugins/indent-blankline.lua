@@ -3,6 +3,7 @@ local M = {
 	"lukas-reineke/indent-blankline.nvim",
   event = { "BufReadPre", "BufNewFile" },
 	main = "ibl",
+  enabled = true,
 }
 
 function M.config()
@@ -11,21 +12,18 @@ function M.config()
 			char = "┊",
 			tab_char = "┊",
 		},
-		scope = { enabled = false },
+    scope = { enabled = false },
 		exclude = {
 			filetypes = {
-				"help",
-				"alpha",
-				"dashboard",
-				"neo-tree",
-				"Trouble",
-				"trouble",
-				"lazy",
-				"mason",
-				"notify",
-				"toggleterm",
-				"lazyterm",
-			},
+        "help",
+        "lazy",
+        "mason",
+        "toggleterm",
+        "lazyterm",
+        "markdown",
+        "NvimTree",
+        "lspinfo",
+      },
 		},
 	})
 end

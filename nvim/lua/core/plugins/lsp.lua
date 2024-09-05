@@ -216,6 +216,7 @@ local M = {
 							"sass",
 							"markdown",
 							"yaml",
+							"json",
 							"html",
 							"javascript",
 							"javascriptreact",
@@ -225,6 +226,10 @@ local M = {
 						condition = function(utils)
 							return has_prettier(utils)
 						end,
+					}),
+
+          			null_ls.builtins.formatting.prettierd.with({ 
+						filetypes = { "json" } 
 					}),
 
 					-- CSS

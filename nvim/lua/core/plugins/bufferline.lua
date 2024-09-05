@@ -15,7 +15,7 @@ local M = {
 function M.config()
 	require("bufferline").setup({
 		options = {
-      mode = "tabs",
+      -- mode = "tabs",
 			color_icons = true,
 			diagnostics = "nvim_lsp",
       separator_style = "slant",
