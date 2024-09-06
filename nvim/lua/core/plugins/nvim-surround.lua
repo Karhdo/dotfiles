@@ -1,7 +1,7 @@
 ---@type LazyPluginSpec
 local M = {
 	"kylechui/nvim-surround",
-	enabled = false,
+	enabled = true,
 	event = { "CursorMoved" },
 }
 
