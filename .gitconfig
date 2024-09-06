@@ -7,5 +7,5 @@
 
 [includeIf "gitdir:~/Workplace/YouNet_Media/"]
   [user]
-	  name = khanhdt1109
+	  name = khanhdt
 	  email = khanhdt@younetgroup.com
