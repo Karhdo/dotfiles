@@ -1,5 +1,5 @@
 ---@type LazyPlugin[]
-local kinds = require("core.global.style").lsp.kinds
+      local kinds = require("core.global.style").lsp.kinds
 
 local M = {
 	{
@@ -35,7 +35,7 @@ local M = {
 			"folke/neodev.nvim",
 		},
 		config = function()
-			local lsp = require("core.utils.lsp")
+      local lsp = require("core.utils.lsp")
 			local commander = require("core.utils.commander")
 			local icons = require("core.global.style").icons.git
 
@@ -93,6 +93,7 @@ local M = {
 
 			-- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
 			vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+
 			lsp.setup_servers()
 		end,
 	},
@@ -110,6 +111,7 @@ local M = {
 			local lsp = require("core.utils.lsp")
 
 			require("mason-null-ls").setup({
+        automatic_installation = true,
 				ensure_installed = {
 					"stylua",
 					"hadolint",
@@ -119,24 +121,6 @@ local M = {
 					"codespell",
 				},
 			})
-			-- TODO: use glob for this
-			local function has_stylua(utils)
-				return utils.root_has_file("stylua.toml", ".stylua.toml")
-			end
-
-			local function has_prettier(utils)
-				return utils.root_has_file(".prettierrc", ".prettierrc.json")
-			end
-
-			local function has_eslint(utils)
-				return utils.root_has_file(
-					".eslintrc.js",
-					".eslintrc.cjs",
-					".eslintrc.yaml",
-					".eslintrc.yml",
-					".eslintrc.json"
-				)
-			end
 
 			local filetype_config = { html = { disable_format = false } }
 
@@ -183,78 +167,24 @@ local M = {
 
 			null_ls.setup({
 				on_attach = on_attach,
-				-- debug = true,
 				sources = {
 					-- Formatting
-					-- null_ls.builtins.diagnostics.eslint.with({
-					-- 	prefer_local = "node_modules/.bin",
-					-- 	condition = function(utils)
-					-- 		return has_eslint(utils) and not has_prettier(utils)
-					-- 	end,
-					-- }),
-
-					null_ls.builtins.formatting.prettierd.with({
-						filetypes = {
-							"css",
-							"scss",
-							"sass",
-							"markdown",
-							"svelte",
-							"vue",
-							"yaml",
-              "javascript",
-						},
-						condition = function(utils)
-							return not has_prettier(utils)
-						end,
-					}),
-
-					null_ls.builtins.formatting.prettierd.with({
-						filetypes = {
-							"css",
-							"scss",
-							"sass",
-							"markdown",
-							"yaml",
-							"json",
-							"html",
-							"javascript",
-							"javascriptreact",
-							"typescript",
-							"typescriptreact",
-						},
-						condition = function(utils)
-							return has_prettier(utils)
-						end,
-					}),
-
-          			null_ls.builtins.formatting.prettierd.with({ 
-						filetypes = { "json" } 
-					}),
+					-- null_ls.builtins.diagnostics.eslint_d,
+					null_ls.builtins.formatting.prettierd,
 
 					-- CSS
-					null_ls.builtins.diagnostics.stylelint.with({
-						condition = function(utils)
-							return utils.root_has_file(".stylelintrc.json")
-						end,
-					}),
+					null_ls.builtins.diagnostics.stylelint,
 
 					-- Lua
 					null_ls.builtins.formatting.stylua.with({
-						condition = has_stylua,
-					}),
-					-- use lua formatter as default
-					-- null_ls.builtins.formatting.lua_format.with({
-					-- 	condition = function(utils)
-					-- 		return not has_stylua(utils)
-					-- 	end,
-					-- }),
+						filetypes = { "lua" },
+          }),
 
 					-- SQL
 					null_ls.builtins.formatting.sqlformat,
 
 					-- Shell script
-					null_ls.builtins.diagnostics.shellcheck,
+					--null_ls.builtins.diagnostics.shellcheck,
 					null_ls.builtins.formatting.shfmt.with({
 						filetypes = { "sh", "zsh" },
 					}),
@@ -267,7 +197,6 @@ local M = {
 
 					-- Spell(English linter)
 					null_ls.builtins.diagnostics.codespell,
-					extra_args = { "--no-passive" },
 				},
 			})
 		end,

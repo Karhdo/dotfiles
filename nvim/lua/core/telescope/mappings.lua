@@ -29,6 +29,7 @@ end
 
 map_tele(";b", "buffers")
 map_tele(";r", "live_grep")
+map_tele(";o", "oldfiles")
 map_tele(";f", "search_current_folders")
 
 return map_tele
