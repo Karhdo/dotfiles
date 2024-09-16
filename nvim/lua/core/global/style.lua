@@ -43,7 +43,7 @@ local M = {
       Variable = " ",
     },
   },
--- TODO: use other colors
+  -- TODO: use other colors
   palette = {
     pale_red = "#E06C75",
     dark_red = "#be5046",

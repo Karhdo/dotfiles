@@ -6,25 +6,25 @@ local should_reload = false
 ---@param str string
 ---@return string
 local function replace_termcodes(str)
-	return vim.api.nvim_replace_termcodes(str, true, true, true)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
 local function map_tele(lhs, rhs, options, buffer, mode)
-	local map_key = replace_termcodes(lhs .. rhs .. (buffer or ""))
+  local map_key = replace_termcodes(lhs .. rhs .. (buffer or ""))
 
-	TelescopeMapArgs[map_key] = options or {}
+  TelescopeMapArgs[map_key] = options or {}
 
-	mode = mode or "n"
-	rhs = string.format(
-		should_reload and "<Cmd>lua pcall(require('core.telescope')['%s'],TelescopeMapArgs['%s'])<CR>"
-			or "<Cmd>lua pcall(require('core.telescope')['%s'],TelescopeMapArgs['%s'])<CR>",
-		rhs,
-		map_key
-	)
+  mode = mode or "n"
+  rhs = string.format(
+    should_reload and "<Cmd>lua pcall(require('core.telescope')['%s'],TelescopeMapArgs['%s'])<CR>"
+    or "<Cmd>lua pcall(require('core.telescope')['%s'],TelescopeMapArgs['%s'])<CR>",
+    rhs,
+    map_key
+  )
 
-	local map_opts = { noremap = true, silent = true, nowait = true, buffer = buffer }
+  local map_opts = { noremap = true, silent = true, nowait = true, buffer = buffer }
 
-	vim.keymap.set(mode, lhs, rhs, map_opts)
+  vim.keymap.set(mode, lhs, rhs, map_opts)
 end
 
 map_tele(";b", "buffers")
