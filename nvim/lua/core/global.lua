@@ -19,14 +19,14 @@ P = vim.print
 ---@vararg  TParam
 ---@return fun():TReturn
 function B(cb, ...)
-	local args = { ... }
-	return function()
-		return cb(unpack(args))
-	end
+  local args = { ... }
+  return function()
+    return cb(table.unpack(args)) -- Updated to table.unpack for Lua 5.4
+  end
 end
 
 ---protected require
 ---@param package string
 function PR(package)
-	return pcall(require, package)
+  return pcall(require, package)
 end

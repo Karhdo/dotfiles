@@ -1,6 +1,5 @@
----@type LazyPluginSpec
 local M = {
-	"tzachar/cmp-tabnine",
+  "tzachar/cmp-tabnine",
   enabled = false,
   -- build = "./install.sh", -- For MacOS
   build = "powershell ./install.ps1", -- For Windows
