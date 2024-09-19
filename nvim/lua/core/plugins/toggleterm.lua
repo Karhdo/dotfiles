@@ -14,7 +14,7 @@ function M.config()
       border = border,
       highlight = {
         border = "Normal",
-        background = "Terminal"
+        background = "Terminal" -- Terminal | Normal
       }
     }
   })
@@ -54,15 +54,14 @@ function M.config()
 
   local lazygit = Terminal:new({
     count = 8,
-    -- id = 101,
     cmd = "lazygit",
     shade_terminals = false,
-    -- dir = "git_dir",
     direction = "float",
     hidden = true,
-    float_opts = { border = "single" },
+    float_opts = { border = "curved" },
     start_in_insert = true,
-    -- Function to run on opening the terminal
+    -- function to run on opening the terminal
+    ---@param term Terminal
     on_open = function(term)
       tnoremap({
         "<c-q>",
