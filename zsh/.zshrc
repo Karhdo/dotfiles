@@ -15,7 +15,6 @@ alias cz="cd ~/.config/zsh && v .zshrc"  # Edit Zsh config
 alias cv="cd ~/.config/nvim && v init.lua"  # Edit Neovim config
 
 # Directory Navigation Aliases
-alias z="cd ~"  # Home directory
 alias zv="cd ~/.config/nvim"  # Neovim config folder
 alias zz="cd ~/.config/zsh"  # Zsh config folder
 alias zw="cd ~/Workplace"  # Workplace folder
@@ -52,11 +51,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 # Node.js version manager (fnm) setup
-FNM_PATH="$HOME/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
-  eval "$(fnm env --use-on-cd --shell zsh)"
-fi
+eval "$(fnm env --use-on-cd --shell zsh)"
 
 # Zoxide (cd alternative) setup
 eval "$(zoxide init zsh)"

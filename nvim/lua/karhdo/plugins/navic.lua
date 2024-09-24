@@ -3,7 +3,7 @@ local M = {
 }
 
 function M.config()
-  local kinds = require("core.global.style").lsp.kinds
+  local kinds = require("karhdo.core.styles").lsp.kinds
 
   require("nvim-navic").setup({
     highlight = true,

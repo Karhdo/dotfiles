@@ -3,7 +3,7 @@ local M = {
 }
 
 function M.config()
-  local palette = require("core.global.style").palette
+  local palette = require("karhdo.core.styles").palette
   local override = {
     ["component.ts"] = {
       icon = "",
