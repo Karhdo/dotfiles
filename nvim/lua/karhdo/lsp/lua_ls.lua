@@ -1,4 +1,4 @@
-local lsp = require("core.utils.lsp")
+local utils = require("karhdo.lsp.utils")
 
 local M = {
   settings = {
@@ -9,7 +9,7 @@ local M = {
     },
   },
   on_attach = function(client, bufnr)
-    lsp.on_attach(client, bufnr)
+    utils.on_attach(client, bufnr)
   end,
 }
 

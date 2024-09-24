@@ -10,6 +10,5 @@ vim.g.open_command = "xdg-open"
 -- Import Lua modules
 -- =============================================================================
 
-require("core.global")
-require("core.options")
-require("core.lazy")
+require("karhdo.core")
+require("karhdo.lazy")

@@ -1,4 +1,4 @@
-local lsp = require("core.utils.lsp")
+local utils = require("karhdo.lsp.utils")
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
@@ -54,14 +54,14 @@ function M.on_attach(client, bufnr)
     return
   end
 
-  local mapper = require("core.utils.mapper")
+  local keymap = vim.keymap
 
   if vim.g.use_eslint or vim.g.use_prettier then
-    lsp.disable_formatting(client)
+    utils.disable_formatting(client)
   end
-  lsp.on_attach(client, bufnr)
+  utils.on_attach(client, bufnr)
 
-  mapper.nnoremap({ "gd", "<Cmd>TypescriptGoToSourceDefinition<CR>", buffer = bufnr })
+  keymap.set('n', 'gd', '<Cmd>TypescriptGoToSourceDefinition<CR>', { buffer = bufnr })
 end
 
 return M

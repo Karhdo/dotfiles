@@ -1,5 +1,3 @@
-local mapper = require("core.utils.mapper")
-
 local M = {}
 
 -- Setup Mappings
@@ -45,29 +43,29 @@ end
 ---Setup common mapping when an lsp attaches to a buffer
 function M.setup_common_mappings(client, bufnr)
   local server_capabilities = client.server_capabilities
-  local nnoremap = mapper.nnoremap
+  local keymap = vim.keymap
 
-  nnoremap({ "]g", M.diag_go_next, buffer = bufnr, nowait = true })
-  nnoremap({ "[g", M.diag_go_prev, buffer = bufnr, nowait = true })
-  nnoremap({ "]w", M.diag_go_next_warn, buffer = bufnr, nowait = true })
-  nnoremap({ "[w", M.diag_go_prev_warn, buffer = bufnr, nowait = true })
-  nnoremap({ "]e", M.diag_go_next_err, buffer = bufnr, nowait = true })
-  nnoremap({ "[e", M.diag_go_prev_err, buffer = bufnr, nowait = true })
+  keymap.set('n', "]g", M.diag_go_next, { buffer = bufnr, nowait = true })
+  keymap.set('n', "[g", M.diag_go_prev, { buffer = bufnr, nowait = true })
+  keymap.set('n', "]w", M.diag_go_next_warn, { buffer = bufnr, nowait = true })
+  keymap.set('n', "[w", M.diag_go_prev_warn, { buffer = bufnr, nowait = true })
+  keymap.set('n', "]e", M.diag_go_next_err, { buffer = bufnr, nowait = true })
+  keymap.set('n', "[e", M.diag_go_prev_err, { buffer = bufnr, nowait = true })
 
   if server_capabilities.renameProvider then
-    nnoremap({ "<Leader>rr", vim.lsp.buf.rename, buffer = bufnr, nowait = true })
+    keymap.set('n', "<Leader>rr", vim.lsp.buf.rename, { buffer = bufnr, nowait = true })
   end
 
   if server_capabilities.definitionProvider then
-    nnoremap({ "gd", vim.lsp.buf.definition, buffer = bufnr, nowait = true })
+    keymap.set('n', "gd", vim.lsp.buf.definition, { buffer = bufnr, nowait = true })
   end
 
   if server_capabilities.hoverProvider then
-    nnoremap({ "K", vim.lsp.buf.hover, buffer = bufnr, nowait = true })
+    keymap.set('n', "K", vim.lsp.buf.hover, { buffer = bufnr, nowait = true })
   end
 
   if server_capabilities.referencesProvider then
-    nnoremap({ "gr", vim.lsp.buf.references, buffer = bufnr, nowait = true })
+    keymap.set('n', "gr", vim.lsp.buf.references, { buffer = bufnr, nowait = true })
   end
 end
 
@@ -77,34 +75,34 @@ end
 function M.setup_mappings(client, bufnr)
   M.setup_common_mappings(client, bufnr)
 
-  local nnoremap = mapper.nnoremap
-  local vnoremap = mapper.vnoremap
+  local keymap = vim.keymap
 
   local extras = client.config and client.config.extras or {}
   local server_capabilities = client.server_capabilities
 
   if server_capabilities.codeActionProvider then
-    nnoremap({ "<Leader>ca", vim.lsp.buf.code_action, buffer = bufnr, nowait = true })
-    vnoremap({ "<Leader>ca", vim.lsp.buf.code_action, buffer = bufnr, nowait = true })
+    keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, nowait = true })
+    keymap.set('t', '<Leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, nowait = true })
   end
 
   if server_capabilities.documentFormattingProvider then
-    nnoremap({
-      "<Leader><Leader>f",
+    keymap.set('n',
+      '<Leader><Leader>f',
       function()
         (extras.format or vim.lsp.buf.format)({ async = false })
       end,
-      buffer = bufnr,
-      nowait = true,
-    })
+      {
+        buffer = bufnr,
+        nowait = true,
+      })
   end
 
   if server_capabilities.documentRangeFormattingProvider then
-    vnoremap({ "<Leader><Leader>f", extras.range_format or vim.lsp.buf.format, buffer = bufnr, nowait = true })
+    keymap.set('v', '<Leader><Leader>f', extras.range_format or vim.lsp.buf.format, { buffer = bufnr, nowait = true })
   end
 
   if server_capabilities.typeDefinitionProvider then
-    nnoremap({ "<Leader>gd", vim.lsp.buf.type_definition, buffer = bufnr, nowait = true })
+    keymap.set('n', 'Leader>gd', vim.lsp.buf.type_definition, { buffer = bufnr, nowait = true })
   end
 end
 
@@ -114,14 +112,15 @@ end
 function M.on_attach(client, bufnr)
   M.setup_mappings(client, bufnr)
 
-  local ok_status, status = PR("lsp-status")
+  local ok_status, status = pcall(require, "lsp-status")
+
   if ok_status then
     status.on_attach(client)
   end
 end
 
 local function get_server_option(server_name)
-  local has_opt, result = PR("core.lsp." .. server_name) -- load config if it exists
+  local has_opt, result = pcall(require, "karhdo.lsp." .. server_name) -- load config if it exists
 
   if has_opt then
     if type(result) == "table" then
@@ -142,7 +141,7 @@ end
 ---Logic to (re)start installed language servers for use initializing lsp
 ---and restart them on installing new ones
 function M.setup_servers()
-  local has_cmp_lsp, cmp_lsp = PR("cmp_nvim_lsp")
+  local has_cmp_lsp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
 
   require("mason-lspconfig").setup_handlers({
     function(server_name)
