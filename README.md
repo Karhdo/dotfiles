@@ -2,15 +2,12 @@
 
 ![nvim screenshot](./images/screenshot-neovim.png)
 
-![iterm2 screenshot](./images/screenshot-iTerm2.png)
-
-
 ## Contents
 
-- vim (NeoVim) config
+- NeoVim config
 - tmux config
 - git config
-- iterm2 config
+- wezterm config
 
 ## Neovim setup
 
@@ -41,6 +38,47 @@ Requires [Neovim](https://neovim.io/) (>= 0.8)
 ## Shell setup (macOS & Linux)
 
 - [Nerd fonts](https://github.com/ryanoasis/nerd-fonts) - Powerline-patched fonts. I use Hack.
+- [Exa](https://the.exa.website/) - `ls` replacement
+
+## Reference
+
+- [captainko cko.nvim](https://github.com/captainko/cko.nvim)
+
+## Neovim setup
+
+Requires [Neovim](https://neovim.io/) (>= 0.8)
+
+### Plugins
+
+- [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim) - Useful lua functions used by lots of plugins
+- [github/copilot.vim](https://github.com/github/copilot.vim) - GitHub Copilot plugin for Neovim
+- [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs) - A plugin for auto-closing and auto-renaming pairs
+- [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim) - Portable package manager for Neovim
+- [williamboman/mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim) - Extension to mason.nvim for easier LSP configuration
+- [SmiteshP/nvim-navic](https://github.com/SmiteshP/nvim-navic) - Simple winbar/statusline plugin that shows your current code context
+- [nvim-lualine/lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) - A blazing fast and easy to configure Neovim statusline written in Lua
+- [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) - Treesitter configurations and abstraction layer for Neovim
+- [windwp/nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) - Use treesitter to auto close and auto rename HTML tags
+- [p00f/nvim-ts-rainbow](https://github.com/p00f/nvim-ts-rainbow) - Rainbow parentheses for Neovim using tree-sitter
+- [JoosepAlviste/nvim-ts-context-commentstring](https://github.com/JoosepAlviste/nvim-ts-context-commentstring) - Neovim treesitter plugin for setting the commentstring based on the cursor location in a file
+- [RRethy/vim-illuminate](https://github.com/RRethy/vim-illuminate) - Vim plugin for automatically highlighting other uses of the word under the cursor
+- [nvim-tree/nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua) - A file explorer tree for Neovim written in Lua
+
+## Tmux setup
+
+Configuration for Tmux can be found in [tmux/tmux.conf](tmux/tmux.conf).
+
+## Git setup
+
+Configuration for Git can be found in [.gitconfig](.gitconfig).
+
+## Wezterm setup
+
+Configuration for **Wezterm** can be found in [wezterm/](wezterm/).
+
+## Shell setup (macOS & Linux)
+
+- [Hack Nerd fonts](https://github.com/ryanoasis/nerd-fonts) - Powerline-patched fonts. I use Hack.
 - [Exa](https://the.exa.website/) - `ls` replacement
 
 ## Reference
