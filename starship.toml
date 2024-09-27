@@ -93,13 +93,13 @@ $character\
 
 [username]
 style_user = "blue"
-format = "[$user]($style)@"
+format = "[Karhdo]($style)@"
 disabled = false
 show_always = true
 
 [hostname]
 ssh_only = false
-format = '[$hostname](yellow)'
+format = '[MacBook](yellow)'
 disabled = false
 
 

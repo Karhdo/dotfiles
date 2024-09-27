@@ -1,68 +1,71 @@
 local M = {
-  "hrsh7th/nvim-cmp",
-  enabled = not vim.g.vscode,
-  event = { "InsertEnter" },
-  dependencies = {
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-calc",
-    "hrsh7th/cmp-nvim-lsp-signature-help",
-    "saadparwaiz1/cmp_luasnip",
-    "hrsh7th/cmp-cmdline",
-    "hrsh7th/cmp-nvim-lsp-document-symbol",
-    "f3fora/cmp-spell",
-    "onsails/lspkind-nvim",
-    -- "tzachar/cmp-tabnine",
-  },
+	'hrsh7th/nvim-cmp',
+	event = { 'InsertEnter' },
+	dependencies = {
+		'hrsh7th/cmp-buffer', -- source for text in buffer
+		'hrsh7th/cmp-path', -- source for file system paths
+		{
+			'L3MON4D3/LuaSnip',
+			-- follow latest release.
+			version = 'v2.*', -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+			-- install jsregexp (optional!).
+			build = 'make install_jsregexp',
+		},
+		'saadparwaiz1/cmp_luasnip', -- for autocompletion
+		'rafamadriz/friendly-snippets', -- useful snippets
+		'onsails/lspkind.nvim', -- vs-code like pictograms
+	},
 }
 
 function M.config()
-  local border = require("karhdo.core.styles").border
-  local cmp = require("cmp")
+	local cmp = require('cmp')
+	local luasnip = require('luasnip')
+	local lspkind = require('lspkind')
 
-  local menu = {
-    nvim_lsp = "[LSP]",
-    jira = "[Jira]",
-    emoji = "[Emoji]",
-    path = "[Path]",
-    calc = "[Calc]",
-    spell = "[Spell]",
-    buffer = "[Buffer]",
-    fuzzy_buffer = "[Fuzzy]",
-    luasnip = "[LuaSnip]",
-    -- cmp_tabnine = "[Tab9]",
-    npm = "[NPM]",
-    crates = "[Crates]",
-  }
+	local border = require('karhdo.core.styles').border
 
-  cmp.setup({
-    snippet = {
-      expand = function(args)
-        require("luasnip").lsp_expand(args.body)
-      end,
-    },
-    mapping = {
-      ["<C-p>"] = cmp.mapping.select_prev_item(),
-      ["<C-n>"] = cmp.mapping.select_next_item(),
-      ["<Tab>"] = cmp.mapping.confirm({ maxwidth = 50, select = true }),
-    },
-    formatting = {
-      deprecated = true,
-      format = require("lspkind").cmp_format({ with_text = true, menu = menu }),
-    },
-    sources = {
-      { name = "luasnip",                 max_item_count = 4, priority = 8 },
-      { name = "nvim_lsp",                priority = 8 },
-      { name = "nvim_lsp_signature_help", priority = 8 },
-      { name = "spell",                   keywork_length = 3, priority = 5 },
-      { name = "path",                    priority = 4 },
-      { name = "fuzzy_buffer",            max_item_count = 3, priority = 4 },
-      { name = "calc",                    priority = 3 },
-      -- { name = "cmp_tabnine", max_item_count = 3, priority = 7 },
-    },
-    window = { documentation = { border = border } },
-  })
+	local menu = {
+		nvim_lsp = '[LSP]',
+		jira = '[Jira]',
+		emoji = '[Emoji]',
+		path = '[Path]',
+		calc = '[Calc]',
+		spell = '[Spell]',
+		buffer = '[Buffer]',
+		fuzzy_buffer = '[Fuzzy]',
+		luasnip = '[LuaSnip]',
+		npm = '[NPM]',
+		crates = '[Crates]',
+	}
+
+	-- Loads vscode style snippets from installed plugins (e.g. friendly-snippets)
+	require('luasnip.loaders.from_vscode').lazy_load()
+
+	cmp.setup({
+		snippet = {
+			expand = function(args)
+				luasnip.lsp_expand(args.body)
+			end,
+		},
+		mapping = {
+			['<C-p>'] = cmp.mapping.select_prev_item(),
+			['<C-n>'] = cmp.mapping.select_next_item(),
+			['<Tab>'] = cmp.mapping.confirm({ maxwidth = 50, select = true }),
+		},
+		formatting = {
+			format = lspkind.cmp_format({
+				menu = menu,
+				with_text = true,
+			}),
+		},
+		sources = {
+			{ name = 'nvim_lsp' },
+			{ name = 'luasnip' }, -- snippets
+			{ name = 'buffer' }, -- text within current buffer
+			{ name = 'path' }, -- file system paths
+		},
+		window = { documentation = { border = border } },
+	})
 end
 
 return M
