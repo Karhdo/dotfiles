@@ -1,11 +1,11 @@
 local M = {
-  "RRethy/vim-illuminate",
+	'RRethy/vim-illuminate',
 }
 
 function M.config()
-  require("illuminate").configure({
-    filetypes_denylist = { "NvimTree" },
-  })
+	require('illuminate').configure({
+		filetypes_denylist = { 'NvimTree' },
+	})
 end
 
 return M

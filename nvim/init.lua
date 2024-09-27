@@ -2,13 +2,13 @@
 -- Leader Maps
 -- =============================================================================
 
-vim.g.mapleader = ","
-vim.g.maplocalleader = " "
-vim.g.open_command = "xdg-open"
+vim.g.mapleader = ','
+vim.g.maplocalleader = ' '
+vim.g.open_command = 'xdg-open'
 
 -- =============================================================================
 -- Import Lua modules
 -- =============================================================================
 
-require("karhdo.core")
-require("karhdo.lazy")
+require('karhdo.core')
+require('karhdo.lazy')

@@ -50,25 +50,11 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Add local binaries to PATH
 export PATH="$HOME/.local/bin:$PATH"
 
+# Add Neovim Mason binaries to PATH
+export PATH=$HOME/.local/share/nvim/mason/bin:$PATH
+
 # Node.js version manager (fnm) setup
 eval "$(fnm env --use-on-cd --shell zsh)"
 
 # Zoxide (cd alternative) setup
 eval "$(zoxide init zsh)"
-
-# -------------------- Oh-My-Zsh --------------------
-# Path to your oh-my-zsh installation.
-# export ZSH="$HOME/.oh-my-zsh"
-
-# Set theme oh-my-zsh
-# ZSH_THEME="robbyrussell"
-
-# Add wisely, as too many plugins slow down shell startup.
-# plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
-
-# Source file .zshrc
-# source $ZSH/oh-my-zsh.sh
-
-# Customize the zsh Prompt
-# PS1="%{$fg[red]%}[%{$fg[yellow]%}%n%{$reset_color%}@%{$fg[blue]%}%m%{$fg[red]%}]%{$fg[blue]%} ➜ %{$fg[cyan]%}%c%{$fg[red]%} "
-# RPROMPT='$(git_prompt_info)'
