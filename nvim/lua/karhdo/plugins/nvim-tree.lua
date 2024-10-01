@@ -47,6 +47,14 @@ function M.config()
 			indent_markers = {
 				enable = true,
 			},
+			icons = {
+				glyphs = {
+					folder = {
+						-- arrow_closed = '',
+						-- arrow_open = '',
+					},
+				},
+			},
 		},
 	})
 end
