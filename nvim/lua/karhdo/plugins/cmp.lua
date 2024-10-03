@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 local M = {
 	'hrsh7th/nvim-cmp',
 	event = { 'InsertEnter' },
@@ -48,15 +49,19 @@ function M.config()
 			end,
 		},
 		mapping = {
+			['<C-e>'] = cmp.mapping.close(),
+			['<C-Space>'] = cmp.mapping.complete(),
 			['<C-p>'] = cmp.mapping.select_prev_item(),
 			['<C-n>'] = cmp.mapping.select_next_item(),
-			['<Tab>'] = cmp.mapping.confirm({ maxwidth = 50, select = true }),
+			['<Tab>'] = cmp.mapping.confirm({ select = false }),
 		},
 		formatting = {
 			format = lspkind.cmp_format({
 				menu = menu,
 				with_text = true,
+				ellipsis = '...',
 			}),
+			expandable_indicator = true,
 		},
 		sources = {
 			{ name = 'nvim_lsp' },
@@ -64,7 +69,11 @@ function M.config()
 			{ name = 'buffer' }, -- text within current buffer
 			{ name = 'path' }, -- file system paths
 		},
-		window = { documentation = { border = border } },
+		window = {
+			documentation = {
+				border = border,
+			},
+		},
 	})
 end
 
