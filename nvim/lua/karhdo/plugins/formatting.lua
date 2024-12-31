@@ -8,10 +8,10 @@ M.config = function()
 
 	conform.setup({
 		formatters_by_ft = {
-			javascript = { 'prettierd' },
-			typescript = { 'prettierd' },
-			javascriptreact = { 'prettierd' },
-			typescriptreact = { 'prettierd' },
+			javascript = { 'prettierd', extra_args = { '--config', 'prettier.config.js' } },
+			typescript = { 'prettierd', extra_args = { '--config', 'prettier.config.js' } },
+			javascriptreact = { 'prettierd', extra_args = { '--config', 'prettier.config.js' } },
+			typescriptreact = { 'prettierd', extra_args = { '--config', 'prettier.config.js' } },
 			css = { 'prettierd' },
 			html = { 'prettierd' },
 			json = { 'prettierd' },
@@ -21,11 +21,6 @@ M.config = function()
 			liquid = { 'prettierd' },
 			lua = { 'stylua' },
 		},
-		-- format_on_save = {
-		-- async = false,
-		-- timeout_ms = 1000,
-		-- lsp_fallback = false,
-		-- },
 	})
 
 	vim.keymap.set({ 'n', 'v' }, '<leader><leader>f', function()

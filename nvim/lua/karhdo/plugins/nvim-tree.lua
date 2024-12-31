@@ -36,7 +36,8 @@ function M.config()
 		view = {
 			width = {
 				min = 35,
-				max = '40%',
+			  max = 35,
+				-- max = '40%',
 			},
 			side = 'right',
 		},
