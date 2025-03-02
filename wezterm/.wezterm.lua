@@ -5,10 +5,10 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 config.font = wezterm.font('Hack Nerd Font Mono')
-config.font_size = 12
+config.font_size = 15
 
 config.enable_tab_bar = false
-config.window_decorations = "RESIZE | TITLE"
+config.window_decorations = "TITLE | RESIZE"
 
 config.color_scheme = 'Tokyo Night'
 

@@ -8,7 +8,7 @@ eval "$(starship init zsh)"  # Initializes Starship prompt
 # -------------------- Aliases --------------------
 # Terminal Aliases
 alias c="clear"
-alias v="~/Downloads/nvim-macos-x86_64/bin/nvim"
+alias v="~/Workplace/Karhdo/nvim-macos-x86_64/bin/nvim"
 
 # Configuration Aliases
 alias cz="cd ~/.config/zsh && v .zshrc"  # Edit Zsh config
