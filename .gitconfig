@@ -1,6 +1,9 @@
+[user]
+  name = Karhdo
+  email = dotrongkhanh.dev@gmail.com
+
+[includeIf "gitdir:~/Workspace/Spartan/"]
+  path = ~/.gitconfig-spartan
+
 [push]
   autoSetupRemote = true
-
-[user]
-	name = Karhdo
-	email = dotrongkhanh.dev@gmail.com
