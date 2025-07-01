@@ -1,6 +1,9 @@
 # -------------------- ZSH Plugins --------------------
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh  # Command suggestions
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh  # Command syntax highlighting
+source ~/.zsh_custom/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh_custom/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Homebrew setup
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # -------------------- Starship Prompt --------------------
 eval "$(starship init zsh)"  # Initializes Starship prompt
@@ -8,7 +11,7 @@ eval "$(starship init zsh)"  # Initializes Starship prompt
 # -------------------- Aliases --------------------
 # Terminal Aliases
 alias c="clear"
-alias v="~/Workplace/Karhdo/nvim-macos-x86_64/bin/nvim"
+alias v="~/Workplace/Karhdo/nvim-macos-arm64/bin/nvim"
 
 # Configuration Aliases
 alias cz="cd ~/.config/zsh && v .zshrc"  # Edit Zsh config
@@ -18,11 +21,11 @@ alias cv="cd ~/.config/nvim && v init.lua"  # Edit Neovim config
 alias zv="cd ~/.config/nvim"  # Neovim config folder
 alias zz="cd ~/.config/zsh"  # Zsh config folder
 alias zw="cd ~/Workplace"  # Workplace folder
-alias zy="cd ~/Workplace/YouNet_Media"  # YouNet Media folder
+alias zs="cd ~/Workplace/Spartan"  # Spartan folder
 
 # Exa (ls alternative) Aliases
-alias ls="exa -l --icons"  # List with icons
-alias la="exa -la --icons"  # List all with icons
+alias ls="eza -l --icons"  # List with icons
+alias la="eza -la --icons"  # List all with icons
 
 # -------------------- Functions --------------------
 # Open Tmux IDE layout
