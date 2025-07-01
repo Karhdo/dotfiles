@@ -12,3 +12,5 @@ versions.json
 #Zsh local config
 .config/zsh/.zsh_history
 .config/zsh/.zcompdump-MacBook-5.7.1
+.zsh_history
+.zsh_sessions/
