@@ -14,18 +14,19 @@ alias c="clear"
 alias v="~/Workplace/Karhdo/nvim-macos-arm64/bin/nvim"
 
 # Configuration Aliases
-alias cz="cd ~/.config/zsh && v .zshrc"  # Edit Zsh config
-alias cv="cd ~/.config/nvim && v init.lua"  # Edit Neovim config
+alias cz="cd ~/.config/zsh && v .zshrc"    # Edit Zsh config
+alias cv="cd ~/.config/nvim && v init.lua" # Edit Neovim config
+alias ca="cd ~/.aws && v credentials"      # Edit AWS credentials
 
 # Directory Navigation Aliases
-alias zv="cd ~/.config/nvim"  # Neovim config folder
-alias zz="cd ~/.config/zsh"  # Zsh config folder
-alias zw="cd ~/Workplace"  # Workplace folder
-alias zs="cd ~/Workplace/Spartan"  # Spartan folder
+alias zv="cd ~/.config/nvim"      # Neovim config folder
+alias zz="cd ~/.config/zsh"       # Zsh config folder
+alias zw="cd ~/Workplace"         # Workplace folder
+alias zs="cd ~/Workplace/Spartan" # Spartan folder
 
 # Exa (ls alternative) Aliases
 alias ls="eza -l --icons"  # List with icons
-alias la="eza -la --icons"  # List all with icons
+alias la="eza -la --icons" # List all with icons
 
 # -------------------- Functions --------------------
 # Open Tmux IDE layout
@@ -43,7 +44,7 @@ function ide() {
 }
 
 # -------------------- Key Bindings --------------------
-bindkey '^[[A' history-search-backward  # Search history backward
+bindkey '^[[A' history-search-backward # Search history backward
 bindkey '^[[B' history-search-forward  # Search history forward
 
 # -------------------- Environment Variables --------------------
@@ -61,3 +62,4 @@ eval "$(fnm env --use-on-cd --shell zsh)"
 
 # Zoxide (cd alternative) setup
 eval "$(zoxide init zsh)"
+
