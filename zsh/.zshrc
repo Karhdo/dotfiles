@@ -15,6 +15,7 @@ alias v="~/Workplace/Karhdo/nvim-macos-arm64/bin/nvim"
 
 # Configuration Aliases
 alias cz="cd ~/.config/zsh && v .zshrc"    # Edit Zsh config
+alias rz="source ~/.config/zsh/.zshrc"     # Reload Zsh config
 alias cv="cd ~/.config/nvim && v init.lua" # Edit Neovim config
 alias ca="cd ~/.aws && v credentials"      # Edit AWS credentials
 
@@ -63,3 +64,12 @@ eval "$(fnm env --use-on-cd --shell zsh)"
 # Zoxide (cd alternative) setup
 eval "$(zoxide init zsh)"
 
+export PATH=$PATH:$(go env GOPATH)/bin
+
+export JAVA_HOME=$(/usr/libexec/java_home -v17)
+# export JAVA_HOME=$(/usr/libexec/java_home -v1.8)
+export PATH=$JAVA_HOME/bin:$PATH
+
+export PATH="/opt/homebrew/Cellar/go-parquet-tools/1.32.0/bin:$PATH"
+
+export PATH="/usr/local/bin:$PATH"

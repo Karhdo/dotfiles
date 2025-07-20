@@ -42,6 +42,9 @@ function M.config()
 	-- Loads vscode style snippets from installed plugins (e.g. friendly-snippets)
 	require('luasnip.loaders.from_vscode').lazy_load()
 
+	local lspkind = require('lspkind')
+	local tailwind_formatter = require('tailwindcss-colorizer-cmp').formatter
+
 	cmp.setup({
 		snippet = {
 			expand = function(args)
@@ -56,11 +59,17 @@ function M.config()
 			['<Tab>'] = cmp.mapping.confirm({ select = false }),
 		},
 		formatting = {
-			format = lspkind.cmp_format({
-				menu = menu,
-				with_text = true,
-				ellipsis = '...',
-			}),
+			format = function(entry, item)
+				item = lspkind.cmp_format({
+					menu = menu,
+					with_text = true,
+					ellipsis = '...',
+				})(entry, item)
+
+				item = tailwind_formatter(entry, item)
+
+				return item
+			end,
 			expandable_indicator = true,
 		},
 		sources = {

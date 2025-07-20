@@ -65,7 +65,6 @@ end
 
 M.config = function()
 	local cmp_nvim_lsp = require('cmp_nvim_lsp')
-	local mason_lspconfig = require('mason-lspconfig')
 
 	-- Configure LSP capabilities
 	local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -87,25 +86,63 @@ M.config = function()
 		float = float_opt,
 	})
 
-	-- General LSP config for all servers
-	vim.lsp.config('*', {
-		capabilities = capabilities,
+	-- Default config for all servers
+	local default_config = {
 		on_attach = on_attach,
-	})
+		capabilities = capabilities,
+	}
 
-	-- Specific config for Lua
-	vim.lsp.config('lua_ls', {
-		settings = {
-			Lua = {
-				diagnostics = {
-					globals = { 'vim' },
-				},
-				completion = {
-					callSnippet = 'Replace',
+	-- LSP servers with default config
+	local servers = {
+		'tsserver',
+		'eslint',
+		'gopls',
+		'ruff',
+	}
+
+	for _, server in ipairs(servers) do
+		vim.lsp.config(server, default_config)
+	end
+
+	-- Lua LSP (lua_ls) with settings
+	vim.lsp.config(
+		'lua_ls',
+		vim.tbl_deep_extend('force', default_config, {
+			settings = {
+				Lua = {
+					diagnostics = {
+						globals = { 'vim' },
+					},
+					completion = {
+						callSnippet = 'Replace',
+					},
 				},
 			},
-		},
-	})
+		})
+	)
+
+	-- Python LSP (pylsp) with custom cmd and settings
+	local pylsp_cmd = vim.fn.getcwd() .. '/.venv/bin/pylsp'
+	if vim.fn.executable(pylsp_cmd) == 1 then
+		vim.lsp.config(
+			'pylsp',
+			vim.tbl_deep_extend('force', default_config, {
+				cmd = { pylsp_cmd },
+				settings = {
+					pylsp = {
+						plugins = {
+							pylint = { enabled = false },
+							pycodestyle = { enabled = false },
+							ruff = { enabled = true },
+							black = { enabled = true },
+						},
+					},
+				},
+			})
+		)
+	else
+		vim.notify('[LSP] pylsp not found at ' .. pylsp_cmd, vim.log.levels.WARN)
+	end
 end
 
 return M

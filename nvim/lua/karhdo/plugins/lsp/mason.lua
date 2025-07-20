@@ -28,6 +28,8 @@ M.config = function()
 			'ts_ls',
 			'lua_ls',
 			'eslint',
+			'gopls',
+			'pylsp',
 		},
 	})
 
@@ -38,6 +40,8 @@ M.config = function()
 			'prettierd',
 			'stylelint',
 			'codespell',
+			'black',
+			'ruff',
 		},
 	})
 end

@@ -19,6 +19,12 @@ function M.config()
 			highlights.DiagnosticUnnecessary = { fg = '#7882AD' }
 			highlights.MiniIndentscopeSymbol = { fg = '#FFFFFF' }
 		end,
+		on_colors = function(colors)
+			colors.bg_dark = transparent and colors.none or 'dark'
+			colors.bg_float = transparent and colors.none or 'dark'
+			colors.bg_sidebar = transparent and colors.none or 'dark'
+			colors.bg_statusline = transparent and colors.none or 'dark'
+		end,
 	})
 
 	require('tokyonight').load()
