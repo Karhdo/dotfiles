@@ -29,21 +29,6 @@ alias zs="cd ~/Workplace/Spartan" # Spartan folder
 alias ls="eza -l --icons"  # List with icons
 alias la="eza -la --icons" # List all with icons
 
-# -------------------- Functions --------------------
-# Open Tmux IDE layout
-function ide() {
-  if [ -z "$TMUX" ]; then
-    tmux new-session \; \
-      split-window -v -l 22%\; \
-      split-window -h -l 50%\; \
-      select-pane -t 0
-  else
-    tmux split-window -v -l 22%\; \
-      split-window -h -l 50%\; \
-      select-pane -t 0
-  fi
-}
-
 # -------------------- Key Bindings --------------------
 bindkey '^[[A' history-search-backward # Search history backward
 bindkey '^[[B' history-search-forward  # Search history forward
@@ -64,12 +49,22 @@ eval "$(fnm env --use-on-cd --shell zsh)"
 # Zoxide (cd alternative) setup
 eval "$(zoxide init zsh)"
 
+# Go environment setup
 export PATH=$PATH:$(go env GOPATH)/bin
 
+# Java environment setup
 export JAVA_HOME=$(/usr/libexec/java_home -v17)
 # export JAVA_HOME=$(/usr/libexec/java_home -v1.8)
 export PATH=$JAVA_HOME/bin:$PATH
 
+# Parquet tools setup
 export PATH="/opt/homebrew/Cellar/go-parquet-tools/1.32.0/bin:$PATH"
 
+# Add /usr/local/bin to PATH for compatibility
 export PATH="/usr/local/bin:$PATH"
+
+# pyenv environment setup
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"

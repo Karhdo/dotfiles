@@ -8,10 +8,10 @@ M.config = function()
 
 	conform.setup({
 		formatters_by_ft = {
-			javascript = { 'prettierd', extra_args = { '--config', 'prettier.config.js' } },
-			typescript = { 'prettierd', extra_args = { '--config', 'prettier.config.js' } },
-			javascriptreact = { 'prettierd', extra_args = { '--config', 'prettier.config.js' } },
-			typescriptreact = { 'prettierd', extra_args = { '--config', 'prettier.config.js' } },
+			javascript = { 'prettierd' },
+			typescript = { 'prettierd' },
+			javascriptreact = { 'prettierd' },
+			typescriptreact = { 'prettierd' },
 			css = { 'prettierd' },
 			html = { 'prettierd' },
 			json = { 'prettierd' },
@@ -20,6 +20,15 @@ M.config = function()
 			graphql = { 'prettierd' },
 			liquid = { 'prettierd' },
 			lua = { 'stylua' },
+			python = { 'black' },
+		},
+
+		formatters = {
+			prettierd = {
+				env = {
+					PRETTIERD_DEFAULT_CONFIG = vim.fn.expand('~/.config/prettier/prettier.config.js'),
+				},
+			},
 		},
 	})
 
@@ -27,7 +36,7 @@ M.config = function()
 		conform.format({
 			lsp_fallback = true,
 			async = false,
-			timeout_ms = 1000,
+			timeout_ms = 2000,
 		})
 	end, { desc = 'Format file or range (in visual mode)' })
 end
