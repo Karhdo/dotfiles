@@ -12,3 +12,4 @@ vim.g.open_command = 'xdg-open'
 
 require('karhdo.core')
 require('karhdo.lazy')
+require('karhdo.lsp')
