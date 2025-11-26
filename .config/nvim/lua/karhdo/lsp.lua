@@ -44,6 +44,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 		opts.desc = 'Restart LSP server'
 		keymap.set('n', '<leader>lr', ':LspRestart<cr>', opts)
+
+		opts.desc = 'Code Action'
+		keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
 	end,
 })
 

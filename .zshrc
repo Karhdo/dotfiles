@@ -8,22 +8,49 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # -------------------- Starship Prompt --------------------
 eval "$(starship init zsh)"  # Initializes Starship prompt
 
+# -------------------- FZF Setup --------------------
+# Adds fzf to path & sets up key bindings and fzf completion
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Use fd instead of find for fzf, for speed, better syntax & ignore .gitignore files by default
+find_files="fd --type f --hidden --follow --exclude .git"
+find_directories="fd --type d --hidden --follow --exclude .git"
+
+export FZF_DEFAULT_COMMAND="$find_files"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="$find_directories"
+export FZF_CTRL_R_OPTS="--no-preview"
+
+# Config fzf with tokyonight theme
+export FZF_DEFAULT_OPTS="$(paste -sd' ' ~/.fzf_tokyonight)"
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --preview 'bat --color=always {}'"
+
+# Checkout Git branch using fzf
+gcof() {
+  local branch
+  branch=$(git branch --all | sed 's/^[* ] //' | fzf) || return
+  branch=${branch#remotes/origin/}
+  git checkout "$branch"
+}
+
+# -------------------- Bat Setup --------------------
+export BAT_THEME="tokyonight_night"
+
 # -------------------- Aliases --------------------
 # Terminal Aliases
 alias c="clear"
 alias v="~/Workplace/Karhdo/nvim-macos-arm64/bin/nvim"
 
 # Configuration Aliases
-alias cz="cd ~/.config/zsh && v .zshrc"    # Edit Zsh config
-alias rz="source ~/.config/zsh/.zshrc"     # Reload Zsh config
-alias cv="cd ~/.config/nvim && v init.lua" # Edit Neovim config
-alias ca="cd ~/.aws && v credentials"      # Edit AWS credentials
+alias rz="source ~/.zshrc"                                           # Reload Zsh config
+alias cz="cd ~/Workplace/Karhdo/dotfiles && v .zshrc"                # Edit Zsh config
+alias cv="cd ~/Workplace/Karhdo/dotfiles && v .config/nvim/init.lua" # Edit Neovim config
+alias ca="cd ~/.aws && v credentials"                                # Edit AWS credentials
 
 # Directory Navigation Aliases
-alias zv="cd ~/.config/nvim"      # Neovim config folder
-alias zz="cd ~/.config/zsh"       # Zsh config folder
-alias zw="cd ~/Workplace"         # Workplace folder
-alias zs="cd ~/Workplace/Spartan" # Spartan folder
+alias zw="cd ~/Workplace"                 # Workplace folder
+alias zs="cd ~/Workplace/Spartan"         # Spartan folder
+alias zd="cd ~/Workplace/Karhdo/dotfiles" # Dotfiles folder
 
 # Exa (ls alternative) Aliases
 alias ls="eza -l --icons"  # List with icons

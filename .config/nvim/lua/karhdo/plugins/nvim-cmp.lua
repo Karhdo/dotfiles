@@ -41,8 +41,6 @@ function M.config()
 	-- Loads vscode style snippets from installed plugins (e.g. friendly-snippets)
 	require('luasnip.loaders.from_vscode').lazy_load()
 
-	local tailwind_formatter = require('tailwindcss-colorizer-cmp').formatter
-
 	cmp.setup({
 		snippet = {
 			expand = function(args)
@@ -53,16 +51,16 @@ function M.config()
 			-- Old mappings commented out
 			-- ['<C-e>'] = cmp.mapping.close(),
 			-- ['<C-Space>'] = cmp.mapping.complete(),
-			-- ['<C-p>'] = cmp.mapping.select_prev_item(),
-			-- ['<C-n>'] = cmp.mapping.select_next_item(),
-			-- ['<Tab>'] = cmp.mapping.confirm({ select = false }),
-			['<C-k>'] = cmp.mapping.select_prev_item(), -- previous suggestion
-			['<C-j>'] = cmp.mapping.select_next_item(), -- next suggestion
+			['<C-p>'] = cmp.mapping.select_prev_item(),
+			['<C-n>'] = cmp.mapping.select_next_item(),
+			['<Tab>'] = cmp.mapping.confirm({ select = false }),
+			-- ['<C-k>'] = cmp.mapping.select_prev_item(), -- previous suggestion
+			-- ['<C-j>'] = cmp.mapping.select_next_item(), -- next suggestion
 			['<C-b>'] = cmp.mapping.scroll_docs(-4),
 			['<C-f>'] = cmp.mapping.scroll_docs(4),
 			['<C-Space>'] = cmp.mapping.complete(), -- show completion suggestions
 			['<C-e>'] = cmp.mapping.abort(), -- close completion window
-			['<CR>'] = cmp.mapping.confirm({ select = false }),
+			-- ['<CR>'] = cmp.mapping.confirm({ select = false }),
 		},
 		formatting = {
 			format = function(entry, item)
@@ -71,8 +69,6 @@ function M.config()
 					with_text = true,
 					ellipsis = '...',
 				})(entry, item)
-
-				item = tailwind_formatter(entry, item)
 
 				return item
 			end,
