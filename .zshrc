@@ -46,8 +46,8 @@ alias zw="cd ~/Workplace"
 alias zs="cd ~/Workplace/Spartan"
 alias zd="cd ~/Workplace/Karhdo/dotfiles"
 
-alias ls="eza -l --icons"
-alias la="eza -la --icons"
+alias ls="eza --icons=always"
+alias la="eza -la --icons=always"
 
 # -------------------- Key Bindings --------------------
 bindkey '^[[A' history-search-backward
