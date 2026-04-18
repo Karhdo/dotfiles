@@ -1,16 +1,21 @@
 [user]
   name = Karhdo
   email = dotrongkhanh.dev@gmail.com
-	signingkey = /Users/khanhdo/.ssh/spartan.pub
+
+[includeIf "gitdir:/Users/khanhdo/Workplace/Karhdo/"]
+  path = /Users/khanhdo/.gitconfig-karhdo
 
 [includeIf "gitdir:/Users/khanhdo/Workplace/Spartan/"]
   path = /Users/khanhdo/.gitconfig-spartan
 
 [push]
   autoSetupRemote = true
+
 [gpg]
-	format = ssh
+  format = ssh
+
 [commit]
-	gpgsign = true
+  gpgsign = true
+
 [gpg "ssh"]
-	allowedSignersFile = /Users/khanhdo/.ssh/allowed_signers
+  allowedSignersFile = /Users/khanhdo/.ssh/allowed_signers

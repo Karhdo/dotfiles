@@ -4,7 +4,6 @@ local M = {
 	dependencies = {
 		'nvim-lua/plenary.nvim',
 		'nvim-telescope/telescope-media-files.nvim',
-		'nvim-telescope/telescope-file-browser.nvim',
 		{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = vim.fn.executable('make') == 1 },
 	},
 }
@@ -53,7 +52,6 @@ function M.config()
 
 	telescope.load_extension('fzf')
 	telescope.load_extension('media_files')
-	telescope.load_extension('file_browser')
 end
 
 return M

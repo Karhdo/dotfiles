@@ -1,4 +1,4 @@
-local M = { 'norcalli/nvim-colorizer.lua' }
+local M = { 'catgoose/nvim-colorizer.lua' }
 
 function M.config()
 	require('colorizer').setup()

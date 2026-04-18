@@ -1,16 +1,33 @@
+# macOS
 .DS_Store
-iterm2
-configstore
-karabiner
-tmux/plugins
-yarn
-neofetch
-spicetify
+
+# Shell history / caches
+.zsh_history
+.zsh_sessions/
+.config/zsh/.zsh_history
+.config/zsh/.zcompdump-*
+
+# Secrets — DO NOT TRACK
+.config/gh/
+.config/github-copilot/
+
+# Local-only / machine state
+.config/jgit/
+.config/karabiner/assets/
+.config/karabiner/automatic_backups/
+
+# Third-party theme clones (see README for install instructions)
+.config/bat/bat-into-tokyonight/
+.config/bat/themes/tokyonight.nvim/
+
+# Package managers / app state
+configstore/
+yarn/
+spicetify/
 apps.json
 versions.json
 
-#Zsh local config
-.config/zsh/.zsh_history
-.config/zsh/.zcompdump-MacBook-5.7.1
-.zsh_history
-.zsh_sessions/
+# Legacy/unused tool dirs
+iterm2/
+neofetch/
+tmux/plugins/

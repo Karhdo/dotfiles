@@ -69,11 +69,11 @@ env_path=$(go env GOPATH)/bin
 export PATH=$PATH:$env_path
 
 # Java
-export JAVA_HOME=$(/usr/libexec/java_home -v17)
+export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+# export JAVA_HOME=$(/usr/libexec/java_home -v17)
 export PATH=$JAVA_HOME/bin:$PATH
 
-# Pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
+# direnv
+export DIRENV_LOG_FORMAT=""
+eval "$(direnv hook zsh)"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
