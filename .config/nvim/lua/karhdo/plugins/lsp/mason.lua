@@ -8,10 +8,15 @@ return {
 			'cssls',
 			'tailwindcss',
 			'lua_ls',
-			'gopls',
 			'prismals',
 			'pyright',
 			'eslint',
+			'jdtls',
+			'kotlin_lsp',
+		},
+		-- jdtls is started by nvim-jdtls (see jdtls.lua), not mason-lspconfig
+		automatic_enable = {
+			exclude = { 'jdtls' },
 		},
 	},
 	dependencies = {
@@ -38,6 +43,8 @@ return {
 					'codespell',
 					'black',
 					'ruff',
+					'google-java-format',
+					'ktlint',
 				},
 			},
 		},

@@ -21,6 +21,8 @@ M.config = function()
 			liquid = { 'prettierd' },
 			lua = { 'stylua' },
 			python = { 'black' },
+			java = { 'google-java-format' },
+			kotlin = { 'ktlint' },
 		},
 
 		formatters = {
