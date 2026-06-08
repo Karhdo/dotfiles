@@ -142,7 +142,20 @@ Configuration: [.tmux.conf](.tmux.conf).
 
 - Prefix: **`C-t`** (remapped from default `C-b`)
 - Plugin manager: [tpm](https://github.com/tmux-plugins/tpm) at `~/.tmux/plugins/tpm/`
-- Reload config: `prefix + R`
+- Reload config: `prefix + R` (or `prefix + r`)
+
+### Claude CLI popup
+
+A floating popup runs the `claude` CLI, driven by [.config/tmux/claude-popup.sh](.config/tmux/claude-popup.sh):
+
+| Key | Action |
+| --- | ------ |
+| **`Option + a`** | Toggle the popup — opens it, and closes (detaches) when pressed inside it. No prefix needed. |
+| `prefix + a` | Open the popup (fallback for the same thing) |
+
+- Each git repo gets its own long-lived `claude-<repo>` tmux session, derived from the pane's path, so conversations/context stay separate per project and survive closing/reopening the popup.
+- Launches with `claude --dangerously-skip-permissions`; the status bar is hidden for these sessions.
+- `Option + a` relies on WezTerm sending Alt for the **left** Option key (`send_composed_key_when_left_alt_is_pressed = false` in [.wezterm.lua](.wezterm.lua)) — the right Option key still composes special characters.
 
 ## Lazygit
 

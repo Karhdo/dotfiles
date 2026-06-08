@@ -7,6 +7,11 @@ local config = wezterm.config_builder()
 -- use_ime uses the macOS input method editor for complex character input.
 config.use_ime = true
 
+-- Send a real Alt/Meta to the terminal when the LEFT Option key is pressed
+-- (instead of composing accented characters), so tmux Alt bindings like the
+-- Claude popup toggle (M-a) work. The RIGHT Option key still composes glyphs.
+config.send_composed_key_when_left_alt_is_pressed = false
+
 config.font = wezterm.font("Hack Nerd Font Mono")
 config.font_size = 12.5
 config.line_height = 1.2
