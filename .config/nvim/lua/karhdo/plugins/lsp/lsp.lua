@@ -12,6 +12,14 @@ return {
 			vim.lsp.config('*', {
 				capabilities = capabilities,
 			})
+
+			-- Mason installs the JetBrains Kotlin LSP as `intellij-server`, but
+			-- nvim-lspconfig's default kotlin_lsp config looks for a `kotlin-lsp`
+			-- executable (which doesn't exist), so the server never starts. Point
+			-- the command at Mason's binary and run it in stdio mode.
+			vim.lsp.config('kotlin_lsp', {
+				cmd = { vim.fn.stdpath('data') .. '/mason/bin/intellij-server', '--stdio' },
+			})
 		end,
 	},
 	{ 'antosha417/nvim-lsp-file-operations', config = true },
