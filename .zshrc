@@ -35,7 +35,7 @@ export BAT_THEME="tokyonight_night"
 
 # -------------------- Aliases --------------------
 alias c="clear"
-alias v="~/Workplace/Karhdo/nvim-macos-arm64/bin/nvim"
+alias v="nvim"
 
 alias rz="source ~/.zshrc"
 alias cz="cd ~/Workplace/Karhdo/dotfiles && v .zshrc"
@@ -54,7 +54,6 @@ bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
 # -------------------- PATH --------------------
-export PATH="$HOME/Workplace/Karhdo/nvim-macos-arm64/bin:$PATH"
 export EDITOR="nvim"
 export VISUAL="nvim"
 # Read lazygit config from the dotfiles repo (~/.config is symlinked to it).
