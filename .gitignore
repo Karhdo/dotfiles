@@ -11,6 +11,9 @@
 .config/gh/
 .config/github-copilot/
 
+# Claude Code local settings (machine-specific, not shared)
+.claude/settings.local.json
+
 # Local-only / machine state
 .config/jgit/
 .config/karabiner/assets/

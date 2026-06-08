@@ -1,23 +1,27 @@
-# Comments and blank lines are allowed.
+# GNU Stow ignore list for this dotfiles package.
+# Patterns are Perl regexes, anchored to a full match by stow:
+#   - a pattern WITHOUT "/"  -> matched against each entry's basename
+#   - a pattern WITH "/"     -> matched against the path relative to the repo
+#                               root (presented with a leading "/")
+# Providing this file REPLACES stow's built-in defaults, so everything we want
+# skipped must be listed here.
 
-RCS
-.+,v
-
-CVS
-\.\#.+ # CVS conflict files / emacs lock files
-\.cvsignore
-
-\.svn
-\_darcs
-\.hg
-
+# --- VCS / repo metadata (never symlink into $HOME) ---
 \.git
 \.gitignore
 \.gitmodules
 
-.+~ # emacs backup files
-\#.\*\# # emacs autosave files
+# --- OS / editor junk (any depth) ---
+\.DS_Store
+.+~                 # editor backup files (foo~)
+\#.*\#              # editor autosave files (#foo#)
 
-^/README._
-^/LICENSE._
+# --- Repo docs & assets, not home files (top-level only) ---
+^/README.*
+^/LICENSE.*
 ^/COPYING
+^/CLAUDE\.md
+^/images
+
+# --- Claude Code project dir: would collide with ~/.claude ---
+^/\.claude
