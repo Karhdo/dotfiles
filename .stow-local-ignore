@@ -22,6 +22,7 @@
 ^/COPYING
 ^/CLAUDE\.md
 ^/images
+^/Brewfile.*
 
 # --- Claude Code project dir: would collide with ~/.claude ---
 ^/\.claude

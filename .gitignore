@@ -1,6 +1,9 @@
 # macOS
 .DS_Store
 
+# brew bundle lock (regenerated per machine)
+Brewfile.lock.json
+
 # Shell history / caches
 .zsh_history
 .zsh_sessions/
