@@ -54,6 +54,12 @@ bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
 # -------------------- PATH --------------------
+export PATH="$HOME/Workplace/Karhdo/nvim-macos-arm64/bin:$PATH"
+export EDITOR="nvim"
+export VISUAL="nvim"
+# Read lazygit config from the dotfiles repo (~/.config is symlinked to it).
+# Only the config file moves here; lazygit state stays in its default dir.
+export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
