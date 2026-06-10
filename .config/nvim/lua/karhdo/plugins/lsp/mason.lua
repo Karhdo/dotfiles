@@ -12,11 +12,13 @@ return {
 			'pyright',
 			'eslint',
 			'jdtls',
-			'kotlin_lsp',
 		},
-		-- jdtls is started by nvim-jdtls (see jdtls.lua), not mason-lspconfig
+		-- jdtls is started by nvim-jdtls (see jdtls.lua), not mason-lspconfig.
+		-- kotlin_lsp is NOT managed by Mason: the registry pins an expired EAP build that
+		-- gets re-downloaded and clobbers our manual install. It's installed by hand under
+		-- ~/.local/share/nvim/kotlin-lsp/ and enabled from lsp.lua instead.
 		automatic_enable = {
-			exclude = { 'jdtls' },
+			exclude = { 'jdtls', 'kotlin_lsp' },
 		},
 	},
 	dependencies = {
