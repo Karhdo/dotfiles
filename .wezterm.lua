@@ -78,7 +78,7 @@ if wallpaper then
 			source = { Color = "#1a1b26" }, -- Tokyo Night bg, semi-opaque overlay
 			width = "100%",
 			height = "100%",
-			opacity = 0.85,
+			opacity = 0.88,
 		},
 	}
 end
