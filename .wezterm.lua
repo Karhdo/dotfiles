@@ -23,8 +23,44 @@ config.window_decorations = "RESIZE"
 
 config.color_scheme = "Tokyo Night"
 
-config.window_background_opacity = 0.93
-config.macos_window_background_blur = 26
+-- Background: render a wallpaper INSIDE the terminal with a dark overlay on top,
+-- instead of relying on window transparency. This keeps the look consistent no
+-- matter what app sits behind the window (transparency showed through and looked
+-- messy over other apps). Opacity is 1.0 so nothing behind bleeds through.
+--
+-- Tweakables: image `brightness` (lower = darker wallpaper) and overlay `opacity`
+-- (higher = darker, more text contrast). Swap `wallpaper` for any image you like.
+local wallpaper = wezterm.home_dir .. "/Pictures/wallpaper.jpg"
+
+local function file_exists(path)
+	local f = io.open(path, "r")
+	if f then
+		f:close()
+		return true
+	end
+	return false
+end
+
+config.window_background_opacity = 1.0
+
+if file_exists(wallpaper) then
+	config.background = {
+		{
+			source = { File = wallpaper },
+			hsb = { brightness = 0.12, saturation = 1.0, hue = 1.0 },
+			horizontal_align = "Center",
+			vertical_align = "Middle",
+		},
+		{
+			source = { Color = "#1a1b26" }, -- Tokyo Night bg, semi-opaque overlay
+			width = "100%",
+			height = "100%",
+			opacity = 0.85,
+		},
+	}
+end
+-- If the wallpaper is missing (e.g. a fresh machine), we fall back to the solid
+-- Tokyo Night background from color_scheme above — no transparency, no crash.
 
 config.keys = {
 	{ key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b\r" }) },
