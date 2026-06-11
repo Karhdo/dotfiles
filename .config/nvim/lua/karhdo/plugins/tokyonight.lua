@@ -18,6 +18,10 @@ function M.config()
 		on_highlights = function(highlights)
 			highlights.DiagnosticUnnecessary = { fg = '#7882AD' }
 			highlights.MiniIndentscopeSymbol = { fg = '#FFFFFF' }
+			-- Brighter window separator so the line between splits (e.g. the
+			-- toggleterm terminal and the editor) is clearly visible while the
+			-- background stays transparent.
+			highlights.WinSeparator = { fg = '#565f89', bold = true }
 		end,
 		on_colors = function(colors)
 			colors.bg_dark = transparent and colors.none or 'dark'
