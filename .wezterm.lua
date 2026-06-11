@@ -13,7 +13,7 @@ config.use_ime = true
 config.send_composed_key_when_left_alt_is_pressed = false
 
 config.font = wezterm.font("Hack Nerd Font Mono")
-config.font_size = 12.5
+config.font_size = 11
 config.line_height = 1.2
 
 config.enable_tab_bar = false
