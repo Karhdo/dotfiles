@@ -8,7 +8,7 @@ return {
 
 		local os_config = (function()
 			if vim.fn.has('mac') == 1 then
-				return vim.loop.os_uname().machine == 'arm64' and 'config_mac_arm' or 'config_mac'
+				return vim.uv.os_uname().machine == 'arm64' and 'config_mac_arm' or 'config_mac'
 			elseif vim.fn.has('unix') == 1 then
 				return 'config_linux'
 			end

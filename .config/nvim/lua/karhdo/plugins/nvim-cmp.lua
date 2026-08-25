@@ -24,18 +24,12 @@ function M.config()
 
 	local border = require('karhdo.core.styles').border
 
+	-- Mirrors the `sources` list below; a source with no entry here shows no tag.
 	local menu = {
 		nvim_lsp = '[LSP]',
-		jira = '[Jira]',
-		emoji = '[Emoji]',
-		path = '[Path]',
-		calc = '[Calc]',
-		spell = '[Spell]',
-		buffer = '[Buffer]',
-		fuzzy_buffer = '[Fuzzy]',
 		luasnip = '[LuaSnip]',
-		npm = '[NPM]',
-		crates = '[Crates]',
+		buffer = '[Buffer]',
+		path = '[Path]',
 	}
 
 	-- Loads vscode style snippets from installed plugins (e.g. friendly-snippets)

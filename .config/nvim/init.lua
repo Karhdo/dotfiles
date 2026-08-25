@@ -4,7 +4,6 @@
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ' '
-vim.g.open_command = 'xdg-open'
 
 -- =============================================================================
 -- Import Lua modules
