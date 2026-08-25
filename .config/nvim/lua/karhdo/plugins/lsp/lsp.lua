@@ -13,6 +13,27 @@ return {
 				capabilities = capabilities,
 			})
 
+			-- ts_ls advertises textDocument/inlayHint but ships every hint category
+			-- switched OFF, so enabling hints on the client alone yields nothing.
+			-- These preferences are what actually make it emit them.
+			local ts_inlay_hints = {
+				includeInlayParameterNameHints = 'all',
+				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+				includeInlayFunctionParameterTypeHints = true,
+				includeInlayVariableTypeHints = true,
+				includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+				includeInlayPropertyDeclarationTypeHints = true,
+				includeInlayFunctionLikeReturnTypeHints = true,
+				includeInlayEnumMemberValueHints = true,
+			}
+
+			vim.lsp.config('ts_ls', {
+				settings = {
+					typescript = { inlayHints = ts_inlay_hints },
+					javascript = { inlayHints = ts_inlay_hints },
+				},
+			})
+
 			-- JetBrains Kotlin LSP (kotlin_lsp) runs from Mason's intellij-server binary, but
 			-- it is NOT managed by Mason (kept out of ensure_installed + in automatic_enable.exclude
 			-- in mason.lua). Reason: the public builds are EAP/time-bombed and the Mason registry

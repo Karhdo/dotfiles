@@ -59,6 +59,11 @@ return {
 					},
 					maven = { downloadSources = true },
 					signatureHelp = { enabled = true },
+					-- Parameter-name hints. jdtls defaults this to 'literals' (only
+					-- literal arguments); 'all' also annotates variables. Verified key
+					-- spelling and accepted values against the server jar's
+					-- InlayHintsParameterMode enum (NONE | LITERALS | ALL).
+					inlayHints = { parameterNames = { enabled = 'all' } },
 					contentProvider = { preferred = 'fernflower' },
 					completion = {
 						favoriteStaticMembers = {
