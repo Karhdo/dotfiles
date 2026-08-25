@@ -30,6 +30,7 @@ Entry point: `init.lua` → loads `karhdo.core`, `karhdo.lazy`, `karhdo.lsp`.
 - LSP tooling is installed via **mason** + **mason-lspconfig** + **mason-tool-installer** (see `plugins/lsp/mason.lua` for the `ensure_installed` lists). Formatters run via **conform.nvim** (`plugins/formatting.lua`); linters via **nvim-lint** (`plugins/linting.lua`, auto-triggers on `BufEnter`/`BufWritePost`/`InsertLeave`).
 - Leader keys: `,` (global), `<space>` (local). Format: `<leader><leader>f`. LSP keymaps are set in `lsp.lua` inside an `LspAttach` autocmd.
 - Lua style enforced by `stylua.toml`: 2-space indent, single quotes, always use call parentheses.
+- **nvim-treesitter tracks the `main` branch** (`master` is frozen and does not support nvim 0.12). `main` has no module system, so `plugins/treesitter.lua` wires up highlighting, indentation and incremental selection by hand in a `FileType` autocmd. It also builds parsers locally, so **`tree-sitter-cli` (≥ 0.26.1, via brew — not npm) is a prerequisite**; parsers land in `~/.local/share/nvim/site/parser`, not in the plugin directory. Indentation is only enabled for languages that ship an `indents.scm` — kotlin doesn't, and keeps the runtime's `GetKotlinIndent()`.
 
 ### Shell (`.zshrc`)
 

@@ -6,7 +6,16 @@ local M = {
 	},
 }
 
+-- ts_context_commentstring registers itself as a nvim-treesitter *module* unless
+-- told otherwise. The module system only exists on nvim-treesitter's frozen
+-- `master`, so on `main` that path is dead weight (and deprecated upstream).
+function M.init()
+	vim.g.skip_ts_context_commentstring_module = true
+end
+
 function M.config()
+	require('ts_context_commentstring').setup({})
+
 	-- Import Comment plugin safely
 	local Comment = require('Comment')
 
