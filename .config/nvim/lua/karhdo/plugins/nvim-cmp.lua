@@ -42,25 +42,38 @@ function M.config()
 			end,
 		},
 		mapping = {
-			-- Old mappings commented out
-			-- ['<C-e>'] = cmp.mapping.close(),
-			-- ['<C-Space>'] = cmp.mapping.complete(),
 			['<C-p>'] = cmp.mapping.select_prev_item(),
 			['<C-n>'] = cmp.mapping.select_next_item(),
-			['<Tab>'] = cmp.mapping.confirm({ select = false }),
-			-- ['<C-k>'] = cmp.mapping.select_prev_item(), -- previous suggestion
-			-- ['<C-j>'] = cmp.mapping.select_next_item(), -- next suggestion
+			-- Tab confirms the completion menu exactly as before; when the menu is
+			-- closed it moves to the next snippet placeholder instead, so an expanded
+			-- snippet can actually be tabbed through. Needs mode 's' as well, since
+			-- LuaSnip puts you in select mode on each placeholder.
+			['<Tab>'] = cmp.mapping(function(fallback)
+				if cmp.visible() then
+					cmp.confirm({ select = false })
+				elseif luasnip.locally_jumpable(1) then
+					luasnip.jump(1)
+				else
+					fallback()
+				end
+			end, { 'i', 's' }),
+			['<S-Tab>'] = cmp.mapping(function(fallback)
+				if luasnip.locally_jumpable(-1) then
+					luasnip.jump(-1)
+				else
+					fallback()
+				end
+			end, { 'i', 's' }),
 			['<C-b>'] = cmp.mapping.scroll_docs(-4),
 			['<C-f>'] = cmp.mapping.scroll_docs(4),
 			['<C-Space>'] = cmp.mapping.complete(), -- show completion suggestions
 			['<C-e>'] = cmp.mapping.abort(), -- close completion window
-			-- ['<CR>'] = cmp.mapping.confirm({ select = false }),
 		},
 		formatting = {
 			format = function(entry, item)
 				item = lspkind.cmp_format({
 					menu = menu,
-					with_text = true,
+					mode = 'symbol_text',
 					ellipsis = '...',
 				})(entry, item)
 
