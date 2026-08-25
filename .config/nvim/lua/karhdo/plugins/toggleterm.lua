@@ -4,18 +4,36 @@ local M = {
 
 function M.config()
 	local toggleterm = require('toggleterm')
-	local border = require('karhdo.core.styles').border
+
+	-- Pull the Tokyo Night palette for the float border color.
+	local ok, tn = pcall(require, 'tokyonight.colors')
+	local colors = ok and tn.setup() or {}
+	local term_border = colors.blue or '#7aa2f7'
 
 	toggleterm.setup({
 		open_mapping = [[<c-\>]],
 		close_on_exit = true, -- Close the terminal window when the process exits
 		shell = vim.o.shell, -- Change the default shell. Can be a string or a function returning a string
+		-- Height (horizontal split) / width (vertical) of the terminal on open,
+		-- as a fraction of the screen so it scales with the window size.
+		-- Bump the 0.2 for a taller docked terminal, lower it for a shorter one.
+		size = function(term)
+			if term.direction == 'vertical' then
+				return math.floor(vim.o.columns * 0.4)
+			end
+			return math.floor(vim.o.lines * 0.2)
+		end,
+		persist_size = true, -- remember a size you resized to during the session
+		-- Docked (default horizontal split); not float.
+		shade_terminals = false, -- don't darken; keep the terminal transparent
+		-- Transparent terminal background so it inherits the (transparent) editor.
+		highlights = {
+			Normal = { guibg = 'NONE' },
+			NormalFloat = { guibg = 'NONE' },
+			FloatBorder = { guifg = term_border, guibg = 'NONE' },
+		},
 		float_opts = {
-			border = border,
-			highlight = {
-				border = 'Normal',
-				background = 'Terminal', -- Terminal | Normal
-			},
+			border = 'curved', -- thin rounded border (only used by float terminals, e.g. lazygit)
 		},
 	})
 
