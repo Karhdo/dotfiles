@@ -10,7 +10,6 @@ local opt = vim.opt -- Set options (global/buffer/windows-scoped)
 -----------------------------------------------------------
 opt.mouse = 'a' -- Mouse interaction
 opt.numberwidth = 5 -- Space between
-opt.wrap = true -- Automatically wrap text that extends beyond the screen length
 opt.number = true -- Show line number
 opt.cursorline = true -- Highlight current line
 opt.termguicolors = true -- Enable 24-bit RGB colors
@@ -31,7 +30,9 @@ opt.expandtab = true -- Use spaces instead of tabs
 opt.smartindent = true -- Autoindent new lines
 opt.autoindent = true -- Copy indent from current line when starting new one
 
-opt.wrap = false
+opt.wrap = true -- Wrap long lines onto the next screen row
+opt.linebreak = true -- Wrap at word boundaries, not mid-word
+opt.breakindent = true -- Keep wrapped lines visually indented
 
 -----------------------------------------------------------
 -- Formatting
