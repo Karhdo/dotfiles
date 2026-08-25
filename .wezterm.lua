@@ -34,34 +34,13 @@ local function file_exists(path)
 	return false
 end
 
--- Locate the wallpaper bundled in this repo's images/ dir so it is portable.
--- ~/.wezterm.lua is a (relative) symlink into the repo, but wezterm.config_file
--- reports the symlink path itself, so resolve one level to find the repo root.
--- Falls back to ~/Pictures/wallpaper.jpg, then to no image (solid scheme bg).
-local function find_wallpaper()
-	local pok, ok, stdout = pcall(wezterm.run_child_process, { "readlink", wezterm.config_file })
-	if pok and ok and stdout and #stdout > 0 then
-		local target = stdout:gsub("%s+$", "")
-		if not target:match("^/") then
-			target = wezterm.config_dir .. "/" .. target
-		end
-		local repo_image = target:gsub("/[^/]+$", "") .. "/images/wallpaper.jpg"
-		if file_exists(repo_image) then
-			return repo_image
-		end
-	end
-	local home_image = wezterm.home_dir .. "/Pictures/wallpaper.jpg"
-	if file_exists(home_image) then
-		return home_image
-	end
-	return nil
-end
-
-local wallpaper = find_wallpaper()
+-- Wallpaper bundled in this repo's images/ dir (the repo lives at
+-- ~/Workplace/Karhdo/dotfiles and is stowed into $HOME).
+local wallpaper = wezterm.home_dir .. "/Workplace/Karhdo/dotfiles/images/wallpaper.jpg"
 
 config.window_background_opacity = 1.0
 
-if wallpaper then
+if file_exists(wallpaper) then
 	config.background = {
 		{
 			source = { File = wallpaper },
@@ -73,7 +52,7 @@ if wallpaper then
 			source = { Color = "#1a1b26" }, -- Tokyo Night bg, semi-opaque overlay
 			width = "100%",
 			height = "100%",
-			opacity = 0.88,
+			opacity = 0.96,
 		},
 	}
 end
