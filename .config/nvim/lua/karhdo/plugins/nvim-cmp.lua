@@ -44,18 +44,23 @@ function M.config()
 		mapping = {
 			['<C-p>'] = cmp.mapping.select_prev_item(),
 			['<C-n>'] = cmp.mapping.select_next_item(),
-			-- Tab confirms the completion menu exactly as before; when the menu is
-			-- closed it moves to the next snippet placeholder instead, so an expanded
-			-- snippet can actually be tabbed through. Needs mode 's' as well, since
-			-- LuaSnip puts you in select mode on each placeholder.
+			-- Tab priority: confirm the completion menu -> jump to the next snippet
+			-- placeholder -> fall through (copilot.vim's accept map lives on Tab).
+			--
+			-- The check MUST be cmp.confirm()'s return value, not cmp.visible().
+			-- With select = false the menu is usually open with nothing selected,
+			-- and cmp.confirm() then does nothing and returns false; branching on
+			-- cmp.visible() swallows Tab in exactly that state and Copilot never
+			-- sees the key. Mode 's' is needed too, since LuaSnip puts you in
+			-- select mode on each placeholder.
 			['<Tab>'] = cmp.mapping(function(fallback)
-				if cmp.visible() then
-					cmp.confirm({ select = false })
-				elseif luasnip.locally_jumpable(1) then
-					luasnip.jump(1)
-				else
-					fallback()
+				if cmp.confirm({ select = false }) then
+					return
 				end
+				if luasnip.locally_jumpable(1) then
+					return luasnip.jump(1)
+				end
+				fallback()
 			end, { 'i', 's' }),
 			['<S-Tab>'] = cmp.mapping(function(fallback)
 				if luasnip.locally_jumpable(-1) then
