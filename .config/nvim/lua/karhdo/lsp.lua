@@ -48,16 +48,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		opts.desc = 'Code Action'
 		keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
 
-		-- Inlay hints: inferred types, parameter names, etc.
+		-- Inlay hints (inferred types, parameter names). Off by default -- they
+		-- shift text around and get noisy, so opt in per buffer with <leader>ih.
 		--
-		-- Deliberately NOT gated on client:supports_method('textDocument/inlayHint'):
-		-- jdtls registers that capability *dynamically*, well after LspAttach fires,
-		-- so the gate reads false and Java silently never gets hints. The state is
-		-- per buffer, not per client, and Neovim only sends requests to clients that
-		-- advertise support -- so enabling it unconditionally costs nothing on a
-		-- buffer whose servers do not.
-		vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
-
+		-- The keymap is deliberately NOT gated on
+		-- client:supports_method('textDocument/inlayHint'): jdtls registers that
+		-- capability *dynamically*, well after LspAttach fires, so the gate would
+		-- read false and Java would never get the toggle. Neovim only sends
+		-- requests to servers that advertise support, so it is simply inert on
+		-- buffers where nothing does.
 		opts.desc = 'Toggle inlay hints'
 		keymap.set('n', '<leader>ih', function()
 			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = ev.buf }), { bufnr = ev.buf })
