@@ -73,8 +73,10 @@ function M.config()
 	keymap.set('n', ';r', ':Telescope oldfiles only_cwd=true<CR>', { desc = 'Fuzzy find recent files' })
 	keymap.set('n', ';s', function()
 		builtin.live_grep({
-			-- search dotfiles + gitignored files, minus the dirs above
-			additional_args = vim.list_extend({ '--hidden', '--no-ignore' }, rg_ignore_args),
+			-- search dotfiles + gitignored files, minus the dirs above.
+			-- --max-filesize is not optional: --no-ignore drags in gitignored
+			-- logs/dumps, and rg re-reads them on every keystroke.
+			additional_args = vim.list_extend({ '--hidden', '--no-ignore', '--max-filesize=1M' }, rg_ignore_args),
 		})
 	end, { desc = 'Find string in cwd' })
 	keymap.set('n', ';c', builtin.grep_string, { desc = 'Find string under cursor in cwd' })
