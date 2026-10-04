@@ -53,6 +53,9 @@ alias la="eza -la --icons=always"
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
+# Shift+Tab: accept the zsh-autosuggestions hint (Tab stays as normal fzf completion)
+bindkey '^[[Z' autosuggest-accept
+
 # -------------------- PATH --------------------
 export EDITOR="nvim"
 export VISUAL="nvim"
