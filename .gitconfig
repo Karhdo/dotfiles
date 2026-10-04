@@ -19,3 +19,16 @@
 
 [gpg "ssh"]
   allowedSignersFile = /Users/khanhdo/.ssh/allowed_signers
+
+[core]
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  syntax-theme = tokyonight_night
+  line-numbers = true
+  side-by-side = true
+  navigate = true
+  hyperlinks = true
