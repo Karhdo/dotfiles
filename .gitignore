@@ -25,6 +25,7 @@ Brewfile.lock.json
 # Third-party theme clones (see README for install instructions)
 .config/bat/bat-into-tokyonight/
 .config/bat/themes/tokyonight.nvim/
+.config/vercel-plugin
 
 # Package managers / app state
 configstore/
