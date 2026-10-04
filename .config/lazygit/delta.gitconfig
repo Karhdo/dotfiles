@@ -1,0 +1,17 @@
+# delta settings for lazygit only, loaded via `delta --config` in config.yml.
+# Kept separate from the [delta] section in ~/.gitconfig, which styles plain
+# `git diff` / `git log -p` in the terminal.
+
+[delta]
+  dark = true
+  syntax-theme = tokyonight_night
+  line-numbers = true
+  side-by-side = false
+  features = decorations
+
+[delta "interactive"]
+  keep-plus-minus-markers = true
+
+[delta "decorations"]
+  commit-style = raw
+  file-style = omit

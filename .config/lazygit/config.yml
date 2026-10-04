@@ -7,3 +7,16 @@ os:
   # the macOS default app (VSCode). Same $NVIM-socket logic as the edit preset.
   open: '[ -z "$NVIM" ] && nvim -- {{filename}} || nvim --server "$NVIM" --remote-tab {{filename}}'
   openDirInEditor: '[ -z "$NVIM" ] && nvim -- {{dir}} || nvim --server "$NVIM" --remote-tab {{dir}}'
+git:
+  # Render diffs with delta; all styling and layout live in delta.gitconfig.
+  # --paging=never is required or delta spawns its own pager inside lazygit.
+  pagers:
+    - pager: delta --config "$HOME/.config/lazygit/delta.gitconfig" --paging=never
+gui:
+  # Show file/branch icons. Needs a Nerd Font in the terminal (WezTerm uses
+  # Hack Nerd Font Mono).
+  nerdFontsVersion: "3"
+  # Fraction of the screen the left side panels take (default 0.3333).
+  sidePanelWidth: 0.27
+  # Grow the focused side panel vertically so its list isn't cramped.
+  expandFocusedSidePanel: true
