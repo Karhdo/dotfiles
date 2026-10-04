@@ -44,10 +44,9 @@ M.config = function()
 			end, 'Blame line')
 			map('n', '<leader>hB', gs.toggle_current_line_blame, 'Toggle line blame')
 
-			map('n', '<leader>hd', gs.diffthis, 'Diff this')
-			map('n', '<leader>hD', function()
-				gs.diffthis('~')
-			end, 'Diff this ~')
+			-- File diffs open in codediff for VSCode-style side-by-side views.
+			map('n', '<leader>hd', '<cmd>CodeDiff file HEAD<CR>', 'Diff file vs HEAD (CodeDiff)')
+			map('n', '<leader>hD', '<cmd>CodeDiff file HEAD~1<CR>', 'Diff file vs HEAD~1 (CodeDiff)')
 
 			-- Text object
 			map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', 'Gitsigns select hunk')
