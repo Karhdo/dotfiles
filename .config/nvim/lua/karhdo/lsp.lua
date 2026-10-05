@@ -9,10 +9,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 		-- Set keybindings
 		opts.desc = 'Show LSP references'
-		keymap.set('n', 'gR', '<cmd>Telescope lsp_references<cr>', opts)
+		keymap.set('n', 'gR', '<cmd>FzfLua lsp_references<cr>', opts)
 
 		opts.desc = 'Show LSP implementations'
-		keymap.set('n', 'gi', '<cmd>Telescope lsp_implementations<cr>', opts)
+		keymap.set('n', 'gi', '<cmd>FzfLua lsp_implementations<cr>', opts)
 
 		opts.desc = 'Go to declaration'
 		keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
@@ -27,7 +27,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		keymap.set('n', 'K', vim.lsp.buf.hover, opts)
 
 		opts.desc = 'Show buffer diagnostics'
-		keymap.set('n', '<leader>D', '<cmd>Telescope diagnostics bufnr=0<cr>', opts)
+		keymap.set('n', '<leader>D', '<cmd>FzfLua diagnostics_document<cr>', opts)
 
 		opts.desc = 'Show line diagnostics'
 		keymap.set('n', '<leader>d', vim.diagnostic.open_float, opts)
