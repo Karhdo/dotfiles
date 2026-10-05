@@ -127,14 +127,43 @@ stow -R -t ~ .              # re-link after adding top-level files
 
 ## Neovim
 
-Requires [Neovim](https://neovim.io/) **>= 0.11** (tested on 0.12.1).
+Requires [Neovim](https://neovim.io/) **>= 0.11** (tested on 0.12.2).
 
 - Entry point: [.config/nvim/init.lua](.config/nvim/init.lua) → loads `karhdo.core`, `karhdo.lazy`, `karhdo.lsp`.
 - Plugin manager: [lazy.nvim](https://github.com/folke/lazy.nvim) — specs auto-imported from [.config/nvim/lua/karhdo/plugins/](.config/nvim/lua/karhdo/plugins/).
 - LSP tooling via [mason.nvim](https://github.com/williamboman/mason.nvim); formatters via [conform.nvim](https://github.com/stevearc/conform.nvim); linters via [nvim-lint](https://github.com/mfussenegger/nvim-lint).
-- Java/Kotlin: [nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls) (`jdtls`) + `kotlin_lsp`, needs `openjdk@21` (step 8).
+- Java/Kotlin: [nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls) (`jdtls`) + `kotlin_lsp`, needs `openjdk@21` (step 8). `kotlin_lsp` is installed by hand — see [Kotlin LSP](#kotlin-lsp).
 - Leader keys: `,` (global), `<space>` (local). Format buffer: `<leader><leader>f`.
 - Lua style: 2-space indent, single quotes (see [stylua.toml](.config/nvim/stylua.toml)).
+
+### Fuzzy finding
+
+[fzf-lua](https://github.com/ibhagwan/fzf-lua), backed by `fd` and `ripgrep`. Gitignored files are searchable; dependency/build dirs, lockfiles and binaries are excluded (lists in [fzf-lua.lua](.config/nvim/lua/karhdo/plugins/fzf-lua.lua)).
+
+| Key | Action |
+|-----|--------|
+| `;f` | Find files |
+| `;s` | Live grep (smart-case) |
+| `;c` | Grep word under cursor |
+| `;r` | Recent files in cwd |
+| `;b` | Buffers |
+| `;;` | Reopen last picker with its query |
+
+Inside a picker: `C-j`/`C-k` move, `F4` toggles preview, `Esc` closes (fzf has no normal mode — use `;;` to come back).
+
+### Kotlin LSP
+
+JetBrains' [kotlin-lsp](https://github.com/Kotlin/kotlin-lsp) is kept out of Mason: its builds are EAP and stop starting a few months after release, and the Mason registry pins an expired one. Install the standalone archive by hand:
+
+```bash
+V=263.6379.0   # newest from https://github.com/Kotlin/kotlin-lsp/releases
+D=~/.local/share/nvim/mason/packages/kotlin-lsp
+mkdir -p $D && curl -fL -o /tmp/kls.sit \
+  https://download.jetbrains.com/language-server/kotlin-server/$V/kotlin-server-$V-aarch64.sit
+ditto -x -k /tmp/kls.sit $D && rm /tmp/kls.sit
+```
+
+Then set the same version in `kotlin_lsp_home` in [lsp.lua](.config/nvim/lua/karhdo/plugins/lsp/lsp.lua). When the server stops starting (exit code 7), repeat with the newer release. On quit, Neovim also stops the Gradle daemon the server spawns for project import.
 
 ## Tmux
 
