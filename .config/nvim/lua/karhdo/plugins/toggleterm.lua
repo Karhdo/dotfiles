@@ -40,14 +40,16 @@ function M.config()
 	local keymap = vim.keymap
 
 	local function set_terminal_keymaps(event)
-		keymap.set('t', '<C-h>', '<C-\\><C-n><Cmd>lua require\'Navigator\'.left()<CR>', { buffer = event.buf })
-		keymap.set('t', '<C-k>', '<C-\\><C-n><Cmd>lua require\'Navigator\'.up()<CR>', { buffer = event.buf })
-		keymap.set('t', '<C-j>', '<C-\\><C-n><Cmd>lua require\'Navigator\'.down()<CR>', { buffer = event.buf })
-		keymap.set('t', '<C-l>', '<C-\\><C-n><Cmd>lua require\'Navigator\'.right()<CR>', { buffer = event.buf })
+		keymap.set('t', '<C-h>', '<Cmd>wincmd h<CR>', { buffer = event.buf })
+		keymap.set('t', '<C-k>', '<Cmd>wincmd k<CR>', { buffer = event.buf })
+		keymap.set('t', '<C-j>', '<Cmd>wincmd j<CR>', { buffer = event.buf })
+		keymap.set('t', '<C-l>', '<Cmd>wincmd l<CR>', { buffer = event.buf })
 	end
 
+	-- Only toggleterm's own terminals: fzf-lua also runs in a terminal buffer and needs
+	-- its <C-j>/<C-k> to move through results.
 	vim.api.nvim_create_autocmd('TermOpen', {
-		pattern = 'term://*',
+		pattern = 'term://*toggleterm#*',
 		callback = set_terminal_keymaps,
 	})
 
