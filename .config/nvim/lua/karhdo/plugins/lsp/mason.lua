@@ -15,11 +15,9 @@ return {
 		},
 		-- jdtls is started by nvim-jdtls (see jdtls.lua), not mason-lspconfig.
 		--
-		-- kotlin_lsp is excluded so Mason never auto-installs it on startup. The build in
-		-- ~/.local/share/nvim/mason/packages/kotlin-lsp/ has its `intellij-server` binary
-		-- re-signed by hand so faketime can defeat the EAP time-bomb (see lsp.lua); any
-		-- Mason (re)install replaces that binary with a stock-signed one and silently
-		-- brings the expiry back. It is configured and enabled from lsp.lua instead.
+		-- kotlin_lsp is excluded because the Mason registry pins an expired EAP build. A newer
+		-- one is unpacked by hand under ~/.local/share/nvim/mason/packages/kotlin-lsp/ and
+		-- configured and enabled from lsp.lua.
 		automatic_enable = {
 			exclude = { 'jdtls', 'kotlin_lsp' },
 		},

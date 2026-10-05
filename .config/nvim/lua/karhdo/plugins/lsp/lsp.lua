@@ -34,34 +34,35 @@ return {
 				},
 			})
 
-			-- JetBrains Kotlin LSP (kotlin_lsp) runs from Mason's intellij-server binary, but
-			-- it is NOT managed by Mason (kept out of ensure_installed + in automatic_enable.exclude
-			-- in mason.lua). Reason: the public builds are EAP/time-bombed and the Mason registry
-			-- pins an already-expired version, which Mason would re-download on startup and use,
-			-- crashing with exit code 7. A non-expired build lives in
-			-- ~/.local/share/nvim/mason/packages/kotlin-lsp/ (currently v262.8190.0,
-			-- released 2026-06-17). The frozen faketime date below must sit AFTER the
-			-- build's release date and before its expiry.
-			--
-			-- To stop it expiring, we launch it under `faketime` with a frozen date that
-			-- sits inside the build's valid window, so the time-bomb never fires. On macOS
-			-- this only works because bin/intellij-server was re-signed (ad-hoc) to add the
-			-- `allow-dyld-environment-variables` + `disable-library-validation` entitlements;
-			-- without them, hardened runtime strips DYLD_INSERT_LIBRARIES / library validation
-			-- blocks libfaketime and faketime is silently a no-op. The JVM runs in-process in
-			-- the launcher (not a separate `java`), so the launcher itself is the inject target.
-			-- Verified: the intellij-server process maps both libjvm and libfaketime.
-			-- If Mason ever re-downloads this package, the binary must be re-signed again.
-			-- Absolute faketime path so it resolves even when nvim's PATH lacks /opt/homebrew/bin.
+			-- JetBrains Kotlin LSP is installed by hand, not by Mason (see mason.lua): builds are
+			-- EAP and stop starting a few months after release, and the Mason registry lags behind.
+			-- When it starts failing (exit code 7), unpack the newest standalone archive from
+			-- github.com/Kotlin/kotlin-lsp/releases next to this one and bump the version here.
+			local kotlin_lsp_home = vim.fn.stdpath('data') .. '/mason/packages/kotlin-lsp/kotlin-server-263.6379.0'
+			local nvim_pid = tostring(vim.fn.getpid())
+			local kotlin_lsp_owner_tag = 'NVIM_KOTLIN_LSP_OWNER=' .. nvim_pid
 			vim.lsp.config('kotlin_lsp', {
-				cmd = {
-					'/opt/homebrew/bin/faketime',
-					'2026-06-25 12:00:00',
-					vim.fn.stdpath('data') .. '/mason/bin/intellij-server',
-					'--stdio',
-				},
+				cmd = { kotlin_lsp_home .. '/bin/intellij-server', '--stdio' },
+				cmd_env = { NVIM_KOTLIN_LSP_OWNER = nvim_pid },
+				-- Nvim's default (false) never force-stops on quit; a server busy indexing ignores
+				-- the polite shutdown and is left running. Kill it if it hasn't exited after 1s.
+				exit_timeout = 1000,
 			})
 			vim.lsp.enable('kotlin_lsp')
+
+			-- The server imports the project through a Gradle daemon (-Xmx8g). Daemons are built
+			-- to outlive their client, so each nvim session left one burning ~1000% CPU. The
+			-- daemon inherits the owner tag from the server's env; kill everything carrying it.
+			vim.api.nvim_create_autocmd('VimLeavePre', {
+				group = vim.api.nvim_create_augroup('KotlinLspCleanup', {}),
+				callback = function()
+					for _, line in ipairs(vim.fn.systemlist({ 'ps', '-AEww', '-o', 'pid=,command=' })) do
+						if line:find(kotlin_lsp_owner_tag .. '%f[^%d]') then
+							vim.uv.kill(tonumber(line:match('^%s*(%d+)')), 'sigterm')
+						end
+					end
+				end,
+			})
 		end,
 	},
 	{ 'antosha417/nvim-lsp-file-operations', config = true },
