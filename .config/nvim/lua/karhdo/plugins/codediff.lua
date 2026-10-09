@@ -1,29 +1,24 @@
-local M = {
+-- VSCode-style diff review: changes, history, PRs and merge conflicts.
+-- The native diff library downloads on first use (`:CodeDiff install!` to
+-- reinstall). Inside a diff tab: ]h/[h hunks, ]f/[f files, -/<leader>hS stage
+-- file, <leader>hs/hu/hr stage/unstage/discard hunk, t toggle layout, g? help.
+return {
 	'esmuellert/codediff.nvim',
 	enabled = not vim.g.vscode,
 	cmd = 'CodeDiff',
 	keys = {
-		{ '<leader>gd', '<cmd>CodeDiff<CR>', desc = 'Review git changes (CodeDiff)' },
-		{ '<leader>gh', '<cmd>CodeDiff history<CR>', desc = 'Repo commit history (CodeDiff)' },
-		{ '<leader>gf', '<cmd>CodeDiff history %<CR>', desc = 'Current file history (CodeDiff)' },
+		{ '<leader>gd', '<Cmd>CodeDiff<CR>', desc = 'Review git changes' },
+		{ '<leader>gh', '<Cmd>CodeDiff history<CR>', desc = 'Repo commit history' },
+		{ '<leader>gf', '<Cmd>CodeDiff history %<CR>', desc = 'Current file history' },
 	},
-}
-
--- The native diff library is downloaded on first use (`:CodeDiff install!` to
--- force a reinstall). Inside a diff tab: ]h/[h hunks, ]f/[f files, -/<leader>hS
--- stage file, <leader>hs/hu/hr stage/unstage/discard hunk, t toggle inline,
--- g? help.
-M.config = function()
-	require('codediff').setup({
+	opts = {
 		diff = {
 			layout = 'side-by-side',
-			-- Highlight moved blocks like VSCode's experimental showMoves.
-			compute_moves = true,
+			compute_moves = true, -- Highlight moved blocks like VSCode's showMoves
 		},
 		explorer = {
 			view_mode = 'tree',
-			-- Show +N -M per file and per group.
-			line_stats = { enabled = true },
+			line_stats = { enabled = true }, -- +N -M per file and group
 		},
 		-- Mirror the gitsigns hunk keys so the same muscle memory works in both.
 		keymaps = {
@@ -33,7 +28,5 @@ M.config = function()
 				toggle_stage = { '-', '<leader>hS' },
 			},
 		},
-	})
-end
-
-return M
+	},
+}

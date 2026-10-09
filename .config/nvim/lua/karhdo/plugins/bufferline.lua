@@ -1,25 +1,20 @@
--- Buffer explorer
-local M = {
+-- Buffer tabs along the top.
+return {
 	'akinsho/bufferline.nvim',
-	dependencies = { 'nvim-tree/nvim-web-devicons' },
-	lazy = false,
+	event = 'VeryLazy',
 	keys = {
-		{ '<Tab>', '<Cmd>BufferLineCycleNext<CR>', desc = 'BufferLineCycleNext' },
-		{ '<S-Tab>', '<Cmd>BufferLineCyclePrev<CR>', desc = 'BufferLineCyclePrev' },
-		{ '<Leader>bcr', '<Cmd>BufferLineCloseRight<CR>', desc = 'BufferLineCloseRight' },
-		{ '<Leader>bcl', '<Cmd>BufferLineCloseLeft<CR>', desc = 'BufferLineCloseLeft' },
-		{ '<Leader>bco', '<Cmd>BufferLineCloseLeft<CR><Cmd>BufferLineCloseRight<CR>', desc = 'BufferLineCloseOther' },
+		{ '<Tab>', '<Cmd>BufferLineCycleNext<CR>', desc = 'Next buffer' },
+		{ '<S-Tab>', '<Cmd>BufferLineCyclePrev<CR>', desc = 'Previous buffer' },
+		{ '<leader>bcr', '<Cmd>BufferLineCloseRight<CR>', desc = 'Close buffers to the right' },
+		{ '<leader>bcl', '<Cmd>BufferLineCloseLeft<CR>', desc = 'Close buffers to the left' },
+		{ '<leader>bco', '<Cmd>BufferLineCloseOthers<CR>', desc = 'Close other buffers' },
 	},
-}
-
-function M.config()
-	require('bufferline').setup({
+	dependencies = { 'nvim-tree/nvim-web-devicons' },
+	opts = {
 		options = {
 			color_icons = true,
 			diagnostics = 'nvim_lsp',
-			left_mouse_command = 'buffer %d', -- can be a string | function, see "Mouse actions"
+			left_mouse_command = 'buffer %d',
 		},
-	})
-end
-
-return M
+	},
+}

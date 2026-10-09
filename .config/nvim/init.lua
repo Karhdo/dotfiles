@@ -1,14 +1,6 @@
--- =============================================================================
--- Leader Maps
--- =============================================================================
-
+-- Leaders must be set before any keymap is defined, including plugin `keys`.
 vim.g.mapleader = ','
 vim.g.maplocalleader = ' '
 
--- =============================================================================
--- Import Lua modules
--- =============================================================================
-
 require('karhdo.core')
 require('karhdo.lazy')
-require('karhdo.lsp')

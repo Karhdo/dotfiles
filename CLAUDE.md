@@ -23,14 +23,46 @@ Companion pieces live outside the repo: `~/.ssh/config` routes `github` vs `gith
 
 ### Neovim config (`.config/nvim/`)
 
-Entry point: `init.lua` → loads `karhdo.core`, `karhdo.lazy`, `karhdo.lsp`.
+Entry point: `init.lua` sets the leaders, then loads `karhdo.core` (options, keymaps, autocommands, LSP attach/diagnostics in `core/lsp.lua`) and `karhdo.lazy`.
 
-- Plugin manager: **lazy.nvim** (bootstrapped in `lua/karhdo/lazy.lua`).
-- Plugin specs: auto-imported from `lua/karhdo/plugins/` and `lua/karhdo/plugins/lsp/` — each file returns a lazy.nvim spec table, so adding a plugin means dropping a new file into that directory.
-- LSP tooling is installed via **mason** + **mason-lspconfig** + **mason-tool-installer** (see `plugins/lsp/mason.lua` for the `ensure_installed` lists). Formatters run via **conform.nvim** (`plugins/formatting.lua`); linters via **nvim-lint** (`plugins/linting.lua`, auto-triggers on `BufEnter`/`BufWritePost`/`InsertLeave`).
-- Leader keys: `,` (global), `<space>` (local). Format: `<leader><leader>f`. LSP keymaps are set in `lsp.lua` inside an `LspAttach` autocmd.
-- Lua style enforced by `stylua.toml`: 2-space indent, single quotes, always use call parentheses.
+- Plugin manager: **lazy.nvim** (bootstrapped in `lua/karhdo/lazy.lua`). Specs are auto-imported from `lua/karhdo/plugins/` and `lua/karhdo/plugins/lsp/`.
+- LSP tooling is installed via **mason** + **mason-lspconfig** + **mason-tool-installer** (`plugins/lsp/mason.lua` holds the `ensure_installed` lists); per-server config is in `plugins/lsp/lspconfig.lua`. Formatters run via **conform.nvim** (`plugins/formatting.lua`); linters via **nvim-lint** (`plugins/linting.lua`, auto-triggers on `BufEnter`/`BufWritePost`/`InsertLeave`).
+- Leader keys: `,` (global), `<space>` (local). Format: `<leader><leader>f`.
 - **nvim-treesitter tracks the `main` branch** (`master` is frozen and does not support nvim 0.12). `main` has no module system, so `plugins/treesitter.lua` wires up highlighting, indentation and incremental selection by hand in a `FileType` autocmd. It also builds parsers locally, so **`tree-sitter-cli` (≥ 0.26.1, via brew — not npm) is a prerequisite**; parsers land in `~/.local/share/nvim/site/parser`, not in the plugin directory. Indentation is only enabled for languages that ship an `indents.scm` — kotlin doesn't, and keeps the runtime's `GetKotlinIndent()`.
+
+#### Neovim conventions
+
+Follow these for every change under `.config/nvim/`; existing files are the reference.
+
+**Plugin specs**
+- One plugin per file, named after the plugin (`nvim-tree.lua`) or its role (`formatting.lua` for conform). LSP-related plugins go in `plugins/lsp/`.
+- Start the file with a one-line `--` comment saying what the plugin is for, then `return { ... }`. Helpers and constants the spec needs go above the `return` as locals; never `local M = {}` / `function M.config()`.
+- Spec fields in this order: repo, `enabled`/`cond`, `branch`/`version`/`build`, `lazy`/`priority`, `event`/`cmd`/`ft`/`keys`, `dependencies`, `main`, `init`, `opts`, `config`.
+- Configure with `opts` whenever the plugin only needs `setup(opts)`; lazy.nvim calls it for you. Use `opts = function() ... end` when building the table needs a `require`. Add `config = function(_, opts)` only for work beyond `setup` (extra wiring, autocmds, a non-`setup` entry point), and pass `opts` through.
+- Every plugin declares when it loads: `event`, `cmd`, `ft` or `keys`. Plugins that only exist as a dependency get `lazy = true`. `lazy = false` needs a comment saying why (colorscheme, nvim-treesitter `main`). Prefer `VeryLazy` for UI that is not needed for the first frame.
+- Don't restate defaults (`enabled = true`, `lazy = false` on a plugin that has a trigger, empty `setup({})` in `config`).
+- Shared glyphs, colors and borders come from `core/styles.lua`, never copied into a spec. Icons must be Nerd Font **v3** codepoints (the v2-only range U+F500–U+FD46 renders blank).
+- After adding, removing or updating plugins, commit `lazy-lock.json` together with the spec change.
+
+**Keymaps**
+- Global keymaps that belong to a plugin go in its spec's `keys` (this is also what lazy-loads it): `{ lhs, rhs, mode = ..., desc = '...' }`. Editor keymaps with no plugin go in `core/keymaps.lua`.
+- Buffer-local keymaps (LSP, gitsigns) are set in the attach callback through a local `map(mode, lhs, rhs, desc)` helper that adds `buffer = ...`.
+- Every keymap has a `desc`: sentence case, starts with a verb, no trailing period, no plugin name unless it disambiguates (`'Find files in cwd'`, `'Next hunk'`).
+- Right-hand sides: a Lua function, or `<Cmd>...<CR>` for an Ex command. Use `:` only when a range is needed (visual-mode `:m '>+1`), and say so in a comment.
+- Key notation: `<leader>`, `<localleader>`, `<C-x>`, `<A-x>`, `<S-x>`, `<CR>`, `<Cmd>`, `<BS>`, `<Space>`. Visual-mode maps use `x`, not `v` (`v` also hits select mode, i.e. snippet placeholders).
+- Before taking a key, check it is free (`:verbose map <key>`) and that it is not a prefix of an existing map. Give every new `<leader>` prefix a `group` label in `plugins/which-key.lua`.
+- Current prefixes: `<leader>b` buffers, `<leader>c` code / conflicts, `<leader>g` git review (codediff), `<leader>h` git hunks (gitsigns), `<leader>s` splits, `;` fzf-lua pickers. Git hunk keys are deliberately the same in gitsigns and codediff.
+
+**Autocommands**
+- Always in an augroup named `Karhdo<Name>` with `clear = true`; use `callback` functions, not `command` strings.
+
+**Lua style**
+- `stylua.toml` is the source of truth: tabs (width 2), single quotes, call parentheses always, 120 columns. Run `~/.local/share/nvim/mason/bin/stylua .config/nvim` before committing.
+- Comments explain *why* (a workaround, a non-obvious constraint), not what the next line does. Use `vim.uv`, `vim.keymap.set`, `vim.api.nvim_create_autocmd`, `vim.lsp.config`/`vim.lsp.enable`; no deprecated APIs (`:checkhealth vim.deprecated` must stay clean).
+- `.luarc.json` declares the `vim` global for editors outside Neovim; inside Neovim, lazydev provides the types.
+
+**Verifying a change**
+- Start nvim on a real file and check `:messages`, `:checkhealth lazy vim.deprecated`, and `:Lazy` (load times, nothing unexpectedly loaded at startup). Press any keymap you added.
 
 ### Shell (`.zshrc`)
 

@@ -1,33 +1,32 @@
--- Colorschemes: Tokyonight theme
-local M = {
+-- Colorscheme. Loaded first so every other plugin picks up its highlights.
+local transparent = true
+
+return {
 	'folke/tokyonight.nvim',
-	lazy = false, -- make sure we load this during startup if it is your main colorscheme
-	priority = 1000, -- make sure to load this before all the other start plugins
-}
-
-function M.config()
-	local transparent = true -- set to true if you would like to enable transparency
-
-	require('tokyonight').setup({
+	lazy = false,
+	priority = 1000,
+	opts = {
 		style = 'night',
+		transparent = transparent,
 		styles = {
 			sidebars = transparent and 'transparent' or 'dark',
 			floats = transparent and 'transparent' or 'dark',
 		},
-		transparent = transparent,
-		on_highlights = function(highlights)
-			highlights.DiagnosticUnnecessary = { fg = '#7882AD' }
-			highlights.MiniIndentscopeSymbol = { fg = '#FFFFFF' }
-		end,
 		on_colors = function(colors)
-			colors.bg_dark = transparent and colors.none or 'dark'
-			colors.bg_float = transparent and colors.none or 'dark'
-			colors.bg_sidebar = transparent and colors.none or 'dark'
-			colors.bg_statusline = transparent and colors.none or 'dark'
+			if transparent then
+				colors.bg_dark = colors.none
+				colors.bg_float = colors.none
+				colors.bg_sidebar = colors.none
+				colors.bg_statusline = colors.none
+			end
 		end,
-	})
-
-	require('tokyonight').load()
-end
-
-return M
+		on_highlights = function(hl)
+			hl.DiagnosticUnnecessary = { fg = '#7882AD' }
+			hl.MiniIndentscopeSymbol = { fg = '#FFFFFF' }
+		end,
+	},
+	config = function(_, opts)
+		require('tokyonight').setup(opts)
+		vim.cmd.colorscheme('tokyonight')
+	end,
+}

@@ -134,7 +134,7 @@ Requires [Neovim](https://neovim.io/) **>= 0.11** (tested on 0.12.2).
 - LSP tooling via [mason.nvim](https://github.com/williamboman/mason.nvim); formatters via [conform.nvim](https://github.com/stevearc/conform.nvim); linters via [nvim-lint](https://github.com/mfussenegger/nvim-lint).
 - Java/Kotlin: [nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls) (`jdtls`) + `kotlin_lsp`, needs `openjdk@21` (step 8). `kotlin_lsp` is installed by hand — see [Kotlin LSP](#kotlin-lsp).
 - Leader keys: `,` (global), `<space>` (local). Format buffer: `<leader><leader>f`.
-- Lua style: 2-space indent, single quotes (see [stylua.toml](.config/nvim/stylua.toml)).
+- Lua style: tabs, single quotes (see [stylua.toml](.config/nvim/stylua.toml)); full conventions for plugins and keymaps are in [CLAUDE.md](CLAUDE.md#neovim-conventions).
 
 ### Fuzzy finding
 
@@ -163,7 +163,7 @@ mkdir -p $D && curl -fL -o /tmp/kls.sit \
 ditto -x -k /tmp/kls.sit $D && rm /tmp/kls.sit
 ```
 
-Then set the same version in `kotlin_lsp_home` in [lsp.lua](.config/nvim/lua/karhdo/plugins/lsp/lsp.lua). When the server stops starting (exit code 7), repeat with the newer release. On quit, Neovim also stops the Gradle daemon the server spawns for project import.
+Then set the same version in `kotlin_lsp_home` in [lspconfig.lua](.config/nvim/lua/karhdo/plugins/lsp/lspconfig.lua). When the server stops starting (exit code 7), repeat with the newer release. On quit, Neovim also stops the Gradle daemon the server spawns for project import.
 
 ## Tmux
 

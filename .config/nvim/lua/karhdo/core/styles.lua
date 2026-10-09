@@ -1,46 +1,13 @@
-local M = {
+-- Shared look-and-feel constants. Plugins `require` this instead of repeating
+-- glyphs and colors, so a change here applies everywhere.
+return {
 	icons = {
-		error = '✗',
-		warn = '',
-		info = '',
-		hint = '',
-		git = {
-			add = '┃',
-			change = '┃',
-			delete = '┃',
-			top_delete = '┃',
-			change_delete = '┃',
-		},
-	},
-	lsp = {
-		kinds = {
-			Boolean = '◩ ',
-			Class = ' ',
-			Color = ' ',
-			Constant = ' ',
-			Constructor = ' ',
-			Enum = '練',
-			EnumMember = ' ',
-			Event = ' ',
-			Field = ' ',
-			File = ' ',
-			Folder = ' ',
-			Function = ' ',
-			Interface = ' ',
-			Keyword = ' ',
-			Method = ' ',
-			Module = ' ',
-			Namespace = ' ',
-			Operator = ' ',
-			Property = '襁',
-			Reference = ' ',
-			Snippet = ' ',
-			Struct = 'פּ ',
-			Text = ' ',
-			TypeParameter = '',
-			Unit = '塞',
-			Value = ' ',
-			Variable = ' ',
+		-- Nerd Font v3 glyphs (v2-only codepoints render blank in WezTerm).
+		diagnostics = {
+			error = ' ',
+			warn = ' ',
+			info = ' ',
+			hint = '󰠠 ',
 		},
 	},
 	-- TODO: use other colors
@@ -62,5 +29,3 @@ local M = {
 	},
 	border = { '┏', '━', '┓', '┃', '┛', '━', '┗', '┃' },
 }
-
-return M

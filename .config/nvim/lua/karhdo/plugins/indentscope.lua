@@ -1,9 +1,11 @@
-local M = {
+-- Animated guide for the indent scope under the cursor.
+return {
+	'echasnovski/mini.indentscope',
 	version = '*',
 	event = 'VeryLazy',
-	'echasnovski/mini.indentscope',
 	init = function()
 		vim.api.nvim_create_autocmd('FileType', {
+			group = vim.api.nvim_create_augroup('KarhdoIndentscope', { clear = true }),
 			pattern = {
 				'help',
 				'lazy',
@@ -19,13 +21,8 @@ local M = {
 			end,
 		})
 	end,
-}
-
-function M.config()
-	require('mini.indentscope').setup({
+	opts = {
 		symbol = '┊',
 		options = { try_as_border = true },
-	})
-end
-
-return M
+	},
+}

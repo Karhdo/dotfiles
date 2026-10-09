@@ -1,7 +1,6 @@
-local M = { 'catgoose/nvim-colorizer.lua' }
-
-function M.config()
-	require('colorizer').setup()
-end
-
-return M
+-- Color previews for hex/rgb codes.
+return {
+	'catgoose/nvim-colorizer.lua',
+	event = { 'BufReadPre', 'BufNewFile' },
+	opts = {},
+}

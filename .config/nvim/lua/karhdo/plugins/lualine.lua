@@ -1,11 +1,9 @@
-local M = {
+-- Statusline.
+return {
 	'nvim-lualine/lualine.nvim',
-	enabled = true,
-	lazy = false,
-}
-
-function M.config()
-	require('lualine').setup({
+	event = 'VeryLazy',
+	dependencies = { 'nvim-tree/nvim-web-devicons' },
+	opts = {
 		options = {
 			icons_enabled = true,
 			theme = 'tokyonight',
@@ -16,18 +14,9 @@ function M.config()
 		},
 		sections = {
 			lualine_a = { 'mode' },
-			lualine_b = {
-				'branch',
-				{ 'diff', colored = true },
-			},
-			lualine_c = {
-				{ 'filename', file_status = true, path = 1 },
-			},
-			lualine_x = {
-				'encoding',
-				'fileformat',
-				'filetype',
-			},
+			lualine_b = { 'branch', { 'diff', colored = true } },
+			lualine_c = { { 'filename', file_status = true, path = 1 } },
+			lualine_x = { 'encoding', 'fileformat', 'filetype' },
 			lualine_y = { 'progress' },
 			lualine_z = { 'location' },
 		},
@@ -40,7 +29,5 @@ function M.config()
 			lualine_z = {},
 		},
 		extensions = { 'quickfix', 'fugitive', 'nvim-tree', 'toggleterm' },
-	})
-end
-
-return M
+	},
+}

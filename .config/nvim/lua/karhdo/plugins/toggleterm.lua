@@ -1,85 +1,82 @@
-local M = {
-	'akinsho/toggleterm.nvim',
-}
+-- Docked terminal (<C-\>) and a floating lazygit (<localleader>gg).
+local lazygit
 
-function M.config()
-	local toggleterm = require('toggleterm')
+-- Created on first use, so toggleterm only loads when a terminal is wanted.
+local function toggle_lazygit()
+	lazygit = lazygit
+		or require('toggleterm.terminal').Terminal:new({
+			count = 8,
+			cmd = 'lazygit',
+			direction = 'float',
+			hidden = true,
+			start_in_insert = true,
+			on_open = function(term)
+				local function map(lhs, rhs, desc)
+					vim.keymap.set('t', lhs, rhs, { buffer = term.bufnr, desc = desc })
+				end
 
-	-- Pull the Tokyo Night palette for the float border color.
-	local ok, tn = pcall(require, 'tokyonight.colors')
-	local colors = ok and tn.setup() or {}
-	local term_border = colors.blue or '#7aa2f7'
-
-	toggleterm.setup({
-		open_mapping = [[<c-\>]],
-		close_on_exit = true, -- Close the terminal window when the process exits
-		shell = vim.o.shell, -- Change the default shell. Can be a string or a function returning a string
-		-- Height (horizontal split) / width (vertical) of the terminal on open,
-		-- as a fraction of the screen so it scales with the window size.
-		-- Bump the 0.2 for a taller docked terminal, lower it for a shorter one.
-		size = function(term)
-			if term.direction == 'vertical' then
-				return math.floor(vim.o.columns * 0.4)
-			end
-			return math.floor(vim.o.lines * 0.2)
-		end,
-		persist_size = true, -- remember a size you resized to during the session
-		-- Docked (default horizontal split); not float.
-		shade_terminals = false, -- don't darken; keep the terminal transparent
-		-- Transparent terminal background so it inherits the (transparent) editor.
-		highlights = {
-			Normal = { guibg = 'NONE' },
-			NormalFloat = { guibg = 'NONE' },
-			FloatBorder = { guifg = term_border, guibg = 'NONE' },
-		},
-		float_opts = {
-			border = 'curved', -- thin rounded border (only used by float terminals, e.g. lazygit)
-		},
-	})
-
-	local keymap = vim.keymap
-
-	local function set_terminal_keymaps(event)
-		keymap.set('t', '<C-h>', '<Cmd>wincmd h<CR>', { buffer = event.buf })
-		keymap.set('t', '<C-k>', '<Cmd>wincmd k<CR>', { buffer = event.buf })
-		keymap.set('t', '<C-j>', '<Cmd>wincmd j<CR>', { buffer = event.buf })
-		keymap.set('t', '<C-l>', '<Cmd>wincmd l<CR>', { buffer = event.buf })
-	end
-
-	-- Only toggleterm's own terminals: fzf-lua also runs in a terminal buffer and needs
-	-- its <C-j>/<C-k> to move through results.
-	vim.api.nvim_create_autocmd('TermOpen', {
-		pattern = 'term://*toggleterm#*',
-		callback = set_terminal_keymaps,
-	})
-
-	local Terminal = require('toggleterm.terminal').Terminal
-
-	local lazygit = Terminal:new({
-		count = 8,
-		cmd = 'lazygit',
-		shade_terminals = false,
-		direction = 'float',
-		hidden = true,
-		float_opts = { border = 'curved' },
-		start_in_insert = true,
-		on_open = function(term)
-			keymap.set('t', '<C-q>', function()
-				term:close()
-			end, { buffer = term.bufnr })
-
-			keymap.set('t', '<C-h>', '<C-h>', { buffer = term.bufnr })
-			keymap.set('t', '<C-j>', '<C-j>', { buffer = term.bufnr })
-			keymap.set('t', '<C-k>', '<C-k>', { buffer = term.bufnr })
-			keymap.set('t', '<C-l>', '<C-l>', { buffer = term.bufnr })
-		end,
-	})
-
-	local function lazygit_toggle()
-		lazygit:toggle()
-	end
-
-	keymap.set('n', '<LocalLeader>gg', lazygit_toggle)
+				map('<C-q>', function()
+					term:close()
+				end, 'Close lazygit')
+				-- Hand window-navigation keys to lazygit instead of moving windows.
+				for _, key in ipairs({ '<C-h>', '<C-j>', '<C-k>', '<C-l>' }) do
+					map(key, key, 'Pass ' .. key .. ' to lazygit')
+				end
+			end,
+		})
+	lazygit:toggle()
 end
 
-return M
+return {
+	'akinsho/toggleterm.nvim',
+	cmd = { 'ToggleTerm', 'TermExec' },
+	keys = {
+		{ [[<C-\>]], mode = { 'n', 'i' }, desc = 'Toggle terminal' },
+		{ '<localleader>gg', toggle_lazygit, desc = 'Toggle lazygit' },
+	},
+	opts = function()
+		-- Tokyo Night's blue for the float border.
+		local ok, tokyonight = pcall(require, 'tokyonight.colors')
+		local border = ok and tokyonight.setup().blue or '#7aa2f7'
+
+		return {
+			open_mapping = [[<C-\>]],
+			close_on_exit = true,
+			shell = vim.o.shell,
+			-- Fraction of the screen so it scales with the window; bump 0.2 for a
+			-- taller docked terminal.
+			size = function(term)
+				if term.direction == 'vertical' then
+					return math.floor(vim.o.columns * 0.4)
+				end
+				return math.floor(vim.o.lines * 0.2)
+			end,
+			persist_size = true,
+			shade_terminals = false, -- Keep the terminal transparent like the editor
+			highlights = {
+				Normal = { guibg = 'NONE' },
+				NormalFloat = { guibg = 'NONE' },
+				FloatBorder = { guifg = border, guibg = 'NONE' },
+			},
+			float_opts = { border = 'curved' },
+		}
+	end,
+	config = function(_, opts)
+		require('toggleterm').setup(opts)
+
+		-- Window navigation from toggleterm's own terminals only: fzf-lua also runs
+		-- in a terminal buffer and needs <C-j>/<C-k> to move through results.
+		vim.api.nvim_create_autocmd('TermOpen', {
+			group = vim.api.nvim_create_augroup('KarhdoToggletermKeymaps', { clear = true }),
+			pattern = 'term://*toggleterm#*',
+			callback = function(ev)
+				for _, dir in ipairs({ 'h', 'j', 'k', 'l' }) do
+					vim.keymap.set('t', '<C-' .. dir .. '>', '<Cmd>wincmd ' .. dir .. '<CR>', {
+						buffer = ev.buf,
+						desc = 'Go to window ' .. dir,
+					})
+				end
+			end,
+		})
+	end,
+}

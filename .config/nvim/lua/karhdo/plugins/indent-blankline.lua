@@ -1,13 +1,9 @@
--- Indent blankline
-local M = {
+-- Indent guides. The current scope is drawn by mini.indentscope instead.
+return {
 	'lukas-reineke/indent-blankline.nvim',
 	event = { 'BufReadPre', 'BufNewFile' },
 	main = 'ibl',
-	enabled = true,
-}
-
-function M.config()
-	require('ibl').setup({
+	opts = {
 		indent = {
 			char = '┊',
 			tab_char = '┊',
@@ -25,7 +21,5 @@ function M.config()
 				'lspinfo',
 			},
 		},
-	})
-end
-
-return M
+	},
+}

@@ -1,28 +1,32 @@
--- Create the first autocommand group
-local yank_group = vim.api.nvim_create_augroup('TextYankHighlight', { clear = true })
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = function(name)
+	return vim.api.nvim_create_augroup('Karhdo' .. name, { clear = true })
+end
 
-vim.api.nvim_create_autocmd('TextYankPost', {
-	group = yank_group,
-	pattern = '*',
+autocmd('TextYankPost', {
+	group = augroup('YankHighlight'),
 	callback = function()
-		vim.hl.on_yank({
-			on_visual = false,
-			higroup = 'DiffText',
-		})
+		vim.hl.on_yank({ higroup = 'DiffText', on_visual = false })
 	end,
 })
 
--- Create the second autocommand group
-local search_group = vim.api.nvim_create_augroup('VimrcIncSearchHighlight', { clear = true })
+-- Highlight matches only while typing a search, not after it.
+local search = augroup('SearchHighlight')
 
-vim.api.nvim_create_autocmd('CmdlineEnter', {
-	group = search_group,
-	pattern = '[/\\?]',
-	command = [[:set hlsearch | redrawstatus]],
+autocmd('CmdlineEnter', {
+	group = search,
+	pattern = { '/', '?' },
+	callback = function()
+		vim.o.hlsearch = true
+		vim.cmd.redrawstatus()
+	end,
 })
 
-vim.api.nvim_create_autocmd('CmdlineLeave', {
-	group = search_group,
-	pattern = '[/\\?]',
-	command = ':set nohlsearch | redrawstatus',
+autocmd('CmdlineLeave', {
+	group = search,
+	pattern = { '/', '?' },
+	callback = function()
+		vim.o.hlsearch = false
+		vim.cmd.redrawstatus()
+	end,
 })

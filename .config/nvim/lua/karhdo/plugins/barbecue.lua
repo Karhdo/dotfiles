@@ -1,16 +1,12 @@
-local M = {
+-- Winbar breadcrumbs (file path > symbol), fed by nvim-navic.
+return {
 	'utilyre/barbecue.nvim',
-	event = { 'BufReadPost' },
+	event = 'BufReadPost',
 	dependencies = {
 		'SmiteshP/nvim-navic',
-		'nvim-tree/nvim-web-devicons', -- optional dependency
+		'nvim-tree/nvim-web-devicons',
+	},
+	opts = {
+		exclude_filetypes = { 'gitcommit', 'toggleterm', 'Trouble' },
 	},
 }
-
-function M.config()
-	require('barbecue').setup({
-		exclude_filetypes = { 'gitcommit', 'toggleterm', 'Trouble' },
-	})
-end
-
-return M

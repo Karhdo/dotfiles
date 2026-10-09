@@ -1,46 +1,33 @@
--- =============================================================================
---  Keymaps  (leader keys are set in init.lua)
--- =============================================================================
-local keymap = vim.keymap -- for conciseness
+-- Editor keymaps that don't belong to a plugin. Plugin keymaps live in the
+-- plugin's spec (`keys`), buffer-local ones in their attach callback.
+local map = vim.keymap.set
 
------- Clear search highlights ------
-keymap.set('n', '<leader>nh', '<Cmd>nohlsearch<CR>', { desc = 'Clear search highlights' })
+map('n', '<leader>nh', '<Cmd>nohlsearch<CR>', { desc = 'Clear search highlights' })
 
------- Windows ------
--- Windows navigator
-keymap.set('n', '<c-h>', '<Cmd>wincmd h<CR>', { desc = 'Move to left window' })
-keymap.set('n', '<c-j>', '<Cmd>wincmd j<CR>', { desc = 'Move to bottom window' })
-keymap.set('n', '<c-k>', '<Cmd>wincmd k<CR>', { desc = 'Move to top window' })
-keymap.set('n', '<c-l>', '<Cmd>wincmd l<CR>', { desc = 'Move to right window' })
+-- Windows
+map('n', '<C-h>', '<Cmd>wincmd h<CR>', { desc = 'Go to left window' })
+map('n', '<C-j>', '<Cmd>wincmd j<CR>', { desc = 'Go to lower window' })
+map('n', '<C-k>', '<Cmd>wincmd k<CR>', { desc = 'Go to upper window' })
+map('n', '<C-l>', '<Cmd>wincmd l<CR>', { desc = 'Go to right window' })
 
--- Window management
-keymap.set('n', '<leader>sv', '<C-w>v', { desc = 'Split window vertically' })
-keymap.set('n', '<leader>sh', '<C-w>s', { desc = 'Split window horizontally' })
-keymap.set('n', '<leader>se', '<C-w>=', { desc = 'Make splits equal size' })
-keymap.set('n', '<leader>sx', '<Cmd>close<CR>', { desc = 'Close current split' })
+map('n', '<leader>sv', '<C-w>v', { desc = 'Split window vertically' })
+map('n', '<leader>sh', '<C-w>s', { desc = 'Split window horizontally' })
+map('n', '<leader>se', '<C-w>=', { desc = 'Make splits equal size' })
+map('n', '<leader>sx', '<Cmd>close<CR>', { desc = 'Close current split' })
 
------- Move lines up or down ------
--- Normal mode
-keymap.set('n', '<A-k>', '<Cmd>m .-2<CR>==', { desc = 'Move line up' })
-keymap.set('n', '<A-j>', '<Cmd>m .+1<CR>==', { desc = 'Move line down' })
+map('n', '<C-,>', '<C-w><', { desc = 'Decrease window width' })
+map('n', '<C-.>', '<C-w>>', { desc = 'Increase window width' })
+map('n', '<A-,>', '<C-w>5>', { desc = 'Increase window width by 5' })
+map('n', '<A-.>', '<C-w>5<', { desc = 'Decrease window width by 5' })
 
--- Insert mode
-keymap.set('i', '<A-j>', '<Esc><Cmd>m .+1<CR>==gi', { desc = 'Move line down (insert mode)' })
-keymap.set('i', '<A-k>', '<Esc><Cmd>m .-2<CR>==gi', { desc = 'Move line up (insert mode)' })
+-- Move lines. Visual mode uses `:` rather than <Cmd> so the '< '> marks are set.
+map('n', '<A-j>', '<Cmd>m .+1<CR>==', { desc = 'Move line down' })
+map('n', '<A-k>', '<Cmd>m .-2<CR>==', { desc = 'Move line up' })
+map('i', '<A-j>', '<Esc><Cmd>m .+1<CR>==gi', { desc = 'Move line down' })
+map('i', '<A-k>', '<Esc><Cmd>m .-2<CR>==gi', { desc = 'Move line up' })
+map('x', '<A-j>', ':m \'>+1<CR>gv=gv', { desc = 'Move selection down' })
+map('x', '<A-k>', ':m \'<-2<CR>gv=gv', { desc = 'Move selection up' })
 
--- Visual mode
-keymap.set('v', '<A-j>', ':m \'>+1<CR>gv=gv', { desc = 'Move selection down' })
-keymap.set('v', '<A-k>', ':m \'<-2<CR>gv=gv', { desc = 'Move selection up' })
-
------- Window resizing ------
--- Sizing window horizontally
-keymap.set('n', '<C-,>', '<C-W><', { desc = 'Resize window left' })
-keymap.set('n', '<C-.>', '<C-W>>', { desc = 'Resize window right' })
-
--- Sizing window vertically
-keymap.set('n', '<A-,>', '<C-W>5>', { desc = 'Resize window down' })
-keymap.set('n', '<A-.>', '<C-W>5<', { desc = 'Resize window up' })
-
------- Insert new lines ------
-keymap.set('n', '<C-CR>', 'mzo<Esc>`z', { desc = 'Insert new line below' })
-keymap.set('n', '<S-CR>', 'mzO<Esc>`z', { desc = 'Insert new line above' })
+-- Blank lines, keeping the cursor where it is
+map('n', '<C-CR>', 'mzo<Esc>`z', { desc = 'Insert blank line below' })
+map('n', '<S-CR>', 'mzO<Esc>`z', { desc = 'Insert blank line above' })

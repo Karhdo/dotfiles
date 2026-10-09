@@ -1,3 +1,5 @@
+-- Java LSP via nvim-jdtls (more complete than plain lspconfig jdtls: Lombok,
+-- refactors). The server binary comes from Mason.
 return {
 	'mfussenegger/nvim-jdtls',
 	ft = 'java',
@@ -100,15 +102,16 @@ return {
 			},
 		}
 
-		local start = function()
+		local function start()
 			jdtls.start_or_attach(config)
 		end
 
+		-- `ft = 'java'` loads this on the first Java buffer; the autocmd covers the rest.
 		vim.api.nvim_create_autocmd('FileType', {
+			group = vim.api.nvim_create_augroup('KarhdoJdtls', { clear = true }),
 			pattern = 'java',
 			callback = start,
 		})
-
 		start()
 
 		vim.api.nvim_create_user_command('JdtlsOrganizeImports', function()

@@ -14,4 +14,8 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
 	{ import = 'karhdo.plugins' },
 	{ import = 'karhdo.plugins.lsp' },
+}, {
+	-- No plugin here needs luarocks packages; without this :checkhealth lazy
+	-- reports an error for the missing hererocks toolchain.
+	rocks = { enabled = false },
 })

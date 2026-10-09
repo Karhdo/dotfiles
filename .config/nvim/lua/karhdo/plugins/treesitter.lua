@@ -1,17 +1,4 @@
-local M = {
-	'nvim-treesitter/nvim-treesitter',
-	-- `master` is frozen and declares nvim 0.12 unsupported; `main` is the
-	-- rewrite that targets 0.12+. It has no module system -- highlight, indent
-	-- and incremental selection are wired up by hand in `config` below.
-	branch = 'main',
-	-- Upstream states `main` does not support lazy-loading: it registers its
-	-- filetype -> parser mappings from `plugin/` at startup.
-	lazy = false,
-	build = ':TSUpdate',
-	dependencies = {
-		'windwp/nvim-ts-autotag',
-	},
-}
+-- Syntax highlighting, indentation and node selection on nvim-treesitter `main`.
 
 -- Parsers to keep installed. `main` builds these from grammar with
 -- tree-sitter-cli, so a new entry costs a one-off compile on the next startup.
@@ -47,7 +34,7 @@ local function attach(buf)
 	-- drops each new line into column 0 -- leave them on their runtime indent
 	-- file instead.
 	if vim.treesitter.query.get(lang, 'indents') then
-		vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		vim.bo[buf].indentexpr = 'v:lua.require\'nvim-treesitter\'.indentexpr()'
 	end
 end
 
@@ -128,50 +115,61 @@ local function node_decremental()
 	select_node(buf, stack[#stack])
 end
 
-function M.config()
-	local treesitter = require('nvim-treesitter')
+return {
+	'nvim-treesitter/nvim-treesitter',
+	-- `master` is frozen and declares nvim 0.12 unsupported; `main` is the
+	-- rewrite that targets 0.12+. It has no module system -- highlight, indent
+	-- and incremental selection are wired up by hand in `config` below.
+	branch = 'main',
+	build = ':TSUpdate',
+	-- Upstream states `main` does not support lazy-loading: it registers its
+	-- filetype -> parser mappings from `plugin/` at startup.
+	lazy = false,
+	keys = {
+		{ '<C-Space>', init_selection, desc = 'Select treesitter node' },
+		{ '<C-Space>', node_incremental, mode = 'x', desc = 'Expand selection' },
+		{ '<BS>', node_decremental, mode = 'x', desc = 'Shrink selection' },
+	},
+	dependencies = { 'windwp/nvim-ts-autotag' },
+	config = function()
+		local treesitter = require('nvim-treesitter')
 
-	treesitter.setup({})
+		treesitter.setup({})
 
-	local installed = treesitter.get_installed('parsers')
-	local missing = vim.tbl_filter(function(lang)
-		return not vim.tbl_contains(installed, lang)
-	end, ensure_installed)
+		local installed = treesitter.get_installed('parsers')
+		local missing = vim.tbl_filter(function(lang)
+			return not vim.tbl_contains(installed, lang)
+		end, ensure_installed)
 
-	if #missing > 0 then
-		treesitter.install(missing)
-	end
-
-	-- Autotag used to be a nvim-treesitter module; on `main` it sets itself up.
-	require('nvim-ts-autotag').setup({})
-
-	local group = vim.api.nvim_create_augroup('KarhdoTreesitter', { clear = true })
-
-	vim.api.nvim_create_autocmd('FileType', {
-		group = group,
-		callback = function(args)
-			attach(args.buf)
-		end,
-	})
-
-	vim.api.nvim_create_autocmd('BufDelete', {
-		group = group,
-		callback = function(args)
-			selection[args.buf] = nil
-		end,
-	})
-
-	vim.keymap.set('n', '<C-space>', init_selection, { desc = 'Treesitter: select node' })
-	vim.keymap.set('x', '<C-space>', node_incremental, { desc = 'Treesitter: expand selection' })
-	vim.keymap.set('x', '<bs>', node_decremental, { desc = 'Treesitter: shrink selection' })
-
-	-- `config` runs before the first file's FileType fires, but not when this is
-	-- re-sourced from a running session.
-	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-		if vim.api.nvim_buf_is_loaded(buf) then
-			attach(buf)
+		if #missing > 0 then
+			treesitter.install(missing)
 		end
-	end
-end
 
-return M
+		-- Autotag used to be a nvim-treesitter module; on `main` it sets itself up.
+		require('nvim-ts-autotag').setup({})
+
+		local group = vim.api.nvim_create_augroup('KarhdoTreesitter', { clear = true })
+
+		vim.api.nvim_create_autocmd('FileType', {
+			group = group,
+			callback = function(args)
+				attach(args.buf)
+			end,
+		})
+
+		vim.api.nvim_create_autocmd('BufDelete', {
+			group = group,
+			callback = function(args)
+				selection[args.buf] = nil
+			end,
+		})
+
+		-- `config` runs before the first file's FileType fires, but not when this is
+		-- re-sourced from a running session.
+		for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+			if vim.api.nvim_buf_is_loaded(buf) then
+				attach(buf)
+			end
+		end
+	end,
+}

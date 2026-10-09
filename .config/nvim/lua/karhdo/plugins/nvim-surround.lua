@@ -1,11 +1,6 @@
-local M = {
+-- Add/change/delete surrounding pairs (ys, cs, ds).
+return {
 	'kylechui/nvim-surround',
-	enabled = true,
-	event = { 'CursorMoved' },
+	event = 'VeryLazy',
+	opts = {},
 }
-
-function M.config()
-	require('nvim-surround').setup({})
-end
-
-return M

@@ -1,63 +1,48 @@
--- Folder explorer
-local M = {
+-- File explorer, docked on the right.
+return {
 	'nvim-tree/nvim-tree.lua',
 	keys = {
-		{ '<C-n>', '<cmd>NvimTreeToggle<cr>', desc = 'NvimTreeToggle' }, -- Open/ Close
-		{ '<leader>n', '<cmd>NvimTreeFindFile<cr>', desc = 'NvimTreeFindFile' }, -- Search File
+		{ '<C-n>', '<Cmd>NvimTreeToggle<CR>', desc = 'Toggle file explorer' },
+		{ '<leader>n', '<Cmd>NvimTreeFindFile<CR>', desc = 'Reveal file in explorer' },
 	},
-}
+	dependencies = { 'nvim-tree/nvim-web-devicons' },
+	opts = function()
+		local icons = require('karhdo.core.styles').icons.diagnostics
 
-function M.config()
-	local icons = require('karhdo.core.styles').icons
-	local nvimtree = require('nvim-tree')
-
-	-- Recommended settings from nvim-tree documentation
-	vim.g.loaded_netrw = 1
-	vim.g.loaded_netrwPlugin = 1
-
-	icons = {
-		info = icons.info,
-		hint = icons.hint,
-		error = icons.error,
-		warning = icons.warn,
-	}
-
-	nvimtree.setup({
-		auto_reload_on_write = false,
-		git = {
-			enable = true,
-			ignore = false,
-			timeout = 500,
-		},
-		diagnostics = {
-			enable = true,
-			icons = icons,
-		},
-		view = {
-			width = {
-				min = 35,
-			  max = 35,
-				-- max = '40%',
-			},
-			side = 'right',
-		},
-		renderer = {
-			add_trailing = false,
-			group_empty = true,
-			highlight_opened_files = 'name',
-			indent_markers = {
+		return {
+			auto_reload_on_write = false,
+			git = {
 				enable = true,
+				ignore = false,
+				timeout = 500,
 			},
-			icons = {
-				glyphs = {
-					folder = {
-						arrow_closed = '',
-						arrow_open = '',
+			diagnostics = {
+				enable = true,
+				icons = {
+					error = vim.trim(icons.error),
+					warning = vim.trim(icons.warn),
+					info = vim.trim(icons.info),
+					hint = vim.trim(icons.hint),
+				},
+			},
+			view = {
+				width = { min = 35, max = 35 },
+				side = 'right',
+			},
+			renderer = {
+				add_trailing = false,
+				group_empty = true,
+				highlight_opened_files = 'name',
+				indent_markers = { enable = true },
+				icons = {
+					glyphs = {
+						folder = {
+							arrow_closed = '',
+							arrow_open = '',
+						},
 					},
 				},
 			},
-		},
-	})
-end
-
-return M
+		}
+	end,
+}
