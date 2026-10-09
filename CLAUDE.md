@@ -54,6 +54,8 @@ Claude Code runs in popups via the **tmux-claude-hatch** plugin, launched with `
 | `prefix + d` | Hide the popup; Claude keeps running |
 | `prefix + N` | Renumber windows (`renumber-windows on` already does this on close) |
 
+The status bar theme **tmux-tokyo-night is pinned to `v1.11.0`** (`#v1.11.0` in `.tmux.conf`; v5+ is a rewrite with a different look and extra key bindings). tpm only honours that pin on a fresh install — its updater just runs `git pull` — so the local checkout also has its `origin` remote removed, which makes `prefix + U` fail for that plugin instead of upgrading it. Don't re-add the remote or run tpm updates on it.
+
 `source-file` only adds or overrides bindings; after removing or renaming a `bind-key`, also `tmux unbind-key -T prefix <key>` in the running server.
 
 ## Common tasks
