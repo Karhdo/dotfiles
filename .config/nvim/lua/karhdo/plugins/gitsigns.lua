@@ -10,6 +10,9 @@ M.config = function()
 		current_line_blame_opts = {
 			delay = 100, -- Delay before showing blame, in milliseconds
 			virt_text_pos = 'eol', -- Position of virtual text (end of line)
+			-- eol virtual text is drawn in ascending priority, so going above the
+			-- diagnostics' default (4096) puts the blame after the error message.
+			virt_text_priority = 5000,
 		},
 		on_attach = function(bufnr)
 			local gs = package.loaded.gitsigns
