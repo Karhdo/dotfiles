@@ -44,6 +44,18 @@ Entry point: `init.lua` → loads `karhdo.core`, `karhdo.lazy`, `karhdo.lsp`.
 
 Prefix is remapped to **`C-t`** (not default `C-b`). Plugin manager is **tpm** at `~/.tmux/plugins/tpm/`; reload config with `prefix + R`.
 
+Claude Code runs in popups via the **tmux-claude-hatch** plugin, launched with `--dangerously-skip-permissions` (`@claude_args`). `.config/tmux/claude-popup.sh` (bound to `y`/`Y`, overriding the plugin's `y`, so those bindings must stay after the tpm `run` line) keeps one popup session per outer tmux session, keyed by its start dir (`#{session_path}`, e.g. the `LoanBud` session → `loanbud-hq`). Inside it each directory gets its own window (tagged `@claude_dir`) running Claude in the pane's current dir. `@claude_command` points at `.config/tmux/claude.sh`, which drops to a shell when Claude exits so the popup's session survives (`exit` closes it); piped calls such as the picker's `claude agents --json` fallback pass straight through.
+
+| Key | Action |
+|---|---|
+| `prefix + y` | Open/reattach Claude for the current dir in the tmux session's popup |
+| `prefix + Y` | Same, but a newly started Claude gets `--resume` (no effect if that dir's window already exists) |
+| `prefix + u` | fzf picker of all running Claudes with status (plugin default) |
+| `prefix + d` | Hide the popup; Claude keeps running |
+| `prefix + N` | Renumber windows (`renumber-windows on` already does this on close) |
+
+`source-file` only adds or overrides bindings; after removing or renaming a `bind-key`, also `tmux unbind-key -T prefix <key>` in the running server.
+
 ## Common tasks
 
 Reload shell config: `rz` (alias for `source ~/.zshrc`).
