@@ -174,18 +174,32 @@ Configuration: [.tmux.conf](.tmux.conf).
 - Plugin manager: [tpm](https://github.com/tmux-plugins/tpm) at `~/.tmux/plugins/tpm/`
 - Reload config: `prefix + R` (or `prefix + r`)
 
-### Claude CLI popup
+| Key | Action |
+| --- | ------ |
+| `prefix + h/j/k/l` | Move to the pane left / down / up / right (repeatable) |
+| `prefix + C-h/C-j/C-k/C-l` | Resize the pane by 5 cells (repeatable) |
+| `prefix + N` | Renumber windows (also happens automatically when a window closes) |
 
-A floating popup runs the `claude` CLI, driven by [.config/tmux/claude-popup.sh](.config/tmux/claude-popup.sh):
+### Theme
+
+[tmux-tokyo-night](https://github.com/fabioluciano/tmux-tokyo-night) **pinned to `v1.11.0`** — v5+ is a rewrite with a different look and extra key bindings. The status bar is transparent and shows the date and the weather for Ho Chi Minh.
+
+tpm only honours the pin on a fresh install (its updater just runs `git pull`), so the local checkout also has its `origin` remote removed; `prefix + U` then fails for that plugin instead of upgrading it.
+
+### Claude Code popups
+
+[tmux-claude-hatch](https://github.com/craftzdog/tmux-claude-hatch) runs Claude Code in popups, started with `--dangerously-skip-permissions`.
 
 | Key | Action |
 | --- | ------ |
-| **`Option + a`** | Toggle the popup — opens it, and closes (detaches) when pressed inside it. No prefix needed. |
-| `prefix + a` | Open the popup (fallback for the same thing) |
+| `prefix + y` | Open Claude for the current directory |
+| `prefix + Y` | Same, but a new Claude starts with `--resume` to pick a past conversation |
+| `prefix + d` | Hide the popup; Claude keeps running |
+| `prefix + u` | Picker of every running Claude with its status (`enter` jump, `ctrl-x` kill) |
 
-- Each git repo gets its own long-lived `claude-<repo>` tmux session, derived from the pane's path, so conversations/context stay separate per project and survive closing/reopening the popup.
-- Launches with `claude --dangerously-skip-permissions`; the status bar is hidden for these sessions.
-- `Option + a` relies on WezTerm sending Alt for the **left** Option key (`send_composed_key_when_left_alt_is_pressed = false` in [.wezterm.lua](.wezterm.lua)) — the right Option key still composes special characters.
+- Each tmux session gets one popup session, keyed by the directory the tmux session started in (e.g. the `LoanBud` session → `loanbud-hq`). Inside it, every directory you open Claude from gets its own window — switch with `prefix + n/p/w`. Driven by [.config/tmux/claude-popup.sh](.config/tmux/claude-popup.sh), which overrides the plugin's `y`.
+- [.config/tmux/claude.sh](.config/tmux/claude.sh) drops to a shell when Claude exits, so the popup survives; run `claude` again, or `exit` to close it.
+- The optional Claude Code plugin (`/plugin install tmux-claude-hatch@tmux-claude-hatch`) rings the bell when Claude needs you, which highlights the window you launched it from.
 
 ## Window manager
 
