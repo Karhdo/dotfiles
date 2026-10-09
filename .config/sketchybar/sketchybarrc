@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+# SketchyBar: transparent Tokyo Night bar. Reload after editing: sketchybar --reload
+#
+# What to edit where:
+#   colors.sh         all colors (and the bar's transparency)
+#   sketchybarrc      what's in the bar, sizes, fonts (this file)
+#   plugins/*.sh      how each item gets its value (battery, cpu, ...)
+#   plugins/icon_map.sh  downloaded app-icon table; don't edit
+#
+# Layout: [spaces] > [focused app]      [now playing cpu battery A date]
+
+CONFIG_DIR="$HOME/.config/sketchybar"
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+source "$CONFIG_DIR/colors.sh"
+
+FONT="Hack Nerd Font Mono"
+APP_FONT="sketchybar-app-font:Regular:12.0"
+
+# topmost=window: draw above normal windows so they can't cover the bar.
+sketchybar --bar position=top height=24 color=$BAR_COLOR blur_radius=20 \
+  padding_left=8 padding_right=8 display=all topmost=window
+
+sketchybar --default \
+  icon.font="$FONT:Regular:12.0" icon.color=$FG \
+  label.font="$FONT:Regular:11.0" label.color=$FG \
+  padding_left=3 padding_right=3 \
+  icon.padding_left=8 icon.padding_right=4 \
+  label.padding_left=4 label.padding_right=8 \
+  background.corner_radius=6 background.height=18
+
+# Spaces: number + icons of the apps on it ("—" when empty).
+for sid in 1 2 3 4 5 6; do
+  sketchybar --add space space.$sid left \
+    --set space.$sid associated_space=$sid \
+      icon=$sid label="—" label.font="$APP_FONT" \
+      icon.padding_left=8 label.padding_left=8 label.padding_right=8 padding_right=6 \
+      background.color=$ACCENT background.drawing=off \
+      script="$PLUGIN_DIR/space.sh" \
+      click_script="skhd -k 'ctrl - $sid'" # click = Ctrl+N (Switch to Desktop N)
+done
+
+# Keeps each space's app icons up to date.
+sketchybar --add item space_windows left \
+  --set space_windows drawing=off script="$PLUGIN_DIR/space_windows.sh" \
+  --subscribe space_windows space_windows_change
+
+sketchybar --add item chevron left \
+  --set chevron icon= icon.color=$MUTED label.drawing=off
+
+sketchybar --add item front_app left \
+  --set front_app background.color=0x00000000 background.border_color=$OUTLINE \
+    background.border_width=1 \
+    icon.font="$APP_FONT" icon.color=$OUTLINE label.color=$OUTLINE \
+    script="$PLUGIN_DIR/front_app.sh" \
+  --subscribe front_app front_app_switched
+
+# Right side is laid out right-to-left; each item sits in its own outlined box.
+sketchybar --default background.drawing=on background.color=$BOX \
+  background.border_color=$BOX_BORDER background.border_width=1 padding_left=4 padding_right=4
+
+sketchybar --add item calendar right \
+  --set calendar icon=󰃭 update_freq=30 \
+    script='sketchybar --set $NAME label="$(date "+%a %d %b %I:%M %p")"'
+
+# Keyboard input source (A / VI), updated when you switch (e.g. Ctrl+Space).
+sketchybar --add event input_change AppleSelectedInputSourcesChangedNotification
+sketchybar --add item input right \
+  --set input icon.drawing=off label.padding_left=6 label.padding_right=6 \
+    script="$PLUGIN_DIR/input.sh" \
+  --subscribe input input_change
+
+sketchybar --add item battery right \
+  --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
+  --subscribe battery system_woke power_source_change
+
+sketchybar --add item cpu right \
+  --set cpu icon= update_freq=5 script="$PLUGIN_DIR/cpu.sh"
+
+# Now playing, just left of cpu; hidden when nothing plays.
+sketchybar --add item media right \
+  --set media icon=󰝚 icon.color=$ACCENT2 label.color=$ACCENT2 \
+    label.max_chars=30 scroll_texts=on drawing=off \
+    script="$PLUGIN_DIR/media.sh" \
+  --subscribe media media_change
+
+sketchybar --update

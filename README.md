@@ -10,6 +10,7 @@ Personal macOS dotfiles. The repo root mirrors `$HOME` and is symlinked with [GN
 - [Updating](#updating)
 - [Neovim](#neovim)
 - [Tmux](#tmux)
+- [Window manager](#window-manager)
 - [Lazygit](#lazygit)
 - [Git](#git)
 - [Wezterm](#wezterm)
@@ -185,6 +186,33 @@ A floating popup runs the `claude` CLI, driven by [.config/tmux/claude-popup.sh]
 - Each git repo gets its own long-lived `claude-<repo>` tmux session, derived from the pane's path, so conversations/context stay separate per project and survive closing/reopening the popup.
 - Launches with `claude --dangerously-skip-permissions`; the status bar is hidden for these sessions.
 - `Option + a` relies on WezTerm sending Alt for the **left** Option key (`send_composed_key_when_left_alt_is_pressed = false` in [.wezterm.lua](.wezterm.lua)) — the right Option key still composes special characters.
+
+## Window manager
+
+[yabai](https://github.com/koekeishiya/yabai) tiles windows, [skhd](https://github.com/koekeishiya/skhd) maps the keys, and [SketchyBar](https://github.com/FelixKratz/SketchyBar) replaces the menu bar (transparent Tokyo Night). Configs: [.config/yabai/yabairc](.config/yabai/yabairc), [.config/skhd/skhdrc](.config/skhd/skhdrc), [.config/sketchybar/](.config/sketchybar/).
+
+| Command | Action |
+| ------- | ------ |
+| `wmon` | Start all three and auto-hide the macOS menu bar |
+| `wmoff` | Stop all three and show the macOS menu bar again |
+| `wmr` | Restart all three after editing their configs |
+
+| Key | Action |
+| --- | ------ |
+| `Alt+Shift+h/j/k/l` | Focus window left / down / up / right |
+| `Ctrl+Alt+Shift+h/j/k/l` | Swap window in that direction |
+| `Alt+Shift+m` | Toggle fill the screen |
+| `Alt+Shift+f` | Toggle floating |
+| `Alt+Shift+0` | Balance window sizes |
+| `Alt+Shift+.` | Focus the other display |
+| `Ctrl+Alt+Shift+n` | Send window to the other display |
+| `Ctrl+1..6` | Switch desktop (macOS shortcut; clicking a space in the bar does the same) |
+
+One-time setup on a new machine (after `brew bundle`):
+
+1. **Accessibility**: allow `yabai` and `skhd` in System Settings → Privacy & Security → Accessibility.
+2. **Desktop shortcuts**: enable "Switch to Desktop 1–6" (`Ctrl+1..6`) in System Settings → Keyboard → Keyboard Shortcuts → Mission Control, and create the desktops in Mission Control. yabai runs with SIP enabled, so it cannot switch or create spaces itself.
+3. Run `wmon`.
 
 ## Lazygit
 

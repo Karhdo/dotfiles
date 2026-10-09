@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+# yabai: arranges windows automatically (tiling). Keys are in skhd/skhdrc.
+# Start:  yabai --start-service    Stop: yabai --stop-service
+# Reload after editing this file: yabai --restart-service
+
+# Split the screen between windows: each new window takes half of the current one.
+yabai -m config layout bsp
+
+# No gaps: windows touch each other and the screen edges.
+yabai -m config top_padding 0
+yabai -m config bottom_padding 0
+yabai -m config left_padding 0
+yabai -m config right_padding 0
+yabai -m config window_gap 0
+
+# Keep windows below SketchyBar (24px tall).
+yabai -m config external_bar all:24:0
+
+# Apps that keep their own size and position instead of being tiled.
+yabai -m rule --add app="^(System Settings|Calculator|Activity Monitor|App Store|Archive Utility)$" manage=off
+yabai -m rule --add app="^(universalAccessAuthWarn|SecurityAgent|CoreServicesUIAgent)$" manage=off

@@ -49,6 +49,25 @@ alias zd="cd ~/Workplace/Karhdo/dotfiles"
 alias ls="eza --icons=always"
 alias la="eza -la --icons=always"
 
+# -------------------- Window manager (yabai + skhd + SketchyBar) --------------------
+# wmon: tiling, shortcuts and the bar on (hides the macOS menu bar behind SketchyBar)
+# wmoff: all off, normal macOS windows and menu bar back
+# wmr: restart all three after editing their configs
+_wm_menubar_autohide() {
+  osascript -e "tell application \"System Events\" to tell dock preferences to set autohide menu bar to $1"
+}
+wmon() {
+  yabai --start-service; skhd --start-service; brew services start sketchybar >/dev/null
+  _wm_menubar_autohide true
+}
+wmoff() {
+  yabai --stop-service; skhd --stop-service; brew services stop sketchybar >/dev/null
+  _wm_menubar_autohide false
+}
+wmr() {
+  yabai --restart-service; skhd --restart-service; brew services restart sketchybar >/dev/null
+}
+
 # -------------------- Key Bindings --------------------
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward

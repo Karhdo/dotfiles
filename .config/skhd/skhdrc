@@ -1,0 +1,31 @@
+# skhd: keyboard shortcuts for yabai. All use Alt+Shift so they don't clash with
+# Neovim (Alt+j/k) or tmux (Ctrl+t).
+# Reload after editing this file: skhd --restart-service
+
+# Move focus to the window on the left / below / above / right
+alt + shift - h : yabai -m window --focus west
+alt + shift - j : yabai -m window --focus south
+alt + shift - k : yabai -m window --focus north
+alt + shift - l : yabai -m window --focus east
+
+# Swap the current window with the one on the left / below / above / right
+ctrl + alt + shift - h : yabai -m window --swap west
+ctrl + alt + shift - j : yabai -m window --swap south
+ctrl + alt + shift - k : yabai -m window --swap north
+ctrl + alt + shift - l : yabai -m window --swap east
+
+# Make the current window fill the screen, or go back (toggle)
+alt + shift - m : yabai -m window --toggle zoom-fullscreen
+
+# Take the current window out of the tiling so it floats freely, or put it back
+alt + shift - f : yabai -m window --toggle float
+
+# Make all windows on this screen the same size again
+alt + shift - 0 : yabai -m space --balance
+
+# Two screens: focus the other screen (Alt+Shift+.)
+alt + shift - 0x2F : yabai -m display --focus next || yabai -m display --focus first
+
+# Two screens: send the current window to the other screen and follow it
+ctrl + alt + shift - n : (yabai -m window --display next || yabai -m window --display first) && \
+                         (yabai -m display --focus next || yabai -m display --focus first)
