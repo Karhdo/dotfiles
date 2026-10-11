@@ -77,7 +77,7 @@ Follow these for every change under `.config/nvim/`; existing files are the refe
 yabai (BSP tiling, no gaps) + skhd (all keys use `alt + shift`, so they don't clash with Neovim's `Alt+j/k` or tmux's `C-t`) + SketchyBar. `wmon` / `wmoff` / `wmr` in `.zshrc` start, stop and restart all three; `wmon`/`wmoff` also toggle macOS menu-bar auto-hide.
 
 - **SIP stays enabled**: no yabai scripting addition, so yabai cannot focus, create or move spaces. Desktop switching relies on macOS's own `Ctrl+1..6` shortcuts; SketchyBar space clicks send them via `skhd -k`.
-- SketchyBar's bar `height` and yabai's `external_bar all:<h>:0` must stay equal, or windows overlap or leave a gap under the bar.
+- SketchyBar's bar `height` (external monitors) and yabai's `external_bar all:<h>:0` must stay equal, or windows overlap or leave a gap under the bar. The MacBook screen uses `notch_display_height=32` instead: macOS already keeps the 32pt notch strip free of windows there, so yabai's value doesn't apply on that screen.
 - `plugins/icon_map.sh` is downloaded from the sketchybar-app-font release matching the installed `font-sketchybar-app-font` cask version; update both together. Fonts use the `Regular` style — Hack Nerd Font Mono has no Bold installed, and a missing style silently falls back to a font without the icons.
 - All colors live in `colors.sh` (Tokyo Night). Keep plugins free of hard-coded colors.
 

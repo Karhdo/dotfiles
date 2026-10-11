@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Tokyo Night (night) palette, 0xAARRGGBB.
-export BAR_COLOR=0x9916161e # bg_dark at 60% opacity: dark, wallpaper still visible
+export BAR_COLOR=0xd916161e # bg_dark at 85% opacity: nearly solid, a hint of the wallpaper
 export FG=0xffc0caf5        # fg: default text and icons
 export ACCENT_FG=0xffc0caf5 # fg: text drawn on top of the accent
 export MUTED=0xff737aa2     # dark5: the › separator
