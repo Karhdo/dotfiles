@@ -222,7 +222,14 @@ tpm only honours the pin on a fresh install (its updater just runs `git pull`), 
 | `Ctrl+Alt+Shift+n` | Send window to the other display |
 | `Ctrl+1..6` | Switch desktop (macOS shortcut; clicking a space in the bar does the same) |
 
-One-time setup on a new machine (after `brew bundle`):
+Not installed by `brew bundle`; install it when you want it:
+
+```bash
+brew install koekeishiya/formulae/yabai koekeishiya/formulae/skhd FelixKratz/formulae/sketchybar
+brew install --cask font-sketchybar-app-font
+```
+
+Then, once per machine:
 
 1. **Accessibility**: allow `yabai` and `skhd` in System Settings → Privacy & Security → Accessibility.
 2. **Desktop shortcuts**: enable "Switch to Desktop 1–6" (`Ctrl+1..6`) in System Settings → Keyboard → Keyboard Shortcuts → Mission Control, and create the desktops in Mission Control. yabai runs with SIP enabled, so it cannot switch or create spaces itself.

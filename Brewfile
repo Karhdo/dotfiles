@@ -19,20 +19,12 @@ brew "fnm"         # Node version manager (auto-switch on cd)
 brew "zoxide"      # smarter cd
 brew "direnv"      # per-directory env (GH_TOKEN per workspace)
 brew "gnupg"       # GPG (commit signing trust)
+brew "jq"          # JSON parsing (tmux-claude-hatch)
 
 # --- Languages / LSP runtimes ---
 brew "openjdk@21"  # runtime for jdtls + kotlin_lsp (Java/Kotlin LSP)
 brew "libpq"       # psql + postgres client libs
 
-# --- Window manager: tiling + shortcuts + bar (see README "Window manager") ---
-tap "koekeishiya/formulae"
-tap "FelixKratz/formulae"
-brew "koekeishiya/formulae/yabai"   # tiling window manager (.config/yabai)
-brew "koekeishiya/formulae/skhd"    # hotkeys for yabai (.config/skhd)
-brew "FelixKratz/formulae/sketchybar" # menu bar replacement (.config/sketchybar)
-brew "jq"                           # JSON parsing in the SketchyBar plugins
-
 # --- Casks ---
 cask "wezterm"               # terminal emulator (.wezterm.lua)
-cask "font-hack-nerd-font"   # Nerd Font for icons in nvim/eza/starship/SketchyBar
-cask "font-sketchybar-app-font" # app icons in SketchyBar (matches plugins/icon_map.sh)
+cask "font-hack-nerd-font"   # Nerd Font for icons in nvim/eza/starship
