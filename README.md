@@ -10,7 +10,6 @@ Personal macOS dotfiles. The repo root mirrors `$HOME` and is symlinked with [GN
 - [Updating](#updating)
 - [Neovim](#neovim)
 - [Tmux](#tmux)
-- [Window manager](#window-manager)
 - [Lazygit](#lazygit)
 - [Git](#git)
 - [Wezterm](#wezterm)
@@ -200,40 +199,6 @@ tpm only honours the pin on a fresh install (its updater just runs `git pull`), 
 - Each tmux session gets one popup session, keyed by the directory the tmux session started in (e.g. the `LoanBud` session → `loanbud-hq`). Inside it, every directory you open Claude from gets its own window — switch with `prefix + n/p/w`. Driven by [.config/tmux/claude-popup.sh](.config/tmux/claude-popup.sh), which overrides the plugin's `y`.
 - [.config/tmux/claude.sh](.config/tmux/claude.sh) drops to a shell when Claude exits, so the popup survives; run `claude` again, or `exit` to close it.
 - The optional Claude Code plugin (`/plugin install tmux-claude-hatch@tmux-claude-hatch`) rings the bell when Claude needs you, which highlights the window you launched it from.
-
-## Window manager
-
-[yabai](https://github.com/koekeishiya/yabai) tiles windows, [skhd](https://github.com/koekeishiya/skhd) maps the keys, and [SketchyBar](https://github.com/FelixKratz/SketchyBar) replaces the menu bar (transparent Tokyo Night). Configs: [.config/yabai/yabairc](.config/yabai/yabairc), [.config/skhd/skhdrc](.config/skhd/skhdrc), [.config/sketchybar/](.config/sketchybar/).
-
-| Command | Action |
-| ------- | ------ |
-| `wmon` | Start all three and auto-hide the macOS menu bar |
-| `wmoff` | Stop all three and show the macOS menu bar again |
-| `wmr` | Restart all three after editing their configs |
-
-| Key | Action |
-| --- | ------ |
-| `Alt+Shift+h/j/k/l` | Focus window left / down / up / right |
-| `Ctrl+Alt+Shift+h/j/k/l` | Swap window in that direction |
-| `Alt+Shift+m` | Toggle fill the screen |
-| `Alt+Shift+f` | Toggle floating |
-| `Alt+Shift+0` | Balance window sizes |
-| `Alt+Shift+.` | Focus the other display |
-| `Ctrl+Alt+Shift+n` | Send window to the other display |
-| `Ctrl+1..6` | Switch desktop (macOS shortcut; clicking a space in the bar does the same) |
-
-Not installed by `brew bundle`; install it when you want it:
-
-```bash
-brew install koekeishiya/formulae/yabai koekeishiya/formulae/skhd FelixKratz/formulae/sketchybar
-brew install --cask font-sketchybar-app-font
-```
-
-Then, once per machine:
-
-1. **Accessibility**: allow `yabai` and `skhd` in System Settings → Privacy & Security → Accessibility.
-2. **Desktop shortcuts**: enable "Switch to Desktop 1–6" (`Ctrl+1..6`) in System Settings → Keyboard → Keyboard Shortcuts → Mission Control, and create the desktops in Mission Control. yabai runs with SIP enabled, so it cannot switch or create spaces itself.
-3. Run `wmon`.
 
 ## Lazygit
 
