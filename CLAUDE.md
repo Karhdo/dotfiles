@@ -79,11 +79,13 @@ Prefix is remapped to **`C-t`** (not default `C-b`). Plugin manager is **tpm** a
 
 Claude Code runs in popups via the **tmux-claude-hatch** plugin, launched with `--dangerously-skip-permissions` (`@claude_args`). `.config/tmux/claude-popup.sh` (bound to `y`/`Y`, overriding the plugin's `y`, so those bindings must stay after the tpm `run` line) keeps one popup session per outer tmux session, keyed by its start dir (`#{session_path}`, e.g. the `LoanBud` session → `loanbud-hq`). Inside it each directory gets its own window (tagged `@claude_dir`) running Claude in the pane's current dir. `@claude_command` points at `.config/tmux/claude.sh`, which drops to a shell when Claude exits so the popup's session survives (`exit` closes it); piped calls such as the picker's `claude agents --json` fallback pass straight through.
 
+The picker (`u`) is the plugin's, but its `enter` is rebound through `@claude_fzf_options` to `.config/tmux/claude-pick.sh`. That clears `@claude_parent` (the terminal the plugin would switch; `list.sh` sets it again on the next `u`) and hands the row back, so the plugin opens the chosen Claude in the popup over the current window instead of switching to the session that launched it. Claudes in ordinary panes keep the plugin's jump to the pane. Don't attach from inside fzf's `become` instead: tmux rejects `/dev/tty` as a terminal and the popup comes up blank.
+
 | Key | Action |
 |---|---|
 | `prefix + y` | Open/reattach Claude for the current dir in the tmux session's popup |
 | `prefix + Y` | Same, but a newly started Claude gets `--resume` (no effect if that dir's window already exists) |
-| `prefix + u` | fzf picker of all running Claudes with status (plugin default) |
+| `prefix + u` | fzf picker of all running Claudes with status; picking one opens it in the popup over the current window, without switching session |
 | `prefix + d` | Hide the popup; Claude keeps running |
 | `prefix + N` | Renumber windows (`renumber-windows on` already does this on close) |
 
