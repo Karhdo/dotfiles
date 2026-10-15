@@ -49,6 +49,8 @@ alias zd="cd ~/Workplace/Karhdo/dotfiles"
 alias ls="eza --icons=always"
 alias la="eza -la --icons=always"
 
+alias lzd="lazydocker"
+
 # -------------------- Key Bindings --------------------
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
@@ -85,3 +87,9 @@ export PATH=$JAVA_HOME/bin:$PATH
 export DIRENV_LOG_FORMAT=""
 eval "$(direnv hook zsh)"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+# Docker: the engine runs in Colima's VM (`colima start` / `colima stop`), not Docker Desktop.
+# Testcontainers ignores Docker contexts and reads DOCKER_HOST; the override is the socket's
+# path inside the VM, which it mounts into its Ryuk cleanup container.
+export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
+export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock

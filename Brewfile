@@ -21,6 +21,15 @@ brew "direnv"      # per-directory env (GH_TOKEN per workspace)
 brew "gnupg"       # GPG (commit signing trust)
 brew "jq"          # JSON parsing (tmux-claude-hatch)
 
+# --- Containers (Colima instead of Docker Desktop) ---
+brew "colima"                    # Linux VM running the Docker engine: colima start / stop
+brew "docker"                    # Docker CLI (client only)
+brew "docker-compose"            # `docker compose` plugin
+brew "docker-buildx"             # `docker buildx` plugin
+brew "docker-credential-helper"  # stores registry logins (ECR) in the macOS keychain
+brew "kubernetes-cli"            # kubectl (Docker Desktop used to provide it)
+brew "lazydocker"                # Docker TUI: containers, images, logs
+
 # --- Languages / LSP runtimes ---
 brew "openjdk@21"  # runtime for jdtls + kotlin_lsp (Java/Kotlin LSP)
 brew "libpq"       # psql + postgres client libs

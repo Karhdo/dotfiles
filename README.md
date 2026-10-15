@@ -11,6 +11,7 @@ Personal macOS dotfiles. The repo root mirrors `$HOME` and is symlinked with [GN
 - [Neovim](#neovim)
 - [Tmux](#tmux)
 - [Lazygit](#lazygit)
+- [Docker](#docker)
 - [Git](#git)
 - [Wezterm](#wezterm)
 - [Shell](#shell)
@@ -205,6 +206,22 @@ tpm only honours the pin on a fresh install (its updater just runs `git pull`), 
 Configuration: [.config/lazygit/config.yml](.config/lazygit/config.yml).
 
 Opened via toggleterm in Neovim (`<space>gg`). Pressing `e`/`o` on a file opens it in the **parent** Neovim session (not a nested instance) using Neovim's remote over the `$NVIM` socket. `.zshrc` points lazygit at this tracked config via `LG_CONFIG_FILE`, so `state.yml` stays in lazygit's default dir (out of the repo).
+
+## Docker
+
+No Docker Desktop: [Colima](https://github.com/abiosoft/colima) runs the Docker engine in a small Linux VM, and the Homebrew `docker` CLI (with the `compose` and `buildx` plugins) talks to it.
+
+```bash
+colima start --cpu 4 --memory 8 --vm-type vz --vz-rosetta   # first run; later just `colima start`
+colima stop                                                 # free the VM's CPU and memory
+colima status
+```
+
+- `.zshrc` sets `DOCKER_HOST` to Colima's socket and `TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE`, so Testcontainers finds the engine.
+- `~/.docker/config.json` (not tracked) needs `"credsStore": "osxkeychain"` and `"cliPluginsExtraDirs": ["/opt/homebrew/lib/docker/cli-plugins"]` so logins and the brew plugins work.
+- Registry logins aren't kept across the switch; log in to ECR again with `aws ecr get-login-password | docker login --username AWS --password-stdin <registry>`.
+
+[lazydocker](https://github.com/jesseduffield/lazydocker) is the dashboard: containers, images, volumes, Compose services, logs and stats. Open it with `lzd` in the shell, or as a float in Neovim with `<space>gd` (`<C-q>` closes it). `?` lists its keys.
 
 ## Git
 

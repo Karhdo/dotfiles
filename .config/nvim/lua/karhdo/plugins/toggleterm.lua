@@ -1,12 +1,13 @@
--- Docked terminal (<C-\>) and a floating lazygit (<localleader>gg).
-local lazygit
+-- Docked terminal (<C-\>) and floating lazygit (<localleader>gg) / lazydocker (<localleader>gd).
+local floats = {}
 
--- Created on first use, so toggleterm only loads when a terminal is wanted.
-local function toggle_lazygit()
-	lazygit = lazygit
+-- A floating TUI, created on first use so toggleterm only loads when a terminal is wanted.
+-- `count` keeps each one in its own toggleterm slot.
+local function toggle_float(cmd, count)
+	floats[cmd] = floats[cmd]
 		or require('toggleterm.terminal').Terminal:new({
-			count = 8,
-			cmd = 'lazygit',
+			count = count,
+			cmd = cmd,
 			direction = 'float',
 			hidden = true,
 			start_in_insert = true,
@@ -17,14 +18,14 @@ local function toggle_lazygit()
 
 				map('<C-q>', function()
 					term:close()
-				end, 'Close lazygit')
-				-- Hand window-navigation keys to lazygit instead of moving windows.
+				end, 'Close ' .. cmd)
+				-- Hand window-navigation keys to the TUI instead of moving windows.
 				for _, key in ipairs({ '<C-h>', '<C-j>', '<C-k>', '<C-l>' }) do
-					map(key, key, 'Pass ' .. key .. ' to lazygit')
+					map(key, key, 'Pass ' .. key .. ' to ' .. cmd)
 				end
 			end,
 		})
-	lazygit:toggle()
+	floats[cmd]:toggle()
 end
 
 return {
@@ -32,7 +33,20 @@ return {
 	cmd = { 'ToggleTerm', 'TermExec' },
 	keys = {
 		{ [[<C-\>]], mode = { 'n', 'i' }, desc = 'Toggle terminal' },
-		{ '<localleader>gg', toggle_lazygit, desc = 'Toggle lazygit' },
+		{
+			'<localleader>gg',
+			function()
+				toggle_float('lazygit', 8)
+			end,
+			desc = 'Toggle lazygit',
+		},
+		{
+			'<localleader>gd',
+			function()
+				toggle_float('lazydocker', 9)
+			end,
+			desc = 'Toggle lazydocker',
+		},
 	},
 	opts = function()
 		-- Tokyo Night's blue for the float border.

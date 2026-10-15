@@ -71,6 +71,7 @@ Follow these for every change under `.config/nvim/`; existing files are the refe
 - FZF integrates with **fd** for file/dir discovery and **bat** for preview; theme options are read from `~/.fzf_tokyonight`.
 - `v` alias points to a standalone Neovim binary at `~/Workplace/Karhdo/nvim-macos-arm64/bin/nvim` (not the system `nvim`).
 - Tool initializers chained via `eval`: `fnm` (Node), `zoxide`, `direnv`. Node version switches on `cd` via `--use-on-cd`.
+- Docker has no Docker Desktop: the engine runs in **Colima**'s VM (`colima start`/`stop`) and the Homebrew `docker` CLI talks to it. `DOCKER_HOST` points at `~/.colima/default/docker.sock` because Testcontainers ignores Docker contexts; `TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock` is the socket's path *inside* the VM. Colima only shares `$HOME` with the VM, so bind mounts from `/tmp` come up empty.
 
 ### Tmux (`.tmux.conf`)
 
