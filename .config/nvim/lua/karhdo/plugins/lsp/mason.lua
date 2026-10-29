@@ -11,8 +11,8 @@ return {
 				ui = {
 					icons = {
 						package_pending = '➜',
-						package_installed = '',
-						package_not_installed = '',
+						package_installed = '',
+						package_not_installed = '',
 					},
 				},
 			},

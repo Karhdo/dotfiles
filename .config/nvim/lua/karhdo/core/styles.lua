@@ -4,9 +4,9 @@ return {
 	icons = {
 		-- Nerd Font v3 glyphs (v2-only codepoints render blank in WezTerm).
 		diagnostics = {
-			error = ' ',
-			warn = ' ',
-			info = ' ',
+			error = ' ',
+			warn = ' ',
+			info = ' ',
 			hint = '󰠠 ',
 		},
 	},
