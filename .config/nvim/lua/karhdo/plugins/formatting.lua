@@ -78,7 +78,9 @@ return {
 			graphql = { 'prettierd' },
 			liquid = { 'prettierd' },
 			lua = { 'stylua' },
-			python = { 'black' },
+			-- ruff (installed as an LSP in mason.lua) formats too, following each
+			-- project's [tool.ruff] settings.
+			python = { 'ruff_format' },
 			java = { 'google-java-format' },
 			kotlin = { 'ktlint' },
 		},

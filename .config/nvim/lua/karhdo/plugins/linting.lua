@@ -18,6 +18,12 @@ return {
 			typescript = { 'codespell' },
 			javascriptreact = { 'codespell' },
 			typescriptreact = { 'codespell' },
+			python = { 'codespell' },
+			lua = { 'codespell' },
+			kotlin = { 'codespell' },
+			java = { 'codespell' },
+			sh = { 'codespell' },
+			markdown = { 'codespell' },
 		},
 	},
 	-- nvim-lint has no setup(); it is configured by assigning fields.

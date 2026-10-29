@@ -26,7 +26,6 @@ return {
 					'stylua',
 					'prettierd',
 					'codespell',
-					'black',
 					'google-java-format',
 					'ktlint',
 					-- Not a formatter or linter here: bashls runs it for its diagnostics.

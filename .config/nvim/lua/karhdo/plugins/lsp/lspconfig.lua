@@ -44,8 +44,13 @@ return {
 		-- one at the repo root), falling back to an activated $VIRTUAL_ENV.
 		vim.lsp.config('pyright', {
 			settings = {
-				-- ruff sorts imports (the `I` rules); two organize-imports actions conflict.
-				pyright = { disableOrganizeImports = true },
+				pyright = {
+					-- ruff sorts imports (the `I` rules); two organize-imports actions conflict.
+					disableOrganizeImports = true,
+					-- Drop the "X is not accessed" hints; ruff already flags unused imports
+					-- and variables (F401, F841), so they showed twice.
+					disableTaggedHints = true,
+				},
 			},
 			before_init = function(_, config)
 				local venv = vim.fs.find('.venv', { path = config.root_dir, upward = true, type = 'directory' })[1]
@@ -64,6 +69,29 @@ return {
 		vim.lsp.config('ruff', {
 			on_attach = function(client)
 				client.server_capabilities.hoverProvider = false
+			end,
+		})
+
+		-- The stock root_dir falls back to `.git` (Tailwind v4 needs no config file), so
+		-- the server started on every Markdown, HTML and JS file in any repo. Require a
+		-- Tailwind/PostCSS config or a package.json that depends on Tailwind (v4 always does).
+		vim.lsp.config('tailwindcss', {
+			root_dir = function(bufnr, on_dir)
+				local fname = vim.api.nvim_buf_get_name(bufnr)
+				local markers = require('lspconfig.util').insert_package_json({
+					'tailwind.config.js',
+					'tailwind.config.cjs',
+					'tailwind.config.mjs',
+					'tailwind.config.ts',
+					'postcss.config.js',
+					'postcss.config.cjs',
+					'postcss.config.mjs',
+					'postcss.config.ts',
+				}, 'tailwindcss', fname)
+				local found = vim.fs.find(markers, { path = fname, upward = true })[1]
+				if found then
+					on_dir(vim.fs.dirname(found))
+				end
 			end,
 		})
 
