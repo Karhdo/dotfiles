@@ -29,6 +29,8 @@ return {
 					'black',
 					'google-java-format',
 					'ktlint',
+					-- Not a formatter or linter here: bashls runs it for its diagnostics.
+					'shellcheck',
 				},
 			},
 		},
@@ -43,8 +45,18 @@ return {
 			'lua_ls',
 			'prismals',
 			'pyright',
+			'ruff',
 			'eslint',
 			'jdtls',
+			'terraformls',
+			'yamlls',
+			'jsonls',
+			'taplo',
+			'bashls',
+			'dockerls',
+			'postgres_lsp',
+			'texlab',
+			'marksman',
 		},
 		-- jdtls is started by nvim-jdtls (jdtls.lua), not mason-lspconfig.
 		--

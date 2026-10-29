@@ -39,6 +39,42 @@ return {
 			},
 		})
 
+		-- Pyright only sees the `python` on PATH, so it misses project venvs. Use the
+		-- nearest `.venv` from the project root up (monorepos keep one per service, or
+		-- one at the repo root), falling back to an activated $VIRTUAL_ENV.
+		vim.lsp.config('pyright', {
+			settings = {
+				-- ruff sorts imports (the `I` rules); two organize-imports actions conflict.
+				pyright = { disableOrganizeImports = true },
+			},
+			before_init = function(_, config)
+				local venv = vim.fs.find('.venv', { path = config.root_dir, upward = true, type = 'directory' })[1]
+					or vim.env.VIRTUAL_ENV
+				local python = venv and venv .. '/bin/python'
+				if python and vim.uv.fs_stat(python) then
+					config.settings.python = vim.tbl_deep_extend('force', config.settings.python or {}, {
+						pythonPath = python,
+					})
+				end
+			end,
+		})
+
+		-- ruff (lint, import sort) runs next to pyright; leave hover to pyright, which
+		-- shows types and docs instead of ruff's rule descriptions.
+		vim.lsp.config('ruff', {
+			on_attach = function(client)
+				client.server_capabilities.hoverProvider = false
+			end,
+		})
+
+		-- The server only starts in a dir with postgres-language-server.jsonc. Fall back
+		-- to the git root so plain .sql files (e.g. Flyway migrations) still get syntax
+		-- checks; a jsonc with a database connection adds schema-aware completion.
+		vim.lsp.config('postgres_lsp', {
+			root_markers = { 'postgres-language-server.jsonc', '.git' },
+			workspace_required = false,
+		})
+
 		-- JetBrains Kotlin LSP is installed by hand, not by Mason (see mason.lua): builds are
 		-- EAP and stop starting a few months after release, and the Mason registry lags behind.
 		-- When it starts failing (exit code 7), unpack the newest standalone archive from
