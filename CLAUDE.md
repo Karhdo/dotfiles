@@ -19,7 +19,9 @@ Personal dotfiles for macOS. Files are laid out so the repo root mirrors `$HOME`
 
 Commits are GPG-signed via SSH key (`gpg.format = ssh`, `commit.gpgsign = true`), with `~/.ssh/allowed_signers` as the trust list. The personal `.gitconfig-karhdo` is intentionally NOT tracked in this repo — only the Spartan one is.
 
-Companion pieces live outside the repo: `~/.ssh/config` routes `github` vs `github-spartan` hosts to different keys, and per-workspace `.envrc` files (loaded by `direnv`) provide distinct `GH_TOKEN` values for the `gh` CLI.
+`~/.ssh/config` (outside the repo) routes `github` vs `github-spartan` hosts to different keys; remotes always use those SSH aliases, never HTTPS.
+
+Per-workspace `.envrc` files (loaded by `direnv`) give the `gh` CLI a distinct `GH_TOKEN` per account. They are tracked here under `Workplace/Karhdo/.envrc` and `Workplace/Spartan/.envrc` and hold no secrets: each reads its token from the macOS Keychain with `gh auth token --user <account>`, so both accounts must be logged in with `gh auth login`. Stow links the Spartan one; it skips `Workplace/Karhdo` because the stow directory lives there, so that link is made by hand: `ln -s dotfiles/Workplace/Karhdo/.envrc ~/Workplace/Karhdo/.envrc`. Run `direnv allow` in each workspace after changing either file.
 
 ### Neovim config (`.config/nvim/`)
 
