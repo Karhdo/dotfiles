@@ -5,8 +5,9 @@ local map = vim.keymap.set
 map('n', '<leader>nh', '<Cmd>nohlsearch<CR>', { desc = 'Clear search highlights' })
 
 -- Every diagnostic on the line in full; the inline text shows only the most severe one
--- (core/lsp.lua). Focusable, so pressing it again enters the popup to scroll or copy.
-map('n', 'gl', function()
+-- (core/lsp.lua). Global, so linter-only buffers get it too. Focusable: press it again
+-- to enter the popup and scroll or copy.
+map('n', '<leader>d', function()
 	vim.diagnostic.open_float({ scope = 'line', focusable = true, source = true })
 end, { desc = 'Show line diagnostics' })
 

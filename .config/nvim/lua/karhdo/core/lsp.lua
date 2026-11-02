@@ -26,7 +26,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		map('n', '<leader>ca', vim.lsp.buf.code_action, 'Code action')
 		map('n', '<leader>lr', '<Cmd>LspRestart<CR>', 'Restart LSP server')
 
-		map('n', '<leader>d', vim.diagnostic.open_float, 'Show line diagnostics')
 		map('n', '<leader>D', '<Cmd>FzfLua diagnostics_document<CR>', 'Show buffer diagnostics')
 		map('n', '[d', function()
 			vim.diagnostic.jump({ count = -1, float = true })
@@ -50,7 +49,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 local severity = vim.diagnostic.severity
 
 -- Like Error Lens, show only the most severe diagnostic per line inline (pyright and ruff
--- often report the same problem); `gl` shows them all. Diagnostics arrive per namespace
+-- often report the same problem); <leader>d shows them all. Diagnostics arrive per namespace
 -- (one per server or linter), so gather every namespace's and draw them in our own.
 local virtual_text = vim.diagnostic.handlers.virtual_text
 local most_severe_ns = vim.api.nvim_create_namespace('KarhdoMostSevere')
