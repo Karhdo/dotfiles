@@ -30,8 +30,21 @@ return {
 					'ktlint',
 					-- Not a formatter or linter here: bashls runs it for its diagnostics.
 					'shellcheck',
+					-- JetBrains' builds are EAP and refuse to start (exit code 7) a few
+					-- months after release, so keep it on the newest one.
+					{ 'kotlin-lsp', auto_update = true },
 				},
+				debounce_hours = 24, -- Check for that update at most once a day
 			},
+			config = function(_, opts)
+				local installer = require('mason-tool-installer')
+				installer.setup(opts)
+				-- Its startup check hangs off VimEnter, which has already passed when nvim
+				-- was started without a file and this loads on the first one opened.
+				if vim.v.vim_did_enter == 1 then
+					installer.run_on_start()
+				end
+			end,
 		},
 		'neovim/nvim-lspconfig',
 	},
@@ -58,12 +71,8 @@ return {
 			'marksman',
 		},
 		-- jdtls is started by nvim-jdtls (jdtls.lua), not mason-lspconfig.
-		--
-		-- kotlin_lsp is installed by hand under ~/.local/share/nvim/mason/packages/kotlin-lsp/
-		-- and configured and enabled from lspconfig.lua; letting Mason manage it would
-		-- replace that build with the registry's.
 		automatic_enable = {
-			exclude = { 'jdtls', 'kotlin_lsp' },
+			exclude = { 'jdtls' },
 		},
 	},
 }

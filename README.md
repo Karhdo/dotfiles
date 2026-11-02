@@ -154,17 +154,9 @@ Inside a picker: `C-j`/`C-k` move, `F4` toggles preview, `Esc` closes (fzf has n
 
 ### Kotlin LSP
 
-JetBrains' [kotlin-lsp](https://github.com/Kotlin/kotlin-lsp) is kept out of Mason: its builds are EAP and stop starting a few months after release, and the Mason registry pins an expired one. Install the standalone archive by hand:
+JetBrains' [kotlin-lsp](https://github.com/Kotlin/kotlin-lsp) builds are EAP and refuse to start a few months after release (`exit code 7`, "This build of kotlin-server has expired"). Mason installs it, and mason-tool-installer updates it automatically, checking at most once a day when Neovim starts ([mason.lua](.config/nvim/lua/karhdo/plugins/lsp/mason.lua)). A new build is used from the next Neovim start. To update right away, run `:MasonToolsUpdate`.
 
-```bash
-V=263.6379.0   # newest from https://github.com/Kotlin/kotlin-lsp/releases
-D=~/.local/share/nvim/mason/packages/kotlin-lsp
-mkdir -p $D && curl -fL -o /tmp/kls.sit \
-  https://download.jetbrains.com/language-server/kotlin-server/$V/kotlin-server-$V-aarch64.sit
-ditto -x -k /tmp/kls.sit $D && rm /tmp/kls.sit
-```
-
-Then set the same version in `kotlin_lsp_home` in [lspconfig.lua](.config/nvim/lua/karhdo/plugins/lsp/lspconfig.lua). When the server stops starting (exit code 7), repeat with the newer release. On quit, Neovim also stops the Gradle daemon the server spawns for project import.
+On quit, Neovim also stops the Gradle daemon the server spawns for project import.
 
 ## Tmux
 
