@@ -4,7 +4,7 @@ return {
 	event = 'BufReadPost',
 	dependencies = {
 		'SmiteshP/nvim-navic',
-		'nvim-tree/nvim-web-devicons',
+		'nvim-mini/mini.icons',
 	},
 	opts = {
 		exclude_filetypes = { 'gitcommit', 'toggleterm', 'Trouble' },

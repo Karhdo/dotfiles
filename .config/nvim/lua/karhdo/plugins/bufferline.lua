@@ -9,7 +9,7 @@ return {
 		{ '<leader>bcl', '<Cmd>BufferLineCloseLeft<CR>', desc = 'Close buffers to the left' },
 		{ '<leader>bco', '<Cmd>BufferLineCloseOthers<CR>', desc = 'Close other buffers' },
 	},
-	dependencies = { 'nvim-tree/nvim-web-devicons' },
+	dependencies = { 'nvim-mini/mini.icons' },
 	opts = {
 		options = {
 			color_icons = true,

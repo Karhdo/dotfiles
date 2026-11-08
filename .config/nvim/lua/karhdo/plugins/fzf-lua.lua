@@ -91,7 +91,7 @@ return {
 		-- fzf has no normal mode, so Esc closes the picker; this reopens it with the same query.
 		{ ';;', picker('resume'), desc = 'Resume last picker' },
 	},
-	dependencies = { 'nvim-tree/nvim-web-devicons' },
+	dependencies = { 'nvim-mini/mini.icons' },
 	opts = function()
 		local border = require('karhdo.core.styles').border
 
