@@ -5,7 +5,7 @@ return {
 		{ '<C-n>', '<Cmd>NvimTreeToggle<CR>', desc = 'Toggle file explorer' },
 		{ '<leader>n', '<Cmd>NvimTreeFindFile<CR>', desc = 'Reveal file in explorer' },
 	},
-	dependencies = { 'nvim-mini/mini.icons' },
+	dependencies = { 'nvim-mini/mini.icons', 'antosha417/nvim-lsp-file-operations' },
 	opts = function()
 		local icons = require('karhdo.core.styles').icons.diagnostics
 
