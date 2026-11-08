@@ -28,7 +28,7 @@ return {
 			hl.DiagnosticLineError = { bg = blend_bg(c.error, 0.06) }
 			hl.DiagnosticLineWarn = { bg = blend_bg(c.warning, 0.06) }
 			hl.DiagnosticLineInfo = { bg = blend_bg(c.info, 0.06) }
-			hl.MiniIndentscopeSymbol = { fg = '#FFFFFF' }
+			hl.SnacksIndentScope = { fg = '#FFFFFF' }
 		end,
 	},
 	config = function(_, opts)
