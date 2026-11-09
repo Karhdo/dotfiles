@@ -12,12 +12,13 @@ return {
 	'SmiteshP/nvim-navic',
 	-- Before the first LspAttach, so auto_attach sees it.
 	event = { 'BufReadPre', 'BufNewFile' },
-	dependencies = { 'nvim-mini/mini.icons', 'onsails/lspkind.nvim' },
+	dependencies = { 'nvim-mini/mini.icons' },
 	opts = function()
-		-- Same symbols as the completion menu; navic wants a trailing space.
+		-- Same symbols as the completion menu (blink-cmp.lua); navic wants a trailing space.
+		local mini_icons = require('mini.icons')
 		local icons = {}
-		for kind, symbol in pairs(require('lspkind').presets.default) do
-			icons[kind] = symbol .. ' '
+		for _, kind in ipairs(mini_icons.list('lsp')) do
+			icons[kind] = mini_icons.get('lsp', kind) .. ' '
 		end
 
 		return {

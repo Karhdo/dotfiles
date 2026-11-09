@@ -104,16 +104,16 @@ return {
 	'neovim/nvim-lspconfig',
 	event = { 'BufReadPre', 'BufNewFile' },
 	dependencies = {
-		'hrsh7th/cmp-nvim-lsp',
+		'saghen/blink.cmp',
 		'antosha417/nvim-lsp-file-operations',
 	},
 	config = function()
-		-- Completion capabilities from cmp, plus willRename/didRename so servers can update
-		-- imports when nvim-tree moves a file.
+		-- Completion capabilities from blink.cmp, plus willRename/didRename so servers can
+		-- update imports when nvim-tree moves a file.
 		vim.lsp.config('*', {
 			capabilities = vim.tbl_deep_extend(
 				'force',
-				require('cmp_nvim_lsp').default_capabilities(),
+				require('blink.cmp').get_lsp_capabilities(),
 				require('lsp-file-operations').default_capabilities()
 			),
 		})
