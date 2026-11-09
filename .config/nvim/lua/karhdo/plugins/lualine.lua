@@ -28,6 +28,6 @@ return {
 			lualine_y = {},
 			lualine_z = {},
 		},
-		extensions = { 'quickfix', 'fugitive', 'nvim-tree', 'toggleterm' },
+		extensions = { 'quickfix', 'nvim-tree' },
 	},
 }

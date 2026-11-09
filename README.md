@@ -197,7 +197,7 @@ tpm only honours the pin on a fresh install (its updater just runs `git pull`), 
 
 Configuration: [.config/lazygit/config.yml](.config/lazygit/config.yml).
 
-Opened via toggleterm in Neovim (`<space>gg`). Pressing `e`/`o` on a file opens it in the **parent** Neovim session (not a nested instance) using Neovim's remote over the `$NVIM` socket. `.zshrc` points lazygit at this tracked config via `LG_CONFIG_FILE`, so `state.yml` stays in lazygit's default dir (out of the repo).
+Opened via snacks.nvim's terminal in Neovim (`<space>gg`). Pressing `e`/`o` on a file opens it in the **parent** Neovim session (not a nested instance) using Neovim's remote over the `$NVIM` socket. `.zshrc` points lazygit at this tracked config via `LG_CONFIG_FILE`, so `state.yml` stays in lazygit's default dir (out of the repo).
 
 ## Docker
 

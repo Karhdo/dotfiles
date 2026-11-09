@@ -4,7 +4,7 @@ local styles = require('karhdo.core.styles')
 local icons = styles.icons.diagnostics
 
 -- Floats are transparent (tokyonight), so without a border the hover and diagnostic
--- popups blend into the code under them. Thin and rounded, like the toggleterm floats.
+-- popups blend into the code under them. Thin and rounded, like the terminal floats.
 local float_border = 'rounded'
 local hover_opts = { border = float_border, max_width = 100, max_height = 25 }
 

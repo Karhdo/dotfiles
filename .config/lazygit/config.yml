@@ -1,6 +1,6 @@
 os:
   # Open files in the parent Neovim session (the one lazygit was launched from
-  # via toggleterm) instead of a nested nvim. Uses Neovim's native remote over
+  # via snacks.nvim) instead of a nested nvim. Uses Neovim's native remote over
   # the $NVIM socket; falls back to a plain nvim when run outside Neovim.
   editPreset: 'nvim-remote'
   # Make the "open" action (o) also open in the parent Neovim session instead of
