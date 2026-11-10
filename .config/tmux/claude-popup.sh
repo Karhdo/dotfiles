@@ -51,4 +51,5 @@ tmux set-option -t "$session" detach-on-destroy on
 [ -n "$window" ] && tmux set-option -t "$session" @claude_origin "$window"
 
 title=" Agents · $(basename "$group") "
+tmux set-option -t "$session" @claude_title "$title" # Reused by claude-recent.sh
 tmux display-popup -w "$w" -h "$h" -b rounded -T "$title" -E "tmux attach-session -t '$session'"
