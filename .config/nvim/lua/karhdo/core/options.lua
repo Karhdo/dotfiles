@@ -43,3 +43,6 @@ opt.smartcase = true -- Case-sensitive once the pattern has an uppercase letter
 -- Which-key popup delay
 opt.timeout = true
 opt.timeoutlen = 500
+
+-- Avro schemas are plain JSON; jsonls validates them (lspconfig.lua)
+vim.filetype.add({ extension = { avsc = 'json' } })

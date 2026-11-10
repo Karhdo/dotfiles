@@ -7,6 +7,7 @@ local ensure_installed = {
 	'go',
 	'java',
 	'javascript',
+	'json',
 	'kotlin',
 	'lua',
 	'markdown',

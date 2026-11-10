@@ -85,6 +85,18 @@ local servers = {
 			client.server_capabilities.hoverProvider = false
 		end,
 	},
+	-- jsonls only validates when the client sends validate.enable (VS Code always does),
+	-- and ships no schemas of its own; validate and complete Avro schemas.
+	jsonls = {
+		settings = {
+			json = {
+				validate = { enable = true },
+				schemas = {
+					{ fileMatch = { '*.avsc' }, url = 'https://www.schemastore.org/avro-avsc.json' },
+				},
+			},
+		},
+	},
 	tailwindcss = { root_dir = tailwind_root_dir },
 	-- Stock config only starts next to a postgres-language-server.jsonc. Fall back to the
 	-- git root so plain .sql files (e.g. Flyway migrations) still get syntax checks.

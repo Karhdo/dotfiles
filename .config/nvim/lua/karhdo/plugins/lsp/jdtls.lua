@@ -1,5 +1,12 @@
 -- Java LSP via nvim-jdtls (more complete than plain lspconfig jdtls: Lombok,
 -- refactors). The server binary comes from Mason.
+
+---Home of the newest installed JDK matching `version` (e.g. '21', '25+').
+---@param version string
+local function java_home(version)
+	return vim.trim(vim.fn.system({ '/usr/libexec/java_home', '-v', version }))
+end
+
 return {
 	'mfussenegger/nvim-jdtls',
 	ft = 'java',
@@ -27,9 +34,14 @@ return {
 		local project_name = vim.fn.fnamemodify(root_dir or vim.fn.getcwd(), ':t')
 		local workspace_dir = vim.fn.stdpath('data') .. '/jdtls-workspace/' .. project_name
 
+		-- jdtls itself needs a newer JDK (1.63 requires 25) than the projects build with;
+		-- on an older one it exits with code 13. Projects and Gradle stay on 21.
+		local server_java = java_home('25+') .. '/bin/java'
+		local project_jdk = java_home('21')
+
 		local config = {
 			cmd = {
-				'java',
+				server_java,
 				'-Declipse.application=org.eclipse.jdt.ls.core.id1',
 				'-Dosgi.bundles.defaultStartLevel=4',
 				'-Declipse.product=org.eclipse.jdt.ls.core.product',
@@ -56,7 +68,7 @@ return {
 					eclipse = { downloadSources = true },
 					-- Prefer Gradle (build.gradle.kts) over Maven when a repo ships both
 					import = {
-						gradle = { enabled = true },
+						gradle = { enabled = true, java = { home = project_jdk } },
 						maven = { enabled = false },
 					},
 					maven = { downloadSources = true },
@@ -92,7 +104,7 @@ return {
 					},
 					configuration = {
 						runtimes = {
-							{ name = 'JavaSE-21', path = vim.fn.trim(vim.fn.system('/usr/libexec/java_home -v 21')) },
+							{ name = 'JavaSE-21', path = project_jdk, default = true },
 						},
 					},
 				},
