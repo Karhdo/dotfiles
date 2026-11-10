@@ -67,7 +67,6 @@ export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
-export PATH="/opt/homebrew/Cellar/go-parquet-tools/1.32.0/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 
 # -------------------- Tools Init --------------------
@@ -79,8 +78,7 @@ env_path=$(go env GOPATH)/bin
 export PATH=$PATH:$env_path
 
 # Java
-export JAVA_HOME=$(/usr/libexec/java_home -v 21)
-# export JAVA_HOME=$(/usr/libexec/java_home -v17)
+export JAVA_HOME=$(/usr/libexec/java_home -v 25)
 export PATH=$JAVA_HOME/bin:$PATH
 
 # direnv

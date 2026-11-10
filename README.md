@@ -113,8 +113,6 @@ Launch Neovim once (`nvim` / `v`): [lazy.nvim](https://github.com/folke/lazy.nvi
 
 Finally, set your terminal font to **Hack Nerd Font** (installed via the Brewfile).
 
-> The old standalone Neovim under `~/Workplace/Karhdo/nvim-macos-arm64/` is no longer used — config now relies on `brew install neovim`. You can delete that directory.
-
 ## Updating
 
 ```bash

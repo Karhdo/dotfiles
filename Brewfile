@@ -8,12 +8,15 @@ brew "neovim"      # editor (config in .config/nvim)
 brew "tmux"        # terminal multiplexer
 brew "starship"    # shell prompt
 brew "lazygit"     # git TUI (opens files in the parent nvim session)
+brew "git-delta"   # diff pager for git and lazygit
+brew "gh"          # GitHub CLI (GH_TOKEN per workspace via .envrc)
+brew "tree-sitter-cli" # builds nvim-treesitter parsers (main branch)
 
 # --- Shell tooling (.zshrc) ---
 brew "bat"         # cat with syntax highlighting + fzf preview
 brew "fd"          # fast find, backs fzf file/dir discovery
 brew "fzf"         # fuzzy finder
-brew "ripgrep"     # used by telescope.nvim live grep
+brew "ripgrep"     # used by fzf-lua live grep
 brew "eza"         # ls replacement
 brew "fnm"         # Node version manager (auto-switch on cd)
 brew "zoxide"      # smarter cd
@@ -31,9 +34,11 @@ brew "kubernetes-cli"            # kubectl (Docker Desktop used to provide it)
 brew "lazydocker"                # Docker TUI: containers, images, logs
 
 # --- Languages / LSP runtimes ---
-brew "openjdk@21"  # runtime for jdtls + kotlin_lsp (Java/Kotlin LSP)
+brew "openjdk@21"  # JDK the Java/Kotlin projects build with
+brew "go"          # .zshrc adds $(go env GOPATH)/bin to PATH
 brew "libpq"       # psql + postgres client libs
 
 # --- Casks ---
+cask "temurin@25"            # JDK 25: JAVA_HOME and the jdtls server need it
 cask "wezterm"               # terminal emulator (.wezterm.lua)
 cask "font-hack-nerd-font"   # Nerd Font for icons in nvim/eza/starship
