@@ -183,9 +183,10 @@ tpm only honours the pin on a fresh install (its updater just runs `git pull`), 
 | Key | Action |
 | --- | ------ |
 | `prefix + y` | Open Claude for the current directory |
-| `prefix + Y` | Same, but a new Claude starts with `--resume` to pick a past conversation |
+| `prefix + r` | Reopen the popup used last, on the Claude that was showing |
+| `prefix + F` | Same as `prefix + r`, but full size; inside a popup, toggles full and normal size |
 | `prefix + d` | Hide the popup; Claude keeps running |
-| `prefix + u` | Picker of every running Claude with its status (`enter` jump, `ctrl-x` kill). Picking one opens it in the popup right where you are, without switching tmux session |
+| `prefix + u` | Picker of every running Claude with its status (`enter` jump, `ctrl-x` kill, `ctrl-y` copy its location). Picking one opens it in the popup right where you are, without switching tmux session |
 
 - Each tmux session gets one popup session, keyed by the directory the tmux session started in (e.g. the `LoanBud` session → `loanbud-hq`). Inside it, every directory you open Claude from gets its own window — switch with `prefix + n/p/w`. Driven by [.config/tmux/claude-popup.sh](.config/tmux/claude-popup.sh), which overrides the plugin's `y`. [.config/tmux/claude-pick.sh](.config/tmux/claude-pick.sh) handles `enter` in the picker, so picking a Claude doesn't switch session.
 - [.config/tmux/claude.sh](.config/tmux/claude.sh) drops to a shell when Claude exits, so the popup survives; run `claude` again, or `exit` to close it.
