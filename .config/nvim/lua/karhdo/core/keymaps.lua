@@ -2,8 +2,6 @@
 -- plugin's spec (`keys`), buffer-local ones in their attach callback.
 local map = vim.keymap.set
 
-map('n', '<leader>nh', '<Cmd>nohlsearch<CR>', { desc = 'Clear search highlights' })
-
 -- Every diagnostic on the line in full; the inline text shows only the most severe one
 -- (core/lsp.lua). Global, so linter-only buffers get it too. Focusable: press it again
 -- to enter the popup and scroll or copy.

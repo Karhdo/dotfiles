@@ -4,7 +4,6 @@
 -- file, <leader>hs/hu/hr stage/unstage/discard hunk, t toggle layout, g? help.
 return {
 	'esmuellert/codediff.nvim',
-	enabled = not vim.g.vscode,
 	cmd = 'CodeDiff',
 	keys = {
 		{ '<leader>gd', '<Cmd>CodeDiff<CR>', desc = 'Review git changes' },

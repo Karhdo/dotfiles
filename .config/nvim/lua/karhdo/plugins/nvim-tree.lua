@@ -12,7 +12,6 @@ return {
 		return {
 			auto_reload_on_write = false,
 			git = {
-				enable = true,
 				ignore = false,
 				timeout = 500,
 			},
@@ -30,7 +29,6 @@ return {
 				side = 'right',
 			},
 			renderer = {
-				add_trailing = false,
 				group_empty = true,
 				highlight_opened_files = 'name',
 				indent_markers = { enable = true },

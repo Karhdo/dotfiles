@@ -80,7 +80,6 @@ end
 
 return {
 	'ibhagwan/fzf-lua',
-	enabled = not vim.g.vscode,
 	cmd = 'FzfLua', -- LSP keymaps (core/lsp.lua) call :FzfLua
 	keys = {
 		{ ';f', picker('files'), desc = 'Find files in cwd' },

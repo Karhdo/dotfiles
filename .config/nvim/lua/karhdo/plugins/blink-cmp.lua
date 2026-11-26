@@ -11,15 +11,7 @@ return {
 	version = '1.*', -- Release tags ship the prebuilt Rust fuzzy matcher
 	event = 'InsertEnter',
 	dependencies = {
-		{
-			'L3MON4D3/LuaSnip',
-			version = 'v2.*',
-			build = 'make install_jsregexp', -- Optional; enables snippet transformations
-			dependencies = { 'rafamadriz/friendly-snippets' },
-			config = function()
-				require('luasnip.loaders.from_vscode').lazy_load()
-			end,
-		},
+		'rafamadriz/friendly-snippets', -- Read by blink's built-in snippet source
 		'nvim-mini/mini.icons',
 	},
 	opts = {
@@ -37,7 +29,6 @@ return {
 			['<C-Space>'] = { 'show', 'fallback' },
 			['<C-e>'] = { 'cancel', 'fallback' },
 		},
-		snippets = { preset = 'luasnip' },
 		sources = {
 			default = { 'lsp', 'snippets', 'buffer', 'path' },
 		},

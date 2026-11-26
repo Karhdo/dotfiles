@@ -20,7 +20,6 @@ opt.tabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
 opt.smartindent = true
-opt.autoindent = true
 
 -- Wrapping
 opt.wrap = true
@@ -30,7 +29,6 @@ opt.breakindent = true -- Keep wrapped lines visually indented
 -- Whitespace
 opt.list = true
 opt.listchars:append('eol:↴')
-opt.backspace = 'indent,eol,start'
 
 -- Splits
 opt.splitright = true
@@ -41,7 +39,6 @@ opt.ignorecase = true
 opt.smartcase = true -- Case-sensitive once the pattern has an uppercase letter
 
 -- Which-key popup delay
-opt.timeout = true
 opt.timeoutlen = 500
 
 -- Avro schemas are plain JSON; jsonls validates them (lspconfig.lua)

@@ -12,9 +12,7 @@ return {
 	dependencies = { 'nvim-mini/mini.icons' },
 	opts = {
 		options = {
-			color_icons = true,
 			diagnostics = 'nvim_lsp',
-			left_mouse_command = 'buffer %d',
 		},
 	},
 }
